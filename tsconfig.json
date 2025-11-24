@@ -1,0 +1,41 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "lib": ["esnext", "dom"],
+    "useDefineForClassFields": true,
+    "baseUrl": ".",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+
+    "resolveJsonModule": true,
+
+    // 类型声明相关配置
+    "types": ["node", "vite/client", "element-plus/global"],
+    "allowJs": true,
+    // 严格性和类型检查相关配置
+    "strict": true,
+
+    // 调试和兼容性相关配置
+    "sourceMap": true,
+    // 模块和兼容性相关配置
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true
+  },
+
+  "include": [
+    "types/**/*.d.ts",
+    "mock/**/*.ts",
+    "src/**/*.ts",
+    "src/**/*.vue",
+    "vite.config.ts",
+    "eslint.config.ts",
+    "uno.config.ts"
+  ],
+  "exclude": ["node_modules", "dist"]
+}
