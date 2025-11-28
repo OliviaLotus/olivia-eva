@@ -82,7 +82,7 @@ export default defineConfig(({ mode }: ConfigEnv) => {
     build: {
       chunkSizeWarningLimit: 2000, // 消除打包大小超过500kb警告
       reportCompressedSize: false,
-      minify: isProduction ? 'esbuild' : 'terser', // 只在生产环境启用压缩
+      minify: isProduction ? 'esbuild' : false, // 只在生产环境启用压缩
       rollupOptions: {
         output: {
           // manualChunks: {
@@ -97,13 +97,13 @@ export default defineConfig(({ mode }: ConfigEnv) => {
             const info = assetInfo.name.split('.')
             let extType = info[info.length - 1]
             // console.log('文件信息', assetInfo.name)
-            if (/\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/i.test(assetInfo.name)) {
+            if (/\.(?:mp4|webm|ogg|mp3|wav|flac|aac)(?:\?.*)?$/i.test(assetInfo.name)) {
               extType = 'media'
             }
-            else if (/\.(png|jpe?g|gif|svg)(\?.*)?$/.test(assetInfo.name)) {
+            else if (/\.(?:png|jpe?g|gif|svg)(?:\?.*)?$/.test(assetInfo.name)) {
               extType = 'img'
             }
-            else if (/\.(woff2?|eot|ttf|otf)(\?.*)?$/i.test(assetInfo.name)) {
+            else if (/\.(?:woff2?|eot|ttf|otf)(?:\?.*)?$/i.test(assetInfo.name)) {
               extType = 'fonts'
             }
             return `${extType}/[name].[hash].[ext]`
