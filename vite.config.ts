@@ -1,6 +1,7 @@
 import type {
   ConfigEnv,
   PluginOption,
+  UserConfig,
 } from 'vite'
 import { resolve } from 'node:path'
 import process from 'node:process'
@@ -16,7 +17,7 @@ import {
 
 const pathSrc = resolve(__dirname, 'src')
 
-export default defineConfig(({ mode }: ConfigEnv) => {
+export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
   const env = loadEnv(mode, process.cwd())
   const isProduction = mode === 'production'
   return {
