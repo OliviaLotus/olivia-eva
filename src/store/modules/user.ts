@@ -2,6 +2,7 @@ import type { UserInfo } from '@/types/api/user'
 import { defineStore } from 'pinia'
 import { store } from '@/store'
 import { AuthStorage } from '@/utils/auth'
+import UserAPI from '@/api/system/user'
 
 export const useUserStore = defineStore('user', () => {
   // 用户信息
