@@ -2,6 +2,9 @@ import NProgress from "@/plugins/nprogress";
 import { useUserStore } from "@/store";
 import { usePermissionStore } from "@/store/modules/permission";
 import router from "..";
+import { isTenantEnabled } from "@/utils/tenant";
+import { useTenantStoreHook } from "@/store/modules/tenant";
+import { addRecentMenu } from "@/composables/useRecentMenus";
 
 export function setupPermissionGuard() {
   const whiteList = ["/login"];
@@ -35,6 +38,9 @@ export function setupPermissionGuard() {
         if (!userStore.userInfo?.roles?.length) {
           await userStore.getUserInfo();
         }
+
+        // 加载用户租户列表（VITE_APP_TENANT_ENABLED=true 时生效）
+        await initTenantContext();
       }
     } catch (error) {
       console.error("Route guard error:", error);
@@ -46,10 +52,24 @@ export function setupPermissionGuard() {
 
   router.afterEach((to) => {
     NProgress.done();
+
     // 记录最近访问
     if (to.meta?.title && to.path) {
       const icon = typeof to.meta.icon === "string" ? to.meta.icon : undefined;
       addRecentMenu(to.path, to.meta.title as string, icon);
     }
   });
+}
+
+// 多租户支持（可选）
+/** 初始化多租户上下文，未启用或失败时静默跳过 */
+async function initTenantContext(): Promise<void> {
+  // 多租户关闭时不初始化租户上下文
+  if (!isTenantEnabled()) return;
+
+  try {
+    await useTenantStoreHook().loadTenant();
+  } catch {
+    // 静默失败，不影响主流程
+  }
 }

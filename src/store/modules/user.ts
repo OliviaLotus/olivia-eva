@@ -1,17 +1,17 @@
-import type { UserInfo } from '@/types/api/user'
-import { defineStore } from 'pinia'
-import { store } from '@/store'
-import { AuthStorage } from '@/utils/auth'
-import UserAPI from '@/api/system/user'
+import type { UserInfo } from "@/types/api/user";
+import { defineStore } from "pinia";
+import { store } from "@/store";
+import { AuthStorage } from "@/utils/auth";
+import UserAPI from "@/api/system/user";
 
-export const useUserStore = defineStore('user', () => {
+export const useUserStore = defineStore("user", () => {
   // 用户信息
-  const userInfo = ref<UserInfo>({} as UserInfo)
+  const userInfo = ref<UserInfo>({} as UserInfo);
   // 记住我状态
-  const rememberMe = ref(AuthStorage.getRememberMe())
+  const rememberMe = ref(AuthStorage.getRememberMe());
 
   function getUserInfo() {
-    return new Promise<UserInfo>((resolve,reject) => {
+    return new Promise<UserInfo>((resolve, reject) => {
       UserAPI.getInfo()
         .then((data) => {
           if (!data) {
@@ -24,11 +24,39 @@ export const useUserStore = defineStore('user', () => {
         .catch((error) => {
           reject(error);
         });
-    }
+    });
   }
-  return { userInfo, rememberMe, isLoggedIn: () => !!AuthStorage.getAccessToken() }
-})
+  /**
+   * 重置所有系统状态
+   * 统一处理所有清理工作，包括用户凭证、路由、缓存等
+   */
+  function resetAllState() {
+    // 1. 重置用户状态
+    resetUserState();
+
+    // 2. 重置其他模块状态
+    // 重置路由
+    usePermissionStoreHook().resetRouter();
+    // 清除字典缓存
+    useDictStoreHook().clearDictCache();
+    // 清除标签视图
+    useTagsViewStore().delAllViews();
+
+    // 3. 清理 WebSocket 连接
+    cleanupWebSocket();
+    console.log("[UserStore] WebSocket connections cleaned up");
+
+    return Promise.resolve();
+  }
+  return {
+    userInfo,
+    rememberMe,
+    isLoggedIn: () => !!AuthStorage.getAccessToken(),
+    getUserInfo,
+    resetAllState,
+  };
+});
 
 export function useUserStoreHook() {
-  return useUserStore(store)
+  return useUserStore(store);
 }
