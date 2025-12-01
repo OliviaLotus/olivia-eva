@@ -8,7 +8,7 @@
 /**
  * 应用存储前缀
  */
-export const APP_PREFIX = 'vea'
+export const APP_PREFIX = "vea";
 
 /**
  * 超级管理员角色标识
@@ -16,7 +16,7 @@ export const APP_PREFIX = 'vea'
  * @description
  * 拥有系统最高权限，可以访问所有资源
  */
-export const ROLE_ROOT = 'ROOT'
+export const ROLE_ROOT = "ROOT";
 
 /**
  * 平台租户ID
@@ -24,7 +24,7 @@ export const ROLE_ROOT = 'ROOT'
  * @description
  * 用于前端识别平台租户（不参与套餐/菜单配置）
  */
-export const PLATFORM_TENANT_ID = 0
+export const PLATFORM_TENANT_ID = 0;
 
 /**
  * 存储键名常量
@@ -64,9 +64,9 @@ export const STORAGE_KEYS = {
   LANGUAGE: `${APP_PREFIX}:app:language`,
   SIDEBAR_STATUS: `${APP_PREFIX}:app:sidebar_status`,
   ACTIVE_TOP_MENU_PATH: `${APP_PREFIX}:app:active_top_menu_path`,
-} as const
+} as const;
 
 /**
  * 存储键名类型
  */
-export type StorageKey = (typeof STORAGE_KEYS)[keyof typeof STORAGE_KEYS]
+export type StorageKey = (typeof STORAGE_KEYS)[keyof typeof STORAGE_KEYS];

@@ -1,17 +1,17 @@
 /** 登录用户信息 */
 export interface UserInfo {
   /** 用户ID */
-  userId?: string
+  userId?: string;
   /** 用户名 */
-  username?: string
+  username?: string;
   /** 用户昵称 */
-  nickname?: string
+  nickname?: string;
   /** 头像URL */
-  avatar?: string
+  avatar?: string;
   /** 租户切换权限（true 可切换租户） */
-  canSwitchTenant?: boolean
+  canSwitchTenant?: boolean;
   /** 角色集合 */
-  roles: string[]
+  roles: string[];
   /** 权限集合 */
-  perms: string[]
+  perms: string[];
 }
