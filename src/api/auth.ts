@@ -12,6 +12,18 @@ const AuthAPI = {
       params: { tenantId },
     });
   },
+
+  /** 刷新 token 接口*/
+  fetchRefreshToken(refreshToken: string) {
+    return request<any, LoginResponse>({
+      url: `${AUTH_BASE_URL}/refresh-token`,
+      method: "post",
+      params: { refreshToken },
+      headers: {
+        Authorization: "no-auth",
+      },
+    });
+  },
 };
 
 export default AuthAPI;

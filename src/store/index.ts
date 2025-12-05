@@ -9,5 +9,7 @@ export function setupStore(app: App<Element>) {
 }
 
 export * from "./modules/user";
-
+export * from "./modules/permission";
+export * from "./modules/tenant";
+export * from "./modules/app";
 export { store };
