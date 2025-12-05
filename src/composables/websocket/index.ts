@@ -1,5 +1,5 @@
-import { useDictSync } from "./useDictSync";
-import { useOnlineCount } from "./useOnlineCount";
+// import { useDictSync } from "./useDictSync";
+// import { useOnlineCount } from "./useOnlineCount";
 
 /**
  * 初始化所有 WebSocket 服务
@@ -10,10 +10,9 @@ import { useOnlineCount } from "./useOnlineCount";
  */
 export function setupWebSocket() {
   // 初始化字典同步服务
-  const dictSync = useDictSync();
-  dictSync.initialize();
-
+  // const dictSync = useDictSync();
+  // dictSync.initialize();
   // 初始化在线用户统计服务
-  const onlineCount = useOnlineCount();
-  onlineCount.initialize();
+  // const onlineCount = useOnlineCount();
+  // onlineCount.initialize();
 }
