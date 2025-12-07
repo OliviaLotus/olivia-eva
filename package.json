@@ -27,6 +27,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@iconify/utils": "^3.1.0",
     "@types/node": "^24.10.1",
     "@types/nprogress": "^0.2.3",
     "@types/qs": "^6.14.0",
