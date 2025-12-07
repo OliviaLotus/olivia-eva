@@ -3,5 +3,6 @@
  */
 export * from "./common";
 export * from "./user";
+export * from "./menu";
 export * from "./tenant";
 export * from "./auth";

@@ -1,6 +1,22 @@
-import router from "@/router";
+import MenuAPI from "@/api/system/menu";
+import router, { constantRoutes } from "@/router";
 import { store, useUserStoreHook } from "@/store";
+import type { RouteItem } from "@/types/api";
 import type { RouteRecordRaw } from "vue-router";
+const modules = import.meta.glob("../../views/**/**.vue");
+const Layout = () => import("../../layouts/index.vue");
+
+function resolveViewComponent(componentPath: string) {
+  const normalized = componentPath
+    .trim()
+    .replace(/^\/+/, "")
+    .replace(/\.vue$/i, "");
+  return (
+    modules[`../../views/${normalized}.vue`] ||
+    modules[`../../views/${normalized}/index.vue`] ||
+    modules[`../../views/error/404.vue`]
+  );
+}
 
 export const usePermissionStore = defineStore("permission", () => {
   // 所有路由（静态路由 + 动态路由）
@@ -102,10 +118,47 @@ export const usePermissionStore = defineStore("permission", () => {
   }
 
   return {
+    routes,
+    mixLayoutSideMenus,
     isRouteGenerated,
+    generateRoutes,
+    setMixLayoutSideMenus,
+    resetRouter,
+    reloadDynamicRoutesOnce,
     reloadPermissionSnapshotOnce,
   };
 });
+
+/**
+ * 转换后端路由数据为Vue Router配置
+ * 处理组件路径映射和Layout层级嵌套
+ */
+const transformRoutes = (routes: RouteItem[], isTopLevel: boolean = true): RouteRecordRaw[] => {
+  return routes.map((route) => {
+    const { component, children, ...args } = route;
+
+    // 处理组件：顶层或非Layout保留组件，中间层Layout设为undefined
+    const processedComponent = isTopLevel || component !== "Layout" ? component : undefined;
+
+    const normalizedRoute = { ...args } as RouteRecordRaw;
+
+    if (!processedComponent) {
+      // 多级菜单的父级菜单，不需要组件
+      normalizedRoute.component = undefined;
+    } else {
+      // 动态导入组件，Layout特殊处理，找不到组件时返回404
+      normalizedRoute.component =
+        processedComponent === "Layout" ? Layout : resolveViewComponent(processedComponent);
+    }
+
+    // 递归处理子路由
+    if (children && children.length > 0) {
+      normalizedRoute.children = transformRoutes(children, false);
+    }
+
+    return normalizedRoute;
+  });
+};
 
 export function usePermissionStoreHook() {
   return usePermissionStore(store);
