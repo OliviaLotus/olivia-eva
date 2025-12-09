@@ -5,6 +5,7 @@ import router from "..";
 import { isTenantEnabled } from "@/utils/tenant";
 import { useTenantStoreHook } from "@/store/modules/tenant";
 import { addRecentMenu } from "@/composables/useRecentMenus";
+import type { RouteRecordRaw } from "vue-router";
 
 export function setupPermissionGuard() {
   const whiteList = ["/login"];
@@ -41,7 +42,29 @@ export function setupPermissionGuard() {
 
         // 加载用户租户列表（VITE_APP_TENANT_ENABLED=true 时生效）
         await initTenantContext();
+
+        const dynamicRoutes = await permissionStore.generateRoutes();
+        dynamicRoutes.forEach((route: RouteRecordRaw) => {
+          router.addRoute(route);
+        });
+
+        next({ ...to, replace: true });
+        return;
       }
+
+      // 路由 404 检查
+      if (to.matched.length === 0) {
+        next("/404");
+        return;
+      }
+
+      // 动态标题
+      const title = (to.params.title as string) || (to.query.title as string);
+      if (title) {
+        to.meta.title = title;
+      }
+
+      next();
     } catch (error) {
       console.error("Route guard error:", error);
       await useUserStore().resetAllState();
