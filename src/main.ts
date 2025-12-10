@@ -1,14 +1,14 @@
-import * as ElementPlusIcons from "@element-plus/icons-vue";
 import { createApp } from "vue";
+import App from "./App.vue";
+import * as ElementPlusIcons from "@element-plus/icons-vue";
 import VXETable from "vxe-table";
+import { configureVxeTable } from "@/plugins/vxe-table";
 import { setupWebSocket } from "@/composables";
 import { setupDirective } from "@/directives";
 import { setupI18n } from "@/lang";
-import { configureVxeTable } from "@/plugins/vxe-table";
 import { setupRouter } from "@/router";
-import { setupPermissionGuard } from "@/router/guards/permission";
 import { setupStore } from "@/store";
-import App from "./App.vue";
+import { setupPermissionGuard } from "@/router/guards/permission";
 
 // ===== 样式导入 =====
 import "element-plus/dist/index.css";
