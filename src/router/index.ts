@@ -1,7 +1,8 @@
 import type { App } from "vue";
+import { createRouter, createWebHashHistory, type RouteRecordRaw } from "vue-router";
 
-import type { RouteRecordRaw } from "vue-router";
-import { createRouter, createWebHashHistory } from "vue-router";
+export const Layout = () => import("@/layouts/index.vue");
+
 // 静态路由
 export const constantRoutes: RouteRecordRaw[] = [];
 
