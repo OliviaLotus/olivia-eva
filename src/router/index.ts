@@ -4,7 +4,20 @@ import { createRouter, createWebHashHistory, type RouteRecordRaw } from "vue-rou
 export const Layout = () => import("@/layouts/index.vue");
 
 // 静态路由
-export const constantRoutes: RouteRecordRaw[] = [];
+export const constantRoutes: RouteRecordRaw[] = [
+  {
+    path: "/redirect",
+    component: Layout,
+    meta: { hidden: true },
+    children: [
+      {
+        path: "/redirect/:path(.*)",
+        name: "Redirect",
+        component: () => import("@/views/redirect/index.vue"),
+      },
+    ],
+  },
+];
 
 const router = createRouter({
   history: createWebHashHistory(),
