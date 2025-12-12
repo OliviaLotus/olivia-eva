@@ -1,26 +1,33 @@
-import type { App } from "vue";
-import { createI18n } from "vue-i18n";
-import { useAppStoreHook } from "@/store/modules/app";
-// 本地语言包
-import enLocale from "./package/en.json";
-import zhCnLocale from "./package/zh-cn.json";
+// 自定义国际化配置
+import { createI18n } from 'vue-i18n';
 
-const appStore = useAppStoreHook();
+import { LanguageEnum } from '@/enums/LanguageEnum';
+import zh_CN from '@/lang/zh_CN';
+import en_US from '@/lang/en_US';
 
-const messages = {
-  en: enLocale,
-  "zh-cn": zhCnLocale,
+/**
+ * 获取当前语言
+ * @returns zh-cn|en ...
+ */
+export const getLanguage = (): LanguageEnum => {
+  const language = useStorage<LanguageEnum>('language', LanguageEnum.zh_CN);
+  if (language.value) {
+    return language.value;
+  }
+  return LanguageEnum.zh_CN;
 };
 
 const i18n = createI18n({
-  legacy: false,
-  locale: appStore.language,
-  messages,
   globalInjection: true,
+  allowComposition: true,
+  legacy: false,
+  locale: getLanguage(),
+  messages: {
+    zh_CN: zh_CN,
+    en_US: en_US
+  }
 });
 
-export function setupI18n(app: App<Element>) {
-  app.use(i18n);
-}
-
 export default i18n;
+
+export type LanguageType = typeof zh_CN;

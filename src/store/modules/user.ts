@@ -1,106 +1,86 @@
-import type { UserInfo } from "@/types/api/user";
-import { defineStore } from "pinia";
-import { store } from "@/store";
-import { AuthStorage } from "@/utils/auth";
-import UserAPI from "@/api/system/user";
-import AuthAPI from "@/api/auth";
+import { to } from 'await-to-js';
+import { getToken, removeToken, setToken } from '@/utils/auth';
+import { login as loginApi, logout as logoutApi, getInfo as getUserInfo } from '@/api/login';
+import { LoginData } from '@/api/types';
+import defAva from '@/assets/images/profile.jpg';
+import { defineStore } from 'pinia';
+import { ref } from 'vue';
 
-export const useUserStore = defineStore("user", () => {
-  // 用户信息
-  const userInfo = ref<UserInfo>({} as UserInfo);
-  // 记住我状态
-  const rememberMe = ref(AuthStorage.getRememberMe());
-  // 刷新 token 的单飞机制，避免多个并发请求时重复刷新
-  let refreshPromise: Promise<void> | null = null;
-
-  /**
-   * 刷新 token（单飞）。
-   *
-   * 多个并发请求遇到 token 过期时，共享同一次 refresh 请求。
-   */
-  function refreshTokenOnce() {
-    if (refreshPromise) return refreshPromise;
-
-    refreshPromise = refreshToken().finally(() => {
-      refreshPromise = null;
-    });
-
-    return refreshPromise;
-  }
+export const useUserStore = defineStore('user', () => {
+  const token = ref(getToken());
+  const name = ref('');
+  const nickname = ref('');
+  const userId = ref<string | number>('');
+  const tenantId = ref<string>('');
+  const avatar = ref('');
+  const roles = ref<Array<string>>([]); // 用户角色编码集合 → 判断路由权限
+  const permissions = ref<Array<string>>([]); // 用户权限编码集合 → 判断按钮权限
 
   /**
-   * 刷新 token
+   * 登录
+   * @param userInfo
+   * @returns
    */
-  function refreshToken() {
-    const refreshToken = AuthStorage.getRefreshToken();
-
-    if (!refreshToken) {
-      return Promise.reject(new Error("没有有效的刷新令牌"));
+  const login = async (userInfo: LoginData): Promise<void> => {
+    const [err, res] = await to(loginApi(userInfo));
+    if (res) {
+      const data = res.data;
+      setToken(data.access_token);
+      token.value = data.access_token;
+      return Promise.resolve();
     }
+    return Promise.reject(err);
+  };
 
-    return new Promise<void>((resolve, reject) => {
-      AuthAPI.fetchRefreshToken(refreshToken)
-        .then((data) => {
-          const { accessToken, refreshToken: newRefreshToken } = data;
-          // 更新令牌，保持当前"记住我"状态
-          AuthStorage.setTokens(accessToken, newRefreshToken, AuthStorage.getRememberMe());
-          resolve();
-        })
-        .catch((error) => {
-          console.log(" refreshToken  刷新失败", error);
-          reject(error);
-        });
-    });
-  }
+  // 获取用户信息
+  const getInfo = async (): Promise<void> => {
+    const [err, res] = await to(getUserInfo());
+    if (res) {
+      const data = res.data;
+      const user = data.user;
+      const profile = user.avatar == '' || user.avatar == null ? defAva : user.avatar;
 
-  function getUserInfo() {
-    return new Promise<UserInfo>((resolve, reject) => {
-      UserAPI.getInfo()
-        .then((data) => {
-          if (!data) {
-            reject("Verification failed, please Login again.");
-            return;
-          }
-          Object.assign(userInfo.value, { ...data });
-          resolve(data);
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
-  }
-  /**
-   * 重置所有系统状态
-   * 统一处理所有清理工作，包括用户凭证、路由、缓存等
-   */
-  function resetAllState() {
-    // 1. 重置用户状态
-    resetUserState();
+      if (data.roles && data.roles.length > 0) {
+        // 验证返回的roles是否是一个非空数组
+        roles.value = data.roles;
+        permissions.value = data.permissions;
+      } else {
+        roles.value = ['ROLE_DEFAULT'];
+      }
+      name.value = user.userName;
+      nickname.value = user.nickName;
+      avatar.value = profile;
+      userId.value = user.userId;
+      tenantId.value = user.tenantId;
+      return Promise.resolve();
+    }
+    return Promise.reject(err);
+  };
 
-    // 2. 重置其他模块状态
-    // 重置路由
-    usePermissionStoreHook().resetRouter();
-    // 清除字典缓存
-    useDictStoreHook().clearDictCache();
-    // 清除标签视图
-    useTagsViewStore().delAllViews();
+  // 注销
+  const logout = async (): Promise<void> => {
+    await logoutApi();
+    token.value = '';
+    roles.value = [];
+    permissions.value = [];
+    removeToken();
+  };
 
-    // 3. 清理 WebSocket 连接
-    cleanupWebSocket();
-    console.log("[UserStore] WebSocket connections cleaned up");
+  const setAvatar = (value: string) => {
+    avatar.value = value;
+  };
 
-    return Promise.resolve();
-  }
   return {
-    userInfo,
-    rememberMe,
-    isLoggedIn: () => !!AuthStorage.getAccessToken(),
-    getUserInfo,
-    resetAllState,
-    refreshTokenOnce,
+    userId,
+    tenantId,
+    token,
+    nickname,
+    avatar,
+    roles,
+    permissions,
+    login,
+    getInfo,
+    logout,
+    setAvatar
   };
 });
-
-export function useUserStoreHook() {
-  return useUserStore(store);
-}

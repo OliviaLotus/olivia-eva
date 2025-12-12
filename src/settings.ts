@@ -1,55 +1,75 @@
-/**
- * 应用配置
- */
+import { LanguageEnum } from '@/enums/LanguageEnum';
 
-import { ComponentSize, LanguageEnum, LayoutMode, SidebarColor, ThemeMode } from "@/enums";
+const setting: DefaultSettings = {
+  /**
+   * 网页标题
+   */
+  title: import.meta.env.VITE_APP_TITLE,
 
-const env = import.meta.env;
-const { pkg } = __APP_INFO__;
-const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  theme: '#409EFF',
 
-// ============================================
-// 应用配置
-// ============================================
-export const appConfig = {
-  name: pkg.name as string,
-  version: pkg.version as string,
-  title: (env.VITE_APP_TITLE as string) || pkg.name,
-
-  // 功能开关
-  tenantEnabled: env.VITE_APP_TENANT_ENABLED === "true",
-} as const;
-
-// ============================================
-// 用户偏好默认值
-// ============================================
-export const defaults = {
-  theme: prefersDark ? ThemeMode.DARK : ThemeMode.LIGHT,
-  themeColor: "#4080FF",
-  sidebarColorScheme: SidebarColor.CLASSIC_BLUE,
-  layout: LayoutMode.LEFT,
-  size: ComponentSize.DEFAULT,
-  language: LanguageEnum.ZH_CN,
-  showTagsView: true,
-  showAppLogo: true,
-  showWatermark: false,
-  pageSwitchingAnimation: "fade-slide",
+  /**
+   * 侧边栏主题 深色主题theme-dark，浅色主题theme-light
+   */
+  sideTheme: 'theme-dark',
+  /**
+   * 是否系统布局配置
+   */
   showSettings: true,
-  watermarkContent: pkg.name,
-} as const;
 
-// ============================================
-// 主题色预设
-// ============================================
-export const themeColorPresets = [
-  "#4080FF",
-  "#1890FF",
-  "#409EFF",
-  "#FA8C16",
-  "#722ED1",
-  "#13C2C2",
-  "#52C41A",
-  "#F5222D",
-  "#2F54EB",
-  "#EB2F96",
-] as const;
+  /**
+   * 是否显示顶部导航
+   */
+  topNav: false,
+
+  /**
+   * 是否显示 tagsView
+   */
+  tagsView: true,
+
+  /**
+   * 显示页签图标
+   */
+  tagsIcon: false,
+
+  /**
+   * 是否固定头部
+   */
+  fixedHeader: false,
+
+  /**
+   * 是否显示logo
+   */
+  sidebarLogo: true,
+
+  /**
+   * 是否显示动态标题
+   */
+  dynamicTitle: false,
+
+  /**
+   * 是否开启动画 开启随机 关闭渐进渐出
+   */
+  animationEnable: false,
+
+  /**
+   * 是否暗黑模式
+   */
+  dark: false,
+
+  /**
+   * 默认语言
+   */
+  language: LanguageEnum.zh_CN,
+
+  /**
+   * 默认大小
+   */
+  size: 'default',
+
+  /**
+   * 默认布局
+   */
+  layout: ''
+};
+export default setting;

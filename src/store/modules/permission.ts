@@ -1,165 +1,207 @@
-import MenuAPI from "@/api/system/menu";
-import router, { constantRoutes } from "@/router";
-import { store, useUserStoreHook } from "@/store";
-import type { RouteItem } from "@/types/api";
-import type { RouteRecordRaw } from "vue-router";
-const modules = import.meta.glob("../../views/**/**.vue");
-const Layout = () => import("../../layouts/index.vue");
+import { defineStore } from 'pinia';
+import router, { constantRoutes, dynamicRoutes } from '@/router';
+import store from '@/store';
+import { getRouters } from '@/api/menu';
+import auth from '@/plugins/auth';
+import { RouteRecordRaw } from 'vue-router';
+import Layout from '@/layout/index.vue';
+import ParentView from '@/components/ParentView/index.vue';
+import InnerLink from '@/layout/components/InnerLink/index.vue';
+import { ref } from 'vue';
+import { createCustomNameComponent } from '@/utils/createCustomNameComponent';
 
-function resolveViewComponent(componentPath: string) {
-  const normalized = componentPath
-    .trim()
-    .replace(/^\/+/, "")
-    .replace(/\.vue$/i, "");
-  return (
-    modules[`../../views/${normalized}.vue`] ||
-    modules[`../../views/${normalized}/index.vue`] ||
-    modules[`../../views/error/404.vue`]
-  );
-}
-
-export const usePermissionStore = defineStore("permission", () => {
-  // 所有路由（静态路由 + 动态路由）
+// 匹配views里面所有的.vue文件
+const modules = import.meta.glob('./../../views/**/*.vue');
+export const usePermissionStore = defineStore('permission', () => {
   const routes = ref<RouteRecordRaw[]>([]);
-  // 混合布局的左侧菜单路由
-  const mixLayoutSideMenus = ref<RouteRecordRaw[]>([]);
-  // 动态路由是否已生成
-  const isRouteGenerated = ref(false);
+  const addRoutes = ref<RouteRecordRaw[]>([]);
+  const defaultRoutes = ref<RouteRecordRaw[]>([]);
+  const topbarRouters = ref<RouteRecordRaw[]>([]);
+  const sidebarRouters = ref<RouteRecordRaw[]>([]);
 
-  /** 生成动态路由 */
-  async function generateRoutes(): Promise<RouteRecordRaw[]> {
-    try {
-      const data = await MenuAPI.getRoutes(); // 获取当前登录人的菜单路由
-      const dynamicRoutes = transformRoutes(data);
-
-      routes.value = [...constantRoutes, ...dynamicRoutes];
-      isRouteGenerated.value = true;
-
-      return dynamicRoutes;
-    } catch (error) {
-      // 路由生成失败，重置状态
-      isRouteGenerated.value = false;
-      throw error;
-    }
-  }
-
-  /** 设置混合布局左侧菜单 */
-  const setMixLayoutSideMenus = (parentPath: string) => {
-    const parentMenu = routes.value.find((item: RouteRecordRaw) => item.path === parentPath);
-    mixLayoutSideMenus.value = parentMenu?.children || [];
+  const getRoutes = (): RouteRecordRaw[] => {
+    return routes.value as RouteRecordRaw[];
+  };
+  const getDefaultRoutes = (): RouteRecordRaw[] => {
+    return defaultRoutes.value as RouteRecordRaw[];
+  };
+  const getSidebarRoutes = (): RouteRecordRaw[] => {
+    return sidebarRouters.value as RouteRecordRaw[];
+  };
+  const getTopbarRoutes = (): RouteRecordRaw[] => {
+    return topbarRouters.value as RouteRecordRaw[];
   };
 
-  /** 重置路由状态 */
-  const resetRouter = () => {
-    // 移除动态添加的路由
-    const constantRouteNames = new Set(constantRoutes.map((route) => route.name).filter(Boolean));
-    routes.value.forEach((route: RouteRecordRaw) => {
-      if (route.name && !constantRouteNames.has(route.name)) {
-        router.removeRoute(route.name);
+  const setRoutes = (newRoutes: RouteRecordRaw[]): void => {
+    addRoutes.value = newRoutes;
+    routes.value = constantRoutes.concat(newRoutes);
+  };
+  const setDefaultRoutes = (routes: RouteRecordRaw[]): void => {
+    defaultRoutes.value = constantRoutes.concat(routes);
+  };
+  const setTopbarRoutes = (routes: RouteRecordRaw[]): void => {
+    topbarRouters.value = routes;
+  };
+  const setSidebarRouters = (routes: RouteRecordRaw[]): void => {
+    sidebarRouters.value = routes;
+  };
+  const generateRoutes = async (): Promise<RouteRecordRaw[]> => {
+    const res = await getRouters();
+    const { data } = res;
+    const sdata = JSON.parse(JSON.stringify(data));
+    const rdata = JSON.parse(JSON.stringify(data));
+    const defaultData = JSON.parse(JSON.stringify(data));
+    const sidebarRoutes = filterAsyncRouter(sdata);
+    const rewriteRoutes = filterAsyncRouter(rdata, undefined, true);
+    const defaultRoutes = filterAsyncRouter(defaultData);
+    const asyncRoutes = filterDynamicRoutes(dynamicRoutes);
+    asyncRoutes.forEach((route) => {
+      router.addRoute(route);
+    });
+    setRoutes(rewriteRoutes);
+    setSidebarRouters(constantRoutes.concat(sidebarRoutes));
+    setDefaultRoutes(sidebarRoutes);
+    setTopbarRoutes(defaultRoutes);
+    // 路由name重复检查
+    duplicateRouteChecker(asyncRoutes, sidebarRoutes);
+    return new Promise<RouteRecordRaw[]>((resolve) => resolve(rewriteRoutes));
+  };
+
+  /**
+   * 遍历后台传来的路由字符串，转换为组件对象
+   * @param asyncRouterMap 后台传来的路由字符串
+   * @param lastRouter 上一级路由
+   * @param type 是否是重写路由
+   */
+  const filterAsyncRouter = (asyncRouterMap: RouteRecordRaw[], lastRouter?: RouteRecordRaw, type = false): RouteRecordRaw[] => {
+    return asyncRouterMap.filter((route) => {
+      if (type && route.children) {
+        route.children = filterChildren(route.children, undefined);
+      }
+      // Layout ParentView 组件特殊处理
+      if (route.component?.toString() === 'Layout') {
+        route.component = Layout;
+      } else if (route.component?.toString() === 'ParentView') {
+        route.component = ParentView;
+      } else if (route.component?.toString() === 'InnerLink') {
+        route.component = InnerLink;
+      } else {
+        route.component = loadView(route.component, route.name as string);
+      }
+      if (route.children != null && route.children && route.children.length) {
+        route.children = filterAsyncRouter(route.children, route, type);
+      } else {
+        delete route.children;
+        delete route.redirect;
+      }
+      return true;
+    });
+  };
+  const filterChildren = (childrenMap: RouteRecordRaw[], lastRouter?: RouteRecordRaw): RouteRecordRaw[] => {
+    let children: RouteRecordRaw[] = [];
+    childrenMap.forEach((el) => {
+      el.path = lastRouter ? lastRouter.path + '/' + el.path : el.path;
+      if (el.children && el.children.length && el.component?.toString() === 'ParentView') {
+        children = children.concat(filterChildren(el.children, el));
+      } else {
+        children.push(el);
       }
     });
-
-    // 重置所有状态
-    routes.value = [...constantRoutes];
-    mixLayoutSideMenus.value = [];
-    isRouteGenerated.value = false;
+    return children;
   };
-
-  let reloadPromise: Promise<RouteRecordRaw[]> | null = null;
-  /**
-   * 重新加载动态路由（单飞）。
-   *
-   * 典型场景：后端权限变更导致接口返回权限不足（A0301），前端需要刷新路由和菜单以同步最新权限。
-   *
-   * - 会先清理已注册的动态路由（resetRouter）
-   * - 重新从后端拉取路由（generateRoutes）
-   * - 将动态路由注册到 vue-router（router.addRoute）
-   */
-  async function reloadDynamicRoutesOnce(): Promise<RouteRecordRaw[]> {
-    if (reloadPromise) return reloadPromise;
-
-    reloadPromise = (async () => {
-      try {
-        resetRouter();
-        const dynamicRoutes = await generateRoutes();
-        dynamicRoutes.forEach((route: RouteRecordRaw) => {
-          router.addRoute(route);
-        });
-        return dynamicRoutes;
-      } finally {
-        reloadPromise = null;
-      }
-    })();
-
-    return reloadPromise;
-  }
-
-  let snapshotPromise: Promise<void> | null = null;
-  /**
-   * 刷新权限快照（单飞）。
-   *
-   * - 刷新用户信息（包含 perms/roles 等）
-   * - 重新加载动态路由
-   */
-  async function reloadPermissionSnapshotOnce(): Promise<void> {
-    if (snapshotPromise) return snapshotPromise;
-
-    snapshotPromise = (async () => {
-      try {
-        const userStore = useUserStoreHook();
-        await userStore.getUserInfo();
-        await reloadDynamicRoutesOnce();
-      } finally {
-        snapshotPromise = null;
-      }
-    })();
-
-    return snapshotPromise;
-  }
-
   return {
     routes,
-    mixLayoutSideMenus,
-    isRouteGenerated,
+    topbarRouters,
+    sidebarRouters,
+    defaultRoutes,
+
+    getRoutes,
+    getDefaultRoutes,
+    getSidebarRoutes,
+    getTopbarRoutes,
+
+    setRoutes,
     generateRoutes,
-    setMixLayoutSideMenus,
-    resetRouter,
-    reloadDynamicRoutesOnce,
-    reloadPermissionSnapshotOnce,
+    setSidebarRouters
   };
 });
 
-/**
- * 转换后端路由数据为Vue Router配置
- * 处理组件路径映射和Layout层级嵌套
- */
-const transformRoutes = (routes: RouteItem[], isTopLevel: boolean = true): RouteRecordRaw[] => {
-  return routes.map((route) => {
-    const { component, children, ...args } = route;
-
-    // 处理组件：顶层或非Layout保留组件，中间层Layout设为undefined
-    const processedComponent = isTopLevel || component !== "Layout" ? component : undefined;
-
-    const normalizedRoute = { ...args } as RouteRecordRaw;
-
-    if (!processedComponent) {
-      // 多级菜单的父级菜单，不需要组件
-      normalizedRoute.component = undefined;
-    } else {
-      // 动态导入组件，Layout特殊处理，找不到组件时返回404
-      normalizedRoute.component =
-        processedComponent === "Layout" ? Layout : resolveViewComponent(processedComponent);
+// 动态路由遍历，验证是否具备权限
+export const filterDynamicRoutes = (routes: RouteRecordRaw[]) => {
+  const res: RouteRecordRaw[] = [];
+  routes.forEach((route) => {
+    if (route.permissions) {
+      if (auth.hasPermiOr(route.permissions)) {
+        res.push(route);
+      }
+    } else if (route.roles) {
+      if (auth.hasRoleOr(route.roles)) {
+        res.push(route);
+      }
     }
-
-    // 递归处理子路由
-    if (children && children.length > 0) {
-      normalizedRoute.children = transformRoutes(children, false);
-    }
-
-    return normalizedRoute;
   });
+  return res;
 };
 
-export function usePermissionStoreHook() {
+export const loadView = (view: any, name: string) => {
+  let res;
+  for (const path in modules) {
+    const viewsIndex = path.indexOf('/views/');
+    let dir = path.substring(viewsIndex + 7);
+    dir = dir.substring(0, dir.lastIndexOf('.vue'));
+    if (dir === view) {
+      res = createCustomNameComponent(modules[path], { name });
+      return res;
+    }
+  }
+  return res;
+};
+
+// 非setup
+export const usePermissionStoreHook = () => {
   return usePermissionStore(store);
+};
+
+interface Route {
+  name?: string | symbol;
+  path: string;
+  children?: Route[];
+}
+
+/**
+ * 检查路由name是否重复
+ * @param localRoutes 本地路由
+ * @param routes 动态路由
+ */
+function duplicateRouteChecker(localRoutes: Route[], routes: Route[]) {
+  // 展平
+  function flatRoutes(routes: Route[]) {
+    const res: Route[] = [];
+    routes.forEach((route) => {
+      if (route.children) {
+        res.push(...flatRoutes(route.children));
+      } else {
+        res.push(route);
+      }
+    });
+    return res;
+  }
+
+  const allRoutes = flatRoutes([...localRoutes, ...routes]);
+
+  const nameList: string[] = [];
+  allRoutes.forEach((route) => {
+    const name = route.name.toString();
+    if (name && nameList.includes(name)) {
+      const message = `路由名称: [${name}] 重复, 会造成 404`;
+      console.error(message);
+      ElNotification({
+        title: '路由名称重复',
+        message,
+        type: 'error'
+      });
+      return;
+    }
+    nameList.push(route.name.toString());
+  });
 }
