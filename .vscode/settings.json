@@ -81,7 +81,6 @@
   "stylelint.packageManager": "pnpm",
   "stylelint.validate": ["css", "postcss", "scss", "vue", "less"],
   "eslint.validate": ["javascript", "typescript", "javascriptreact", "typescriptreact", "vue", "html", "markdown", "json", "jsonc", "json5"],
-  "i18n-ally.enabledParsers": ["json"],
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.expand": false,
   "explorer.fileNesting.patterns": {
