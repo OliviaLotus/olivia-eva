@@ -108,8 +108,6 @@ const codeUrl = ref('');
 const loading = ref(false);
 // 验证码开关
 const captchaEnabled = ref(true);
-// 租户开关
-const tenantEnabled = ref(false);
 
 // 注册开关
 const register = ref(false);
