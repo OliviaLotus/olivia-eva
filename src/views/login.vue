@@ -5,6 +5,12 @@
         <h3 class="title">{{ title }}</h3>
         <lang-select />
       </div>
+      <el-form-item v-if="tenantEnabled" prop="tenantId">
+        <el-select v-model="loginForm.tenantId" filterable :placeholder="proxy.$t('login.selectPlaceholder')" style="width: 100%">
+          <el-option v-for="item in tenantList" :key="item.tenantId" :label="item.companyName" :value="item.tenantId"></el-option>
+          <template #prefix><svg-icon icon-class="company" class="el-input__icon input-icon" /></template>
+        </el-select>
+      </el-form-item>
       <el-form-item prop="username">
         <el-input v-model="loginForm.username" type="text" size="large" auto-complete="off" :placeholder="proxy.$t('login.username')">
           <template #prefix><svg-icon icon-class="user" class="el-input__icon input-icon" /></template>
@@ -22,7 +28,7 @@
           <template #prefix><svg-icon icon-class="password" class="el-input__icon input-icon" /></template>
         </el-input>
       </el-form-item>
-      <el-form-item v-if="isCaptchaOn" prop="code">
+      <el-form-item v-if="captchaEnabled" prop="code">
         <el-input
           v-model="loginForm.code"
           size="large"
@@ -38,6 +44,23 @@
         </div>
       </el-form-item>
       <el-checkbox v-model="loginForm.rememberMe" style="margin: 0 0 25px 0">{{ proxy.$t('login.rememberPassword') }}</el-checkbox>
+      <el-form-item style="float: right">
+        <el-button circle :title="proxy.$t('login.social.wechat')" @click="doSocialLogin('wechat')">
+          <svg-icon icon-class="wechat" />
+        </el-button>
+        <el-button circle :title="proxy.$t('login.social.maxkey')" @click="doSocialLogin('maxkey')">
+          <svg-icon icon-class="maxkey" />
+        </el-button>
+        <el-button circle :title="proxy.$t('login.social.topiam')" @click="doSocialLogin('topiam')">
+          <svg-icon icon-class="topiam" />
+        </el-button>
+        <el-button circle :title="proxy.$t('login.social.gitee')" @click="doSocialLogin('gitee')">
+          <svg-icon icon-class="gitee" />
+        </el-button>
+        <el-button circle :title="proxy.$t('login.social.github')" @click="doSocialLogin('github')">
+          <svg-icon icon-class="github" />
+        </el-button>
+      </el-form-item>
       <el-form-item style="width: 100%">
         <el-button :loading="loading" size="large" type="primary" style="width: 100%" @click.prevent="handleLogin">
           <span v-if="!loading">{{ proxy.$t('login.login') }}</span>
@@ -56,10 +79,12 @@
 </template>
 
 <script setup lang="ts">
-import { getCodeImg, getConfig } from '@/api/login';
+import { getCodeImg, getTenantList } from '@/api/login';
+import { authRouterUrl } from '@/api/system/social/auth';
 import { useUserStore } from '@/store/modules/user';
 import { LoginData, TenantVO } from '@/api/types';
 import { to } from 'await-to-js';
+import { HttpStatus } from '@/enums/RespEnum';
 import { useI18n } from 'vue-i18n';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
@@ -88,12 +113,16 @@ const loginRules: ElFormRules = {
 const codeUrl = ref('');
 const loading = ref(false);
 // 验证码开关
-const isCaptchaOn = ref(false);
+const captchaEnabled = ref(true);
+// 租户开关
+const tenantEnabled = ref(true);
 
 // 注册开关
 const register = ref(false);
 const redirect = ref('/');
 const loginRef = ref<ElFormInstance>();
+// 租户列表
+const tenantList = ref<TenantVO[]>([]);
 
 watch(
   () => router.currentRoute.value,
@@ -129,7 +158,7 @@ const handleLogin = () => {
       } else {
         loading.value = false;
         // 重新获取验证码
-        if (isCaptchaOn.value) {
+        if (captchaEnabled.value) {
           await getCode();
         }
       }
@@ -145,12 +174,12 @@ const handleLogin = () => {
 const getCode = async () => {
   const res = await getCodeImg();
   const { data } = res;
-  isCaptchaOn.value = data.isCaptchaOn === undefined ? true : data.isCaptchaOn;
-  if (isCaptchaOn.value) {
+  captchaEnabled.value = data.captchaEnabled === undefined ? true : data.captchaEnabled;
+  if (captchaEnabled.value) {
     // 刷新验证码时清空输入框
     loginForm.value.code = '';
-    codeUrl.value = 'data:image/gif;base64,' + data.captchaCodeImg;
-    loginForm.value.uuid = data.captchaCodeKey;
+    codeUrl.value = 'data:image/gif;base64,' + data.img;
+    loginForm.value.uuid = data.uuid;
   }
 };
 
@@ -167,11 +196,38 @@ const getLoginData = () => {
   } as LoginData;
 };
 
-onMounted(() => {
-  getConfig().then((res) => {
-    isCaptchaOn.value = res.data.isCaptchaOn;
+/**
+ * 获取租户列表
+ */
+const initTenantList = async () => {
+  const { data } = await getTenantList(false);
+  tenantEnabled.value = data.tenantEnabled === undefined ? true : data.tenantEnabled;
+  if (tenantEnabled.value) {
+    tenantList.value = data.voList;
+    if (tenantList.value != null && tenantList.value.length !== 0) {
+      loginForm.value.tenantId = tenantList.value[0].tenantId;
+    }
+  }
+};
+
+/**
+ * 第三方登录
+ * @param type
+ */
+const doSocialLogin = (type: string) => {
+  authRouterUrl(type, loginForm.value.tenantId).then((res: any) => {
+    if (res.code === HttpStatus.SUCCESS) {
+      // 获取授权地址跳转
+      window.location.href = res.data;
+    } else {
+      ElMessage.error(res.msg);
+    }
   });
+};
+
+onMounted(() => {
   getCode();
+  initTenantList();
   getLoginData();
 });
 </script>
