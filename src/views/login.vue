@@ -56,12 +56,10 @@
 </template>
 
 <script setup lang="ts">
-import { getCodeImg, getTenantList } from '@/api/login';
-import { authRouterUrl } from '@/api/system/social/auth';
+import { getCodeImg } from '@/api/login';
 import { useUserStore } from '@/store/modules/user';
 import { LoginData, TenantVO } from '@/api/types';
 import { to } from 'await-to-js';
-import { HttpStatus } from '@/enums/RespEnum';
 import { useI18n } from 'vue-i18n';
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance;
