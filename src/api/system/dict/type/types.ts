@@ -16,3 +16,9 @@ export interface DictTypeQuery extends PageQuery {
   dictName: string;
   dictType: string;
 }
+
+export type DictionaryData = {
+  label: string;
+  value: number;
+  cssTag: string;
+};

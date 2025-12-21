@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 import { AxiosPromise } from 'axios';
-import { LoginData, LoginResult, VerifyCodeResult, TenantInfo } from './types';
+import { LoginData, LoginResult, TenantInfo, type CaptchaDTO, type ConfigDTO } from './types';
 import { UserInfo } from '@/api/system/user/types';
 
 // pc端固定客户端授权id
@@ -63,15 +63,20 @@ export function logout() {
   });
 }
 
+/** 获取系统配置接口 */
+export function getConfig(): AxiosPromise<ConfigDTO> {
+  return request({
+    url: '/getConfig',
+    method: 'get'
+  });
+}
+
 /**
  * 获取验证码
  */
-export function getCodeImg(): AxiosPromise<VerifyCodeResult> {
+export function getCodeImg(): AxiosPromise<CaptchaDTO> {
   return request({
-    url: '/auth/code',
-    headers: {
-      isToken: false
-    },
+    url: '/captchaImage',
     method: 'get',
     timeout: 20000
   });

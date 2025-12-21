@@ -22,7 +22,7 @@
           <template #prefix><svg-icon icon-class="password" class="el-input__icon input-icon" /></template>
         </el-input>
       </el-form-item>
-      <el-form-item v-if="captchaEnabled" prop="code">
+      <el-form-item v-if="isCaptchaOn" prop="code">
         <el-input
           v-model="loginForm.code"
           size="large"
@@ -56,7 +56,7 @@
 </template>
 
 <script setup lang="ts">
-import { getCodeImg } from '@/api/login';
+import { getCodeImg, getConfig } from '@/api/login';
 import { useUserStore } from '@/store/modules/user';
 import { LoginData, TenantVO } from '@/api/types';
 import { to } from 'await-to-js';
@@ -88,7 +88,7 @@ const loginRules: ElFormRules = {
 const codeUrl = ref('');
 const loading = ref(false);
 // 验证码开关
-const captchaEnabled = ref(true);
+const isCaptchaOn = ref(false);
 
 // 注册开关
 const register = ref(false);
@@ -129,7 +129,7 @@ const handleLogin = () => {
       } else {
         loading.value = false;
         // 重新获取验证码
-        if (captchaEnabled.value) {
+        if (isCaptchaOn.value) {
           await getCode();
         }
       }
@@ -145,12 +145,12 @@ const handleLogin = () => {
 const getCode = async () => {
   const res = await getCodeImg();
   const { data } = res;
-  captchaEnabled.value = data.captchaEnabled === undefined ? true : data.captchaEnabled;
-  if (captchaEnabled.value) {
+  isCaptchaOn.value = data.isCaptchaOn === undefined ? true : data.isCaptchaOn;
+  if (isCaptchaOn.value) {
     // 刷新验证码时清空输入框
     loginForm.value.code = '';
-    codeUrl.value = 'data:image/gif;base64,' + data.img;
-    loginForm.value.uuid = data.uuid;
+    codeUrl.value = 'data:image/gif;base64,' + data.captchaCodeImg;
+    loginForm.value.uuid = data.captchaCodeKey;
   }
 };
 
@@ -168,6 +168,9 @@ const getLoginData = () => {
 };
 
 onMounted(() => {
+  getConfig().then((res) => {
+    isCaptchaOn.value = res.data.isCaptchaOn;
+  });
   getCode();
   getLoginData();
 });
