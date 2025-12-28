@@ -5,8 +5,6 @@ import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 
-import { mockDevServerPlugin } from "vite-plugin-mock-dev-server";
-
 import UnoCSS from "unocss/vite";
 import { resolve } from "path";
 import { name, version, engines, dependencies, devDependencies } from "./package.json";
@@ -19,7 +17,6 @@ const __APP_INFO__ = {
 
 const pathSrc = resolve(__dirname, "src");
 
-// Vite配置  https://cn.vitejs.dev/config
 export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
   const env = loadEnv(mode, process.cwd());
   const isProduction = mode === "production";
@@ -54,7 +51,6 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
     },
     plugins: [
       vue(),
-      ...(env.VITE_MOCK_DEV_SERVER === "true" ? [mockDevServerPlugin()] : []),
       UnoCSS(),
       // API 自动导入
       AutoImport({
