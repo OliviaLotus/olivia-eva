@@ -14,36 +14,6 @@
     </div>
 
     <div class="auth-view__wrapper">
-      <!-- 可选：左侧产品介绍区域，如不需要可整段删除，右侧登录表单会自动居中展示 -->
-      <section class="auth-feature">
-        <div class="auth-feature__badge">
-          <span class="auth-feature__dot" />
-          Enterprise Ready
-        </div>
-        <h1 class="auth-feature__title">企业级管理系统</h1>
-        <p class="auth-feature__subtitle">
-          提供安全、高效、可扩展的管理解决方案，助力企业数字化转型与业务增长。
-        </p>
-        <ul class="auth-feature__highlights">
-          <li>
-            <span>✓</span>
-            统一身份认证与权限管理
-          </li>
-          <li>
-            <span>✓</span>
-            支持多租户模式与租户隔离
-          </li>
-          <li>
-            <span>✓</span>
-            数据安全与操作审计
-          </li>
-          <li>
-            <span>✓</span>
-            灵活扩展与高可用架构
-          </li>
-        </ul>
-      </section>
-
       <section class="auth-panel">
         <div class="auth-panel__brand">
           <div class="auth-panel__logo-wrap">
