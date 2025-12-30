@@ -74,10 +74,6 @@ export const usePermissionStore = defineStore("permission", () => {
    * 重新加载动态路由（单飞）。
    *
    * 典型场景：后端权限变更导致接口返回权限不足（A0301），前端需要刷新路由和菜单以同步最新权限。
-   *
-   * - 会先清理已注册的动态路由（resetRouter）
-   * - 重新从后端拉取路由（generateRoutes）
-   * - 将动态路由注册到 vue-router（router.addRoute）
    */
   async function reloadDynamicRoutesOnce(): Promise<RouteRecordRaw[]> {
     if (reloadPromise) return reloadPromise;
@@ -102,9 +98,6 @@ export const usePermissionStore = defineStore("permission", () => {
 
   /**
    * 刷新权限快照（单飞）。
-   *
-   * - 刷新用户信息（包含 perms/roles 等）
-   * - 重新加载动态路由
    */
   async function reloadPermissionSnapshotOnce(): Promise<void> {
     if (snapshotPromise) return snapshotPromise;

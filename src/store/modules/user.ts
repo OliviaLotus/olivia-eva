@@ -16,12 +16,6 @@ export const useUserStore = defineStore("user", () => {
   // 记住我状态
   const rememberMe = ref(AuthStorage.getRememberMe());
 
-  /**
-   * 登录
-   *
-   * @param {LoginRequest}
-   * @returns
-   */
   function login(loginRequest: LoginRequest) {
     return new Promise<void>((resolve, reject) => {
       AuthAPI.login(loginRequest)
@@ -30,6 +24,20 @@ export const useUserStore = defineStore("user", () => {
           // 保存记住我状态和token
           rememberMe.value = loginRequest.rememberMe ?? false;
           AuthStorage.setTokens(accessToken, refreshToken, rememberMe.value);
+          resolve();
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
+  function logout() {
+    return new Promise<void>((resolve, reject) => {
+      AuthAPI.logout()
+        .then(() => {
+          // 重置所有系统状态
+          resetAllState();
           resolve();
         })
         .catch((error) => {
@@ -70,23 +78,6 @@ export const useUserStore = defineStore("user", () => {
           }
           Object.assign(userInfo.value, { ...data });
           resolve(data);
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
-  }
-
-  /**
-   * 登出
-   */
-  function logout() {
-    return new Promise<void>((resolve, reject) => {
-      AuthAPI.logout()
-        .then(() => {
-          // 重置所有系统状态
-          resetAllState();
-          resolve();
         })
         .catch((error) => {
           reject(error);
@@ -167,10 +158,6 @@ export const useUserStore = defineStore("user", () => {
   };
 });
 
-/**
- * 在组件外部使用UserStore的钩子函数
- * @see https://pinia.vuejs.org/core-concepts/outside-component-usage.html
- */
 export function useUserStoreHook() {
   return useUserStore(store);
 }

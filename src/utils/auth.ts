@@ -6,14 +6,14 @@ import router from "@/router";
 // 负责本地凭证与偏好的读写
 export const AuthStorage = {
   getAccessToken(): string {
-    const isRememberMe = Storage.get<boolean>(STORAGE_KEYS.REMEMBER_ME, false);
+    const isRememberMe = this.getRememberMe();
     return isRememberMe
       ? Storage.get(STORAGE_KEYS.ACCESS_TOKEN, "")
       : Storage.sessionGet(STORAGE_KEYS.ACCESS_TOKEN, "");
   },
 
   getRefreshToken(): string {
-    const isRememberMe = Storage.get<boolean>(STORAGE_KEYS.REMEMBER_ME, false);
+    const isRememberMe = this.getRememberMe();
     return isRememberMe
       ? Storage.get(STORAGE_KEYS.REFRESH_TOKEN, "")
       : Storage.sessionGet(STORAGE_KEYS.REFRESH_TOKEN, "");

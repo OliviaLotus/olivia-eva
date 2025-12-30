@@ -46,7 +46,6 @@ export function setupPermissionGuard() {
           await userStore.getUserInfo();
         }
 
-        // 加载用户租户列表（VITE_APP_TENANT_ENABLED=true 时生效）
         await initTenantContext();
 
         const dynamicRoutes = await permissionStore.generateRoutes();
@@ -89,10 +88,6 @@ export function setupPermissionGuard() {
     }
   });
 }
-
-// ============================================
-// 多租户支持（可选）
-// ============================================
 
 /** 初始化多租户上下文，未启用或失败时静默跳过 */
 async function initTenantContext(): Promise<void> {
