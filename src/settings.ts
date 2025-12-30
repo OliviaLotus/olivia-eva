@@ -1,7 +1,6 @@
 /**
  * 应用配置
  */
-
 import { LayoutMode, ComponentSize, SidebarColor, ThemeMode, LanguageEnum } from "@/enums";
 
 const env = import.meta.env;
@@ -11,7 +10,6 @@ const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
 // 应用配置
 export const appConfig = {
   name: pkg.name as string,
-  version: pkg.version as string,
   title: (env.VITE_APP_TITLE as string) || pkg.name,
 
   // 功能开关

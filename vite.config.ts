@@ -7,11 +7,11 @@ import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 
 import UnoCSS from "unocss/vite";
 import { resolve } from "path";
-import { name, version, engines, dependencies, devDependencies } from "./package.json";
+import { name, engines, dependencies, devDependencies } from "./package.json";
 
 // 平台的名称、版本、运行所需的 node 版本、依赖、构建时间的类型提示
 const __APP_INFO__ = {
-  pkg: { name, version, engines, dependencies, devDependencies },
+  pkg: { name, engines, dependencies, devDependencies },
   buildTimestamp: Date.now(),
 };
 
