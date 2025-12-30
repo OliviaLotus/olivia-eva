@@ -23,11 +23,7 @@
             <div class="auth-panel__title-row">
               <span class="auth-panel__title">{{ appConfig.title }}</span>
             </div>
-            <div v-if="appConfig.version || tenantEnabled" class="auth-panel__version-row">
-              <el-text size="small" type="info">VERSION</el-text>
-              <el-tag v-if="appConfig.version" size="small" effect="light" round>
-                {{ `v${appConfig.version}` }}
-              </el-tag>
+            <div v-if="tenantEnabled" class="auth-panel__version-row">
               <el-tag v-if="tenantEnabled" type="success" size="small" effect="light" round>
                 多租户
               </el-tag>
@@ -38,13 +34,6 @@
         <transition name="fade-slide" mode="out-in">
           <component :is="formComponents[component]" v-model="component" class="auth-panel__form" />
         </transition>
-
-        <footer class="auth-panel__footer">
-          <el-text size="small">
-            Copyright © 2021 - 2025 youlai.tech
-            <a href="http://beian.miit.gov.cn/" target="_blank">皖ICP备00064962号</a>
-          </el-text>
-        </footer>
       </section>
     </div>
   </div>
@@ -165,27 +154,10 @@ const formComponents = {
   padding: clamp(1.5rem, 2vw, 2.5rem);
 }
 
-.auth-feature {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: clamp(1.5rem, 3vw, 3rem);
-  color: var(--el-text-color-primary);
-  animation: featureFade 0.8s ease-out;
-}
-
-.dark .auth-feature {
-  color: rgba(240, 245, 255, 0.92);
-}
-
 @media (max-width: 768px) {
   .auth-view__wrapper {
     display: block;
     padding: 1.25rem 0.75rem 1.75rem;
-  }
-
-  .auth-feature {
-    display: none;
   }
 
   .auth-panel {
@@ -194,94 +166,6 @@ const formComponents = {
     box-shadow:
       0 12px 32px rgba(22, 93, 255, 0.18),
       0 2px 8px rgba(22, 93, 255, 0.12);
-  }
-}
-
-.auth-feature__badge {
-  display: inline-flex;
-  gap: 0.5rem;
-  align-items: center;
-  width: fit-content;
-  padding: 0.3rem 0.9rem;
-  font-size: 0.875rem;
-  color: rgba(22, 93, 255, 0.95);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  background: rgba(22, 93, 255, 0.1);
-  border-radius: 999px;
-
-  @media (prefers-color-scheme: dark) {
-    color: rgba(160, 190, 255, 0.95);
-    background: rgba(64, 128, 255, 0.12);
-  }
-}
-
-.auth-feature__dot {
-  width: 0.5rem;
-  height: 0.5rem;
-  background: #165dff;
-  border-radius: 50%;
-  box-shadow: 0 0 12px rgba(22, 93, 255, 0.7);
-
-  @media (prefers-color-scheme: dark) {
-    background: #7aa2ff;
-  }
-}
-
-.auth-feature__title {
-  margin: 1.5rem 0 0.5rem;
-  font-size: clamp(2rem, 4vw, 2.75rem);
-  font-weight: 600;
-  line-height: 1.2;
-}
-
-.auth-feature__subtitle {
-  margin-bottom: 1.5rem;
-  font-size: 1rem;
-  line-height: 1.7;
-  color: var(--el-text-color-regular);
-
-  @media (prefers-color-scheme: dark) {
-    color: rgba(220, 230, 255, 0.75);
-  }
-}
-
-.auth-feature__highlights {
-  display: grid;
-  gap: 0.75rem;
-  padding: 0;
-  margin: 0;
-  list-style: none;
-
-  li {
-    display: flex;
-    gap: 0.5rem;
-    align-items: flex-start;
-    padding: 0.75rem 1rem;
-    font-weight: 500;
-    color: var(--el-text-color-primary);
-    background: rgba(255, 255, 255, 0.9);
-    border: 1px solid rgba(64, 128, 255, 0.08);
-    border-radius: 12px;
-    backdrop-filter: blur(6px);
-
-    span {
-      font-size: 0.75rem;
-      line-height: 1.6;
-      color: rgba(22, 93, 255, 0.8);
-    }
-  }
-
-  @media (prefers-color-scheme: dark) {
-    li {
-      color: rgba(230, 236, 255, 0.85);
-      background: rgba(18, 22, 36, 0.7);
-      border-color: rgba(98, 149, 255, 0.18);
-
-      span {
-        color: rgba(122, 162, 255, 0.9);
-      }
-    }
   }
 }
 
@@ -425,38 +309,7 @@ const formComponents = {
     box-shadow: none;
   }
 }
-
-.auth-panel__footer {
-  padding-top: 0.875rem;
-  margin-top: 0.125rem;
-  font-size: 0.875rem;
-  text-align: center;
-  border-top: 1px solid rgba(22, 93, 255, 0.06);
-
-  a {
-    margin-left: 0.25rem;
-    color: rgba(22, 93, 255, 0.85);
-    text-decoration: none;
-    transition: color 0.2s ease;
-
-    &:hover {
-      color: rgba(22, 93, 255, 1);
-    }
-  }
-
-  @media (prefers-color-scheme: dark) {
-    border-color: rgba(64, 128, 255, 0.12);
-
-    a {
-      color: rgba(140, 170, 255, 0.88);
-
-      &:hover {
-        color: rgba(160, 190, 255, 1);
-      }
-    }
-  }
-}
-
+// 响应式调整
 @keyframes featureFade {
   from {
     opacity: 0;
