@@ -165,9 +165,7 @@ function getCaptcha() {
     .finally(() => (codeLoading.value = false));
 }
 
-/**
- * 登录提交
- */
+// 登录提交
 async function handleLoginSubmit() {
   // 1. 表单验证
   const valid = await loginFormRef.value?.validate().then(

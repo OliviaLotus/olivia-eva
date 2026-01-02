@@ -309,17 +309,6 @@ const formComponents = {
     box-shadow: none;
   }
 }
-// 响应式调整
-@keyframes featureFade {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
 @keyframes panelLift {
   from {
