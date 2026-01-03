@@ -1,18 +1,5 @@
 <template>
   <div class="auth-view">
-    <div class="auth-view__toolbar">
-      <el-tooltip :content="t('login.themeToggle')" placement="bottom">
-        <div class="toolbar-item">
-          <ThemeSwitch />
-        </div>
-      </el-tooltip>
-      <el-tooltip :content="t('login.languageToggle')" placement="bottom">
-        <div class="toolbar-item">
-          <LangSelect size="text-20px" />
-        </div>
-      </el-tooltip>
-    </div>
-
     <div class="auth-view__wrapper">
       <section class="auth-panel">
         <div class="auth-panel__brand">
@@ -28,6 +15,18 @@
                 多租户
               </el-tag>
             </div>
+          </div>
+          <div class="auth-panel__toolbar">
+            <el-tooltip :content="t('login.themeToggle')" placement="bottom">
+              <div class="toolbar-item">
+                <ThemeSwitch />
+              </div>
+            </el-tooltip>
+            <el-tooltip :content="t('login.languageToggle')" placement="bottom">
+              <div class="toolbar-item">
+                <LangSelect size="text-20px" />
+              </div>
+            </el-tooltip>
           </div>
         </div>
 
@@ -87,62 +86,6 @@ const formComponents = {
     content: "";
     background: linear-gradient(120deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0));
   }
-}
-
-.auth-view__toolbar {
-  display: inline-flex;
-  gap: 0.75rem;
-  align-self: flex-end;
-  padding: 0.5rem 0.75rem;
-  background-color: rgba(255, 255, 255, 0.85);
-  border: 1px solid rgba(22, 93, 255, 0.15);
-  border-radius: 999px;
-  box-shadow: 0 10px 30px rgba(22, 93, 255, 0.12);
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
-
-  &:hover {
-    box-shadow: 0 16px 40px rgba(22, 93, 255, 0.18);
-    transform: translateY(-2px);
-  }
-
-  .toolbar-item {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.5rem;
-    cursor: pointer;
-    border-radius: 8px;
-    transition: background-color 0.3s ease;
-
-    &:hover {
-      background-color: var(--el-fill-color);
-    }
-  }
-
-  @media (max-width: 640px) {
-    position: fixed;
-    top: 12px;
-    right: 16px;
-    z-index: 20;
-    align-self: flex-end;
-    justify-content: center;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    background-color: rgba(24, 28, 43, 0.8);
-    border-color: rgba(64, 128, 255, 0.3);
-  }
-}
-
-/* 应用内暗黑主题下顶部设置面板的深色样式 */
-.dark .auth-view__toolbar {
-  background-color: rgba(24, 28, 43, 0.9);
-  border-color: rgba(64, 128, 255, 0.35);
-  box-shadow:
-    0 10px 30px rgba(0, 0, 0, 0.7),
-    0 0 0 1px rgba(90, 140, 255, 0.25) inset;
 }
 
 .auth-view__wrapper {
@@ -279,6 +222,50 @@ const formComponents = {
   gap: 0.5rem;
   align-items: center;
   font-size: 0.78rem;
+}
+
+.auth-panel__toolbar {
+  display: inline-flex;
+  gap: 0.75rem;
+  align-self: flex-end;
+  padding: 0.5rem 0.75rem;
+
+  .toolbar-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: var(--el-fill-color);
+    }
+  }
+
+  @media (max-width: 640px) {
+    position: fixed;
+    top: 12px;
+    right: 16px;
+    z-index: 20;
+    align-self: flex-end;
+    justify-content: center;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    background-color: rgba(24, 28, 43, 0.8);
+    border-color: rgba(64, 128, 255, 0.3);
+  }
+}
+
+/* 应用内暗黑主题下顶部设置面板的深色样式 */
+.dark .auth-panel__toolbar {
+  background-color: rgba(24, 28, 43, 0.9);
+  border-color: rgba(64, 128, 255, 0.35);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(90, 140, 255, 0.25) inset;
 }
 
 .auth-panel__form {
