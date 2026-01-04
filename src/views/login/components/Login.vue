@@ -71,7 +71,7 @@
 
       <div class="flex-x-between w-full">
         <el-checkbox v-model="loginFormData.rememberMe">{{ t("login.rememberMe") }}</el-checkbox>
-        <el-link type="primary" underline="never" @click="toOtherForm('resetPwd')">
+        <el-link type="primary" underline="never" @click="toOtherForm()">
           {{ t("login.forgetPassword") }}
         </el-link>
       </div>
@@ -86,7 +86,7 @@
 
     <div flex-center gap-10px>
       <el-text size="default">{{ t("login.noAccount") }}</el-text>
-      <el-link type="primary" underline="never" @click="toOtherForm('register')">
+      <el-link type="primary" underline="never" @click="toOtherForm()">
         {{ t("login.reg") }}
       </el-link>
     </div>
@@ -202,9 +202,12 @@ function checkCapsLock(event: KeyboardEvent) {
   }
 }
 
-const emit = defineEmits(["update:modelValue"]);
-function toOtherForm(type: "register" | "resetPwd") {
-  emit("update:modelValue", type);
+// const emit = defineEmits(["update:modelValue"]);
+// function toOtherForm(type: "register" | "resetPwd") {
+//   emit("update:modelValue", type);
+// }
+function toOtherForm() {
+  ElMessage.warning("暂不开放");
 }
 </script>
 
