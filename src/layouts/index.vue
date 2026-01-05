@@ -1,5 +1,5 @@
 <template>
-  <div class="layout-wrapper">
+  <div class="w-full h-full">
     <component :is="currentLayoutComponent" />
     <Settings v-if="showSettings" />
   </div>
@@ -31,10 +31,3 @@ const currentLayoutComponent = computed(() => {
   }
 });
 </script>
-
-<style lang="scss" scoped>
-.layout-wrapper {
-  width: 100%;
-  height: 100%;
-}
-</style>

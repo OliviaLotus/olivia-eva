@@ -1,5 +1,6 @@
 {
   "i18n-ally.localesPaths": [
     "src/lang/package/*"
-  ]
+  ],
+  "vue-i18n.i18nPaths": "src\\lang\\package"
 }
