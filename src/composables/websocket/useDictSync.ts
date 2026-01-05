@@ -6,9 +6,9 @@ import type { IMessage } from "@stomp/stompjs";
  * 字典变更消息结构
  */
 export interface DictChangeMessage {
-  /** 字典编码 */
+  /* 字典编码 */
   dictCode: string;
-  /** 时间戳 */
+  /* 时间戳 */
   timestamp: number;
 }
 

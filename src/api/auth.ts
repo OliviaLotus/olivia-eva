@@ -25,7 +25,7 @@ const AuthAPI = {
     });
   },
 
-  /** 切换租户(平台用户) - 返回新的 token */
+  /* 切换租户(平台用户) - 返回新的 token */
   switchTenant(tenantId: number) {
     return request<any, LoginResponse>({
       url: `${AUTH_BASE_URL}/switch-tenant`,
@@ -46,7 +46,7 @@ const AuthAPI = {
     });
   },
 
-  /** 退出登录接口 */
+  /* 退出登录接口 */
   logout() {
     return request({
       url: `${AUTH_BASE_URL}/logout`,

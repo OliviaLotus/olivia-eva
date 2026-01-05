@@ -64,40 +64,40 @@ export function isMobile(mobile: string): boolean {
  * 表单验证规则生成器
  */
 export const VALIDATORS = {
-  /** 必填项验证 */
+  /* 必填项验证 */
   required(message: string): FormItemRule {
     return { required: true, message, trigger: "blur" };
   },
 
-  /** 邮箱验证 */
+  /* 邮箱验证 */
   email: {
     type: "email",
     message: "请输入正确的邮箱地址",
     trigger: "blur",
   } as FormItemRule,
 
-  /** 手机号验证 */
+  /* 手机号验证 */
   mobile: {
     pattern: /^1[3-9]\d{9}$/,
     message: "请输入正确的手机号码",
     trigger: "blur",
   } as FormItemRule,
 
-  /** URL 验证 */
+  /* URL 验证 */
   url: {
     type: "url",
     message: "请输入正确的URL地址",
     trigger: "blur",
   } as FormItemRule,
 
-  /** 数字验证 */
+  /* 数字验证 */
   number: {
     type: "number",
     message: "请输入数字",
     trigger: "blur",
   } as FormItemRule,
 
-  /** 整数验证 */
+  /* 整数验证 */
   integer: {
     type: "integer",
     message: "请输入整数",

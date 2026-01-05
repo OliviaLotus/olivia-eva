@@ -598,7 +598,7 @@ const handleFileChange = async (event: Event) => {
   }
 };
 
-/** 加载用户信息 */
+/* 加载用户信息 */
 const loadUserProfile = async () => {
   const data = await UserAPI.getProfile();
   userProfile.value = data;

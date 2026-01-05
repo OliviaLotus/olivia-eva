@@ -1,4 +1,4 @@
-/** 公共下载数据，减少重复请求次数 */
+/* 公共下载数据，减少重复请求次数 */
 import DeptAPI from "@/api/system/dept";
 import RoleAPI from "@/api/system/role";
 

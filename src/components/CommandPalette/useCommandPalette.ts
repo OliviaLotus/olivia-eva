@@ -7,7 +7,7 @@ import router from "@/router";
 import { usePermissionStore } from "@/store";
 import { isExternal } from "@/utils";
 
-/** 搜索项类型 */
+/* 搜索项类型 */
 interface SearchItem {
   title: string;
   path: string;

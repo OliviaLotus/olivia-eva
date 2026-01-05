@@ -59,7 +59,7 @@ const encodeDictTagType = (tagType?: unknown): DictTagTypeCode => {
 };
 
 const DictAPI = {
-  /** 字典分页列表 */
+  /* 字典分页列表 */
   getPage(queryParams: DictTypeQueryParams) {
     return request<any, PageResult<DictTypeItem>>({
       url: `${DICT_BASE_URL}`,
@@ -67,28 +67,28 @@ const DictAPI = {
       params: queryParams,
     });
   },
-  /** 字典列表 */
+  /* 字典列表 */
   getList() {
     return request<any, OptionItem[]>({ url: `${DICT_BASE_URL}/options`, method: "get" });
   },
-  /** 字典表单数据 */
+  /* 字典表单数据 */
   getFormData(id: string) {
     return request<any, DictTypeForm>({ url: `${DICT_BASE_URL}/${id}/form`, method: "get" });
   },
-  /** 新增字典 */
+  /* 新增字典 */
   create(data: DictTypeForm) {
     return request({ url: `${DICT_BASE_URL}`, method: "post", data });
   },
-  /** 修改字典 */
+  /* 修改字典 */
   update(id: string, data: DictTypeForm) {
     return request({ url: `${DICT_BASE_URL}/${id}`, method: "put", data });
   },
-  /** 删除字典 */
+  /* 删除字典 */
   deleteByIds(ids: string) {
     return request({ url: `${DICT_BASE_URL}/${ids}`, method: "delete" });
   },
 
-  /** 获取字典项分页列表 */
+  /* 获取字典项分页列表 */
   getDictItemPage(dictCode: string, queryParams: DictItemQueryParams) {
     return request<any, PageResult<DictItem>>({
       url: `${DICT_BASE_URL}/${dictCode}/items`,
@@ -102,7 +102,7 @@ const DictAPI = {
       })),
     }));
   },
-  /** 获取字典项列表 */
+  /* 获取字典项列表 */
   getDictItems(dictCode: string) {
     return request<any, DictItemOption[]>({
       url: `${DICT_BASE_URL}/${dictCode}/items/options`,
@@ -114,7 +114,7 @@ const DictAPI = {
       }))
     );
   },
-  /** 新增字典项 */
+  /* 新增字典项 */
   createDictItem(dictCode: string, data: DictItemForm) {
     return request({
       url: `${DICT_BASE_URL}/${dictCode}/items`,
@@ -125,7 +125,7 @@ const DictAPI = {
       },
     });
   },
-  /** 获取字典项表单数据 */
+  /* 获取字典项表单数据 */
   getDictItemFormData(dictCode: string, id: string) {
     return request<any, DictItemForm>({
       url: `${DICT_BASE_URL}/${dictCode}/items/${id}/form`,
@@ -135,7 +135,7 @@ const DictAPI = {
       tagType: decodeDictTagType((form as any).tagType),
     }));
   },
-  /** 修改字典项 */
+  /* 修改字典项 */
   updateDictItem(dictCode: string, id: string, data: DictItemForm) {
     return request({
       url: `${DICT_BASE_URL}/${dictCode}/items/${id}`,
@@ -146,7 +146,7 @@ const DictAPI = {
       },
     });
   },
-  /** 删除字典项 */
+  /* 删除字典项 */
   deleteDictItems(dictCode: string, ids: string) {
     return request({ url: `${DICT_BASE_URL}/${dictCode}/items/${ids}`, method: "delete" });
   },

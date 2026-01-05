@@ -4,40 +4,40 @@
 
 import type { BaseQueryParams } from "./common";
 
-/** 日志分页查询参数 */
+/* 日志分页查询参数 */
 export interface LogQueryParams extends BaseQueryParams {
-  /** 搜索关键字 */
+  /* 搜索关键字 */
   keywords?: string;
-  /** 操作时间 */
+  /* 操作时间 */
   createTime?: [string, string];
 }
 
-/** 日志分页对象 */
+/* 日志分页对象 */
 export interface LogItem {
-  /** 日志ID */
+  /* 日志ID */
   id: string;
-  /** 日志模块 */
+  /* 日志模块 */
   module: string;
-  /** 日志内容 */
+  /* 日志内容 */
   content: string;
-  /** 请求路径 */
+  /* 请求路径 */
   requestUri?: string;
-  /** 请求方法 */
+  /* 请求方法 */
   method?: string;
-  /** IP地址 */
+  /* IP地址 */
   ip: string;
-  /** 地区 */
+  /* 地区 */
   region: string;
-  /** 浏览器 */
+  /* 浏览器 */
   browser: string;
-  /** 终端系统 */
+  /* 终端系统 */
   os: string;
-  /** 执行时间(毫秒) */
+  /* 执行时间(毫秒) */
   executionTime: number;
-  /** 创建人ID */
+  /* 创建人ID */
   createBy?: string;
-  /** 操作时间 */
+  /* 操作时间 */
   createTime?: string;
-  /** 操作人 */
+  /* 操作人 */
   operator: string;
 }

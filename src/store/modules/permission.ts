@@ -29,7 +29,7 @@ export const usePermissionStore = defineStore("permission", () => {
   // 动态路由是否已生成
   const isRouteGenerated = ref(false);
 
-  /** 生成动态路由 */
+  /* 生成动态路由 */
   async function generateRoutes(): Promise<RouteRecordRaw[]> {
     try {
       const data = await MenuAPI.getRoutes(); // 获取当前登录人的菜单路由
@@ -46,13 +46,13 @@ export const usePermissionStore = defineStore("permission", () => {
     }
   }
 
-  /** 设置混合布局左侧菜单 */
+  /* 设置混合布局左侧菜单 */
   const setMixLayoutSideMenus = (parentPath: string) => {
     const parentMenu = routes.value.find((item: RouteRecordRaw) => item.path === parentPath);
     mixLayoutSideMenus.value = parentMenu?.children || [];
   };
 
-  /** 重置路由状态 */
+  /* 重置路由状态 */
   const resetRouter = () => {
     // 移除动态添加的路由
     const constantRouteNames = new Set(constantRoutes.map((route) => route.name).filter(Boolean));
@@ -158,7 +158,7 @@ const transformRoutes = (routes: RouteItem[], isTopLevel: boolean = true): Route
   });
 };
 
-/** 非组件环境使用权限store */
+/* 非组件环境使用权限store */
 export function usePermissionStoreHook() {
   return usePermissionStore(store);
 }

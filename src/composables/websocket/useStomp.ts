@@ -2,23 +2,23 @@ import { Client, type IMessage, type StompSubscription } from "@stomp/stompjs";
 import { AuthStorage } from "@/utils/auth";
 
 export interface UseStompOptions {
-  /** WebSocket 地址，不传时使用 VITE_APP_WS_ENDPOINT 环境变量 */
+  /* WebSocket 地址，不传时使用 VITE_APP_WS_ENDPOINT 环境变量 */
   brokerURL?: string;
-  /** 用于鉴权的 token，不传时使用 getAccessToken() 的返回值 */
+  /* 用于鉴权的 token，不传时使用 getAccessToken() 的返回值 */
   token?: string;
-  /** 重连延迟，单位毫秒，默认为 15000 */
+  /* 重连延迟，单位毫秒，默认为 15000 */
   reconnectDelay?: number;
-  /** 连接超时时间，单位毫秒，默认为 10000 */
+  /* 连接超时时间，单位毫秒，默认为 10000 */
   connectionTimeout?: number;
-  /** 是否开启指数退避重连策略 */
+  /* 是否开启指数退避重连策略 */
   useExponentialBackoff?: boolean;
-  /** 最大重连次数，默认为 3 */
+  /* 最大重连次数，默认为 3 */
   maxReconnectAttempts?: number;
-  /** 最大重连延迟，单位毫秒，默认为 60000 */
+  /* 最大重连延迟，单位毫秒，默认为 60000 */
   maxReconnectDelay?: number;
-  /** 是否开启调试日志 */
+  /* 是否开启调试日志 */
   debug?: boolean;
-  /** 是否在重连时自动恢复订阅，默认为 true */
+  /* 是否在重连时自动恢复订阅，默认为 true */
   autoRestoreSubscriptions?: boolean;
   /**
    * 心跳接收间隔，单位毫秒，默认为 4000

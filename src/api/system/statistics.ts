@@ -4,7 +4,7 @@ import type { VisitTrendQueryParams, VisitTrendDetail, VisitStatsDetail } from "
 const STATISTICS_BASE_URL = "/api/v1/statistics";
 
 const StatisticsAPI = {
-  /** 获取访问趋势统计 */
+  /* 获取访问趋势统计 */
   getVisitTrend(queryParams: VisitTrendQueryParams) {
     return request<any, VisitTrendDetail>({
       url: `${STATISTICS_BASE_URL}/visits/trend`,
@@ -12,7 +12,7 @@ const StatisticsAPI = {
       params: queryParams,
     });
   },
-  /** 获取访问概览统计 */
+  /* 获取访问概览统计 */
   getVisitOverview() {
     return request<any, VisitStatsDetail>({
       url: `${STATISTICS_BASE_URL}/visits/overview`,

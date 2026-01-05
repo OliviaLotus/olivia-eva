@@ -18,10 +18,7 @@ export function useLayout() {
   const permissionStore = usePermissionStore();
   const { width } = useWindowSize();
 
-  // ============================================
   // 设备检测
-  // ============================================
-
   const isDesktop = computed(() => width.value >= DESKTOP_BREAKPOINT);
   const isMobile = computed(() => appStore.device === DeviceEnum.MOBILE);
 
@@ -37,10 +34,7 @@ export function useLayout() {
     }
   });
 
-  // ============================================
   // 布局状态
-  // ============================================
-
   const currentLayout = computed(() => settingsStore.layout);
   const isSidebarOpen = computed(() => appStore.sidebar.opened);
   const showTagsView = computed(() => settingsStore.showTagsView);
@@ -54,28 +48,24 @@ export function useLayout() {
     [`layout-${settingsStore.layout}`]: true,
   }));
 
-  // ============================================
   // 菜单数据
-  // ============================================
 
-  /** 路由列表（左侧/顶部菜单） */
+  /* 路由列表（左侧/顶部菜单） */
   const routes = computed(() => permissionStore.routes);
 
-  /** 混合布局侧边菜单 */
+  /* 混合布局侧边菜单 */
   const sideMenuRoutes = computed(() => permissionStore.mixLayoutSideMenus);
 
-  /** 顶部菜单激活路径 */
+  /* 顶部菜单激活路径 */
   const activeTopMenuPath = computed(() => appStore.activeTopMenuPath);
 
-  /** 当前激活菜单 */
+  /* 当前激活菜单 */
   const activeMenu = computed(() => {
     const { meta, path } = route;
     return meta?.activeMenu || path;
   });
 
-  // ============================================
   // 操作方法
-  // ============================================
 
   function toggleSidebar() {
     appStore.toggleSidebar();

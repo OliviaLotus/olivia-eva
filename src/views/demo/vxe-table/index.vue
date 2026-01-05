@@ -549,7 +549,7 @@ const formOptions = reactive({
       },
     },
   ],
-  /** 校验规则 */
+  /* 校验规则 */
   rules: {
     username: [
       {
@@ -591,7 +591,7 @@ const curd = {
     }
     xModal.value?.open();
   },
-  /** 确定并保存 */
+  /* 确定并保存 */
   onSubmitForm: () => {
     console.log("提交表单");
   },

@@ -2,7 +2,7 @@ import request from "@/utils/request";
 import type { FileInfo } from "@/types/api";
 
 const FileAPI = {
-  /** 上传文件 （传入 FormData，上传进度回调） */
+  /* 上传文件 （传入 FormData，上传进度回调） */
   upload(formData: FormData, onProgress?: (percent: number) => void) {
     return request<any, FileInfo>({
       url: "/api/v1/files",
@@ -18,7 +18,7 @@ const FileAPI = {
     });
   },
 
-  /** 上传文件（传入 File） */
+  /* 上传文件（传入 File） */
   uploadFile(file: File) {
     const formData = new FormData();
     formData.append("file", file);
@@ -30,7 +30,7 @@ const FileAPI = {
     });
   },
 
-  /** 删除文件 */
+  /* 删除文件 */
   delete(filePath?: string) {
     return request({
       url: "/api/v1/files",
@@ -39,7 +39,7 @@ const FileAPI = {
     });
   },
 
-  /** 下载文件 */
+  /* 下载文件 */
   download(url: string, fileName?: string) {
     return request({
       url,

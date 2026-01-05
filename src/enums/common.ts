@@ -12,11 +12,11 @@
  * 定义对话框的操作模式（创建、编辑、查看）
  */
 export enum DialogMode {
-  /** 创建模式 - 新增数据 */
+  /* 创建模式 - 新增数据 */
   CREATE = "create",
-  /** 编辑模式 - 修改数据 */
+  /* 编辑模式 - 修改数据 */
   EDIT = "edit",
-  /** 查看模式 - 只读展示 */
+  /* 查看模式 - 只读展示 */
   VIEW = "view",
 }
 
@@ -27,9 +27,9 @@ export enum DialogMode {
  * 适用于大多数业务实体的启用/禁用状态
  */
 export enum CommonStatus {
-  /** 禁用 */
+  /* 禁用 */
   DISABLED = 0,
-  /** 启用 */
+  /* 启用 */
   ENABLED = 1,
 }
 
@@ -37,10 +37,10 @@ export enum CommonStatus {
  * 审核状态枚举
  */
 export enum AuditStatus {
-  /** 待审核 */
+  /* 待审核 */
   PENDING = 0,
-  /** 已通过 */
+  /* 已通过 */
   APPROVED = 1,
-  /** 已拒绝 */
+  /* 已拒绝 */
   REJECTED = 2,
 }

@@ -746,7 +746,7 @@ const initSort = () => {
   });
 };
 
-/** 上一页 */
+/* 上一页 */
 function handlePrevClick() {
   if (active.value === 2) {
     //这里需要重新获取一次数据，如果第一次生成代码后，再次点击上一步，数据不重新获取，再次点击下一步，会再次插入数据，导致索引重复报错
@@ -767,7 +767,7 @@ function handlePrevClick() {
   if (active.value-- <= 0) active.value = 0;
 }
 
-/** 下一步 */
+/* 下一步 */
 function handleNextClick() {
   if (active.value === 0) {
     //这里需要校验基础配置
@@ -819,7 +819,7 @@ function handleNextClick() {
   }
 }
 
-/** 查询 */
+/* 查询 */
 function handleQuery() {
   loading.value = true;
   GeneratorAPI.getTablePage(queryParams)
@@ -832,14 +832,14 @@ function handleQuery() {
     });
 }
 
-/** 重置查询 */
+/* 重置查询 */
 function handleResetQuery() {
   queryFormRef.value.resetFields();
   queryParams.pageNum = 1;
   handleQuery();
 }
 
-/** 打开弹窗 */
+/* 打开弹窗 */
 async function handleOpenDialog(tableName: string) {
   dialogState.visible = true;
   active.value = 0;
@@ -873,7 +873,7 @@ async function handleOpenDialog(tableName: string) {
   }
 }
 
-/** 重置配置 */
+/* 重置配置 */
 function handleResetConfig(tableName: string) {
   ElMessageBox.confirm("确定要重置配置吗？", "提示", {
     type: "warning",
@@ -887,7 +887,7 @@ function handleResetConfig(tableName: string) {
 
 type FieldConfigKey = "isShowInQuery" | "isShowInList" | "isShowInForm";
 
-/** 全选 */
+/* 全选 */
 // 单列全选开关已移除，改为顶部“批量设置”入口；保留方法时会触发未使用告警，故删除注释
 
 function bulkSet(key: FieldConfigKey, value: 0 | 1) {
@@ -903,7 +903,7 @@ const checkAllSelected = (key: keyof FieldConfig, isCheckAllRef: any) => {
   isCheckAllRef.value = fieldConfigs.every((row: FieldConfig) => row[key] === 1);
 };
 
-/** 获取生成预览 */
+/* 获取生成预览 */
 async function handlePreview(tableName: string) {
   treeData.value = [];
   try {
@@ -994,14 +994,14 @@ function findFirstLeafNode(node: TreeNode): TreeNode | null {
   return null;
 }
 
-/** 文件树节点 Click */
+/* 文件树节点 Click */
 function handleFileTreeNodeClick(data: TreeNode) {
   if (!data.children || data.children.length === 0) {
     code.value = data.content || "";
   }
 }
 
-/** 获取文件树节点图标 */
+/* 获取文件树节点图标 */
 function getFileTreeNodeIcon(node: TreeNode) {
   const ext = (node.language || node.label.split(".").pop() || "").toLowerCase();
   if (ext === "java") {
@@ -1025,7 +1025,7 @@ function getFileTreeNodeIcon(node: TreeNode) {
   return "file";
 }
 
-/** 一键复制 */
+/* 一键复制 */
 const handleCopyCode = () => {
   if (code.value) {
     copy(code.value);
@@ -1271,7 +1271,7 @@ async function confirmWrite() {
   writeDialog.visible = false;
 }
 
-/** 组件挂载后执行 */
+/* 组件挂载后执行 */
 onMounted(() => {
   handleQuery();
 });

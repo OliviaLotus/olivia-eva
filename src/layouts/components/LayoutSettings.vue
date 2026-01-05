@@ -214,38 +214,24 @@ const drawerVisible = computed({
   set: (value) => (settingsStore.settingsVisible = value),
 });
 
-/**
- * 处理主题切换
- *
- * @param isDark 是否启用暗黑模式
- */
+// 处理主题切换
 const handleThemeChange = (isDark: string | number | boolean) => {
   settingsStore.theme = isDark ? ThemeMode.DARK : ThemeMode.LIGHT;
 };
 
-/**
- * 更改侧边栏颜色
- *
- * @param val 颜色方案名称
- */
+// 更改侧边栏颜色
 const changeSidebarColor = (val: any) => {
   settingsStore.sidebarColorScheme = val;
 };
 
-/**
- * 切换布局
- *
- * @param layout - 布局模式
- */
+// 切换布局
 const handleLayoutChange = (layout: LayoutMode) => {
   if (settingsStore.layout === layout) return;
 
   settingsStore.layout = layout;
 };
 
-/**
- * 复制当前配置
- */
+// 复制当前配置
 const handleCopySettings = async () => {
   try {
     copyLoading.value = true;
@@ -268,9 +254,7 @@ const handleCopySettings = async () => {
   }
 };
 
-/**
- * 重置为默认配置
- */
+// 重置为默认配置
 const handleResetSettings = async () => {
   resetLoading.value = true;
 
@@ -289,9 +273,7 @@ const handleResetSettings = async () => {
   }
 };
 
-/**
- * 生成配置代码字符串
- */
+//生成配置代码字符串
 const generateSettingsCode = (): string => {
   const settings = {
     title: "pkg.name",
@@ -326,9 +308,7 @@ const generateSettingsCode = (): string => {
 };`;
 };
 
-/**
- * 关闭抽屉前的回调
- */
+// 关闭抽屉前的回调
 const handleCloseDrawer = () => {
   settingsStore.settingsVisible = false;
 };

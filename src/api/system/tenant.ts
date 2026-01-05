@@ -47,7 +47,7 @@ const TenantAPI = {
     });
   },
 
-  /** 获取租户分页数据（平台租户管理） */
+  /* 获取租户分页数据（平台租户管理） */
   getPage(queryParams?: TenantQueryParams) {
     return request<any, PageResult<TenantItem>>({
       url: `${TENANT_BASE_URL}`,
@@ -56,7 +56,7 @@ const TenantAPI = {
     });
   },
 
-  /** 获取租户表单数据 */
+  /* 获取租户表单数据 */
   getFormData(tenantId: string) {
     return request<any, TenantForm>({
       url: `${TENANT_BASE_URL}/${tenantId}/form`,
@@ -64,7 +64,7 @@ const TenantAPI = {
     });
   },
 
-  /** 新增租户并初始化默认数据 */
+  /* 新增租户并初始化默认数据 */
   create(data: TenantCreateForm) {
     return request<any, TenantCreateResult>({
       url: `${TENANT_BASE_URL}`,
@@ -73,7 +73,7 @@ const TenantAPI = {
     });
   },
 
-  /** 修改租户 */
+  /* 修改租户 */
   update(tenantId: string, data: TenantForm) {
     return request({
       url: `${TENANT_BASE_URL}/${tenantId}`,
@@ -82,7 +82,7 @@ const TenantAPI = {
     });
   },
 
-  /** 删除租户（批量） */
+  /* 删除租户（批量） */
   deleteByIds(ids: string) {
     return request({
       url: `${TENANT_BASE_URL}/${ids}`,
@@ -90,7 +90,7 @@ const TenantAPI = {
     });
   },
 
-  /** 修改租户状态 */
+  /* 修改租户状态 */
   updateStatus(tenantId: string, status: number) {
     return request({
       url: `${TENANT_BASE_URL}/${tenantId}/status`,
@@ -99,7 +99,7 @@ const TenantAPI = {
     });
   },
 
-  /** 获取租户菜单ID集合 */
+  /* 获取租户菜单ID集合 */
   getTenantMenuIds(tenantId: number) {
     return request<any, number[]>({
       url: `${TENANT_BASE_URL}/${tenantId}/menuIds`,
@@ -107,7 +107,7 @@ const TenantAPI = {
     });
   },
 
-  /** 更新租户菜单 */
+  /* 更新租户菜单 */
   updateTenantMenus(tenantId: number, menuIds: number[]) {
     return request({
       url: `${TENANT_BASE_URL}/${tenantId}/menus`,

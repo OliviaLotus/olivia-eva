@@ -6,17 +6,17 @@
  * 登录请求参数
  */
 export interface LoginRequest {
-  /** 用户名 */
+  /* 用户名 */
   username: string;
-  /** 密码 */
+  /* 密码 */
   password: string;
-  /** 验证码缓存key */
+  /* 验证码缓存key */
   captchaId?: string;
-  /** 验证码 */
+  /* 验证码 */
   captchaCode?: string;
-  /** 记住我 */
+  /* 记住我 */
   rememberMe?: boolean;
-  /** 租户ID */
+  /* 租户ID */
   tenantId?: number;
 }
 
@@ -24,13 +24,13 @@ export interface LoginRequest {
  * 登录响应
  */
 export interface LoginResponse {
-  /** 访问令牌 */
+  /* 访问令牌 */
   accessToken: string;
-  /** 刷新令牌 */
+  /* 刷新令牌 */
   refreshToken: string;
-  /** 令牌类型 */
+  /* 令牌类型 */
   tokenType: string;
-  /** 过期时间(单位:秒) */
+  /* 过期时间(单位:秒) */
   expiresIn: number;
 }
 
@@ -38,8 +38,8 @@ export interface LoginResponse {
  * 验证码响应
  */
 export interface CaptchaInfo {
-  /** 验证码缓存key */
+  /* 验证码缓存key */
   captchaId: string;
-  /** 验证码图片Base64 */
+  /* 验证码图片Base64 */
   captchaBase64: string;
 }

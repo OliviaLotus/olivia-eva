@@ -89,7 +89,7 @@ export function setupPermissionGuard() {
   });
 }
 
-/** 初始化多租户上下文，未启用或失败时静默跳过 */
+/* 初始化多租户上下文，未启用或失败时静默跳过 */
 async function initTenantContext(): Promise<void> {
   // 多租户关闭时不初始化租户上下文
   if (!isTenantEnabled()) return;

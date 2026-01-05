@@ -4,25 +4,25 @@
 
 import type { BaseQueryParams } from "./common";
 
-/** 租户信息 */
+/* 租户信息 */
 export interface TenantInfo {
-  /** 租户ID */
+  /* 租户ID */
   id: number;
-  /** 租户名称 */
+  /* 租户名称 */
   name: string;
-  /** 租户域名 */
+  /* 租户域名 */
   domain?: string;
 }
 
-/** 租户分页查询参数 */
+/* 租户分页查询参数 */
 export interface TenantQueryParams extends BaseQueryParams {
-  /** 关键字(租户名称/租户编码/域名) */
+  /* 关键字(租户名称/租户编码/域名) */
   keywords?: string;
-  /** 租户状态(1-正常 0-禁用) */
+  /* 租户状态(1-正常 0-禁用) */
   status?: number;
 }
 
-/** 租户分页对象 */
+/* 租户分页对象 */
 export interface TenantItem {
   id?: string;
   name?: string;
@@ -40,7 +40,7 @@ export interface TenantItem {
   updateTime?: string;
 }
 
-/** 租户表单对象（编辑） */
+/* 租户表单对象（编辑） */
 export interface TenantForm {
   id?: string;
   name?: string;
@@ -56,7 +56,7 @@ export interface TenantForm {
   expireTime?: string;
 }
 
-/** 新增租户表单对象 */
+/* 新增租户表单对象 */
 export interface TenantCreateForm {
   name?: string;
   code?: string;
@@ -71,7 +71,7 @@ export interface TenantCreateForm {
   adminUsername?: string;
 }
 
-/** 新增租户结果 */
+/* 新增租户结果 */
 export interface TenantCreateResult {
   tenantId?: string;
   tenantCode?: string;
