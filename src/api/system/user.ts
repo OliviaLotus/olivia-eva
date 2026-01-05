@@ -174,7 +174,7 @@ const UserAPI = {
     });
   },
 
-  /** 发送短信验证码（绑定或更换手机号）*/
+  /* 发送短信验证码（绑定或更换手机号）*/
   sendMobileCode(mobile: string) {
     return request({
       url: `${USER_BASE_URL}/mobile/code`,
@@ -201,7 +201,7 @@ const UserAPI = {
     });
   },
 
-  /** 发送邮箱验证码（绑定或更换邮箱）*/
+  /* 发送邮箱验证码（绑定或更换邮箱）*/
   sendEmailCode(email: string) {
     return request({
       url: `${USER_BASE_URL}/email/code`,

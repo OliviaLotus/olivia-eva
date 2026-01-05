@@ -4,7 +4,7 @@ import type { LoginRequest, LoginResponse, CaptchaInfo } from "@/types/api/auth"
 const AUTH_BASE_URL = "/api/v1/auth";
 
 const AuthAPI = {
-  /** 登录接口*/
+  /* 登录接口*/
   login(data: LoginRequest) {
     const payload: Record<string, any> = {
       username: data.username,
@@ -34,7 +34,7 @@ const AuthAPI = {
     });
   },
 
-  /** 刷新 token 接口*/
+  /* 刷新 token 接口*/
   refreshToken(refreshToken: string) {
     return request<any, LoginResponse>({
       url: `${AUTH_BASE_URL}/refresh-token`,
@@ -54,7 +54,7 @@ const AuthAPI = {
     });
   },
 
-  /** 获取验证码接口*/
+  /* 获取验证码接口*/
   getCaptcha() {
     return request<any, CaptchaInfo>({
       url: `${AUTH_BASE_URL}/captcha`,
