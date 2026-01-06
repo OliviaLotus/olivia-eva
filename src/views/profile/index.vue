@@ -386,8 +386,7 @@ const emailSecurityDesc = computed(() => {
   return userProfile.value.email ? `已绑定：${maskEmail(userProfile.value.email)}` : "未绑定邮箱";
 });
 
-/**
- * 打开弹窗
+/* * 打开弹窗
  * @param type 弹窗类型 ACCOUNT: 账号资料 PASSWORD: 修改密码 MOBILE: 绑定手机 EMAIL: 绑定邮箱
  */
 const handleOpenDialog = (type: DialogType) => {
@@ -459,8 +458,7 @@ async function handleUnbindEmail() {
   }
 }
 
-/**
- * 发送手机验证码
+/* * 发送手机验证码
  */
 function handleSendMobileCode() {
   if (!mobileUpdateForm.mobile) {
@@ -489,8 +487,7 @@ function handleSendMobileCode() {
   });
 }
 
-/**
- * 发送邮箱验证码
+/* * 发送邮箱验证码
  */
 function handleSendEmailCode() {
   if (!emailUpdateForm.email) {
@@ -519,8 +516,7 @@ function handleSendEmailCode() {
   });
 }
 
-/**
- * 提交表单
+/* * 提交表单
  */
 const handleSubmit = async () => {
   try {
@@ -561,8 +557,7 @@ const handleSubmit = async () => {
   }
 };
 
-/**
- * 取消
+/* * 取消
  */
 const handleCancel = () => {
   dialogState.visible = false;

@@ -1,5 +1,4 @@
-/**
- * VxeTable 全局配置
+/* * VxeTable 全局配置
  * @see https://vxetable.cn/v4.6/#/table/start/install
  */
 

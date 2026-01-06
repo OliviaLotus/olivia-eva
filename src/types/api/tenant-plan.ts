@@ -1,5 +1,4 @@
-/**
- * Tenant Plan 租户套餐类型定义
+/* * Tenant Plan 租户套餐类型定义
  */
 
 import type { BaseQueryParams } from "./common";

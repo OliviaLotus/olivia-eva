@@ -16,8 +16,7 @@ import type {
 const USER_BASE_URL = "/api/v1/users";
 
 const UserAPI = {
-  /**
-   * 获取当前登录用户信息
+  /*   * 获取当前登录用户信息
    *
    * @returns 登录用户昵称、头像信息，包括角色和权限
    */
@@ -28,8 +27,7 @@ const UserAPI = {
     });
   },
 
-  /**
-   * 获取用户分页列表
+  /*   * 获取用户分页列表
    *
    * @param queryParams 查询参数
    */
@@ -41,8 +39,7 @@ const UserAPI = {
     });
   },
 
-  /**
-   * 获取用户表单详情
+  /*   * 获取用户表单详情
    *
    * @param userId 用户ID
    * @returns 用户表单详情
@@ -54,8 +51,7 @@ const UserAPI = {
     });
   },
 
-  /**
-   * 添加用户
+  /*   * 添加用户
    *
    * @param data 用户表单数据
    */
@@ -67,8 +63,7 @@ const UserAPI = {
     });
   },
 
-  /**
-   * 修改用户
+  /*   * 修改用户
    *
    * @param id 用户ID
    * @param data 用户表单数据
@@ -81,8 +76,7 @@ const UserAPI = {
     });
   },
 
-  /**
-   * 修改用户密码
+  /*   * 修改用户密码
    *
    * @param id 用户ID
    * @param password 新密码
@@ -95,8 +89,7 @@ const UserAPI = {
     });
   },
 
-  /**
-   * 批量删除用户，多个以英文逗号(,)分割
+  /*   * 批量删除用户，多个以英文逗号(,)分割
    *
    * @param ids 用户ID字符串，多个以英文逗号(,)分割
    */
@@ -116,8 +109,7 @@ const UserAPI = {
     });
   },
 
-  /**
-   * 导出用户
+  /*   * 导出用户
    *
    * @param queryParams 查询参数
    */
@@ -130,8 +122,7 @@ const UserAPI = {
     });
   },
 
-  /**
-   * 导入用户
+  /*   * 导入用户
    *
    * @param file 导入文件
    */
@@ -228,8 +219,7 @@ const UserAPI = {
     });
   },
 
-  /**
-   *  获取用户下拉列表
+  /*   *  获取用户下拉列表
    */
   getOptions() {
     return request<any, OptionItem[]>({

@@ -91,8 +91,7 @@ const activeMenuPath = computed((): string => {
   return path;
 });
 
-/**
- * 获取完整路径
+/* * 获取完整路径
  *
  * @param routePath 当前路由的相对路径 /user
  * @returns 完整的绝对路径 D://vue3-element-admin/system/user
@@ -114,8 +113,7 @@ function resolveFullPath(routePath: string) {
   return path.resolve(props.basePath, routePath);
 }
 
-/**
- * 打开菜单
+/* * 打开菜单
  *
  * @param index 当前展开的菜单项索引
  */
@@ -123,8 +121,7 @@ const onMenuOpen = (index: string) => {
   expandedMenuIndexes.value.push(index);
 };
 
-/**
- * 关闭菜单
+/* * 关闭菜单
  *
  * @param index 当前收起的菜单项索引
  */
@@ -132,8 +129,7 @@ const onMenuClose = (index: string) => {
   expandedMenuIndexes.value = expandedMenuIndexes.value.filter((item) => item !== index);
 };
 
-/**
- * 监听展开的菜单项变化，更新父菜单样式
+/* * 监听展开的菜单项变化，更新父菜单样式
  */
 watch(
   () => expandedMenuIndexes.value,
@@ -142,8 +138,7 @@ watch(
   }
 );
 
-/**
- * 监听菜单模式变化：当菜单模式切换为水平模式时，关闭所有展开的菜单项
+/* * 监听菜单模式变化：当菜单模式切换为水平模式时，关闭所有展开的菜单项
  * 避免在水平模式下菜单项显示错位
  */
 watch(
@@ -155,8 +150,7 @@ watch(
   }
 );
 
-/**
- * 监听激活菜单变化，为包含激活子菜单的父菜单添加样式
+/* * 监听激活菜单变化，为包含激活子菜单的父菜单添加样式
  */
 watch(
   () => activeMenuPath.value,
@@ -168,8 +162,7 @@ watch(
   { immediate: true }
 );
 
-/**
- * 监听路由变化，确保菜单能随 TagsView 切换而正确激活
+/* * 监听路由变化，确保菜单能随 TagsView 切换而正确激活
  */
 watch(
   () => currentRoute.path,
@@ -180,8 +173,7 @@ watch(
   }
 );
 
-/**
- * 更新父菜单样式 - 为包含激活子菜单的父菜单添加 has-active-child 类
+/* * 更新父菜单样式 - 为包含激活子菜单的父菜单添加 has-active-child 类
  */
 function updateParentMenuStyles() {
   if (!menuRef.value?.$el) return;
@@ -235,8 +227,7 @@ function updateParentMenuStyles() {
   });
 }
 
-/**
- * 组件挂载后立即更新父菜单样式
+/* * 组件挂载后立即更新父菜单样式
  */
 onMounted(() => {
   // 确保在组件挂载后更新样式，不依赖于异步操作

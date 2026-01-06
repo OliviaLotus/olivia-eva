@@ -1,5 +1,4 @@
-/**
- * 标签页相关类型定义
+/* * 标签页相关类型定义
  */
 
 export interface TagView {

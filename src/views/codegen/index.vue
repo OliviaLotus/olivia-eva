@@ -938,8 +938,7 @@ async function handlePreview(tableName: string) {
   }
 }
 
-/**
- * 递归构建树形结构
+/* * 递归构建树形结构
  *
  * @param data - 数据数组
  * @returns 树形结构根节点
@@ -976,8 +975,7 @@ function buildTree(data: GeneratorPreviewItem[]): TreeNode {
   return root;
 }
 
-/**
- * 递归查找第一个叶子节点
+/* * 递归查找第一个叶子节点
  * @param node - 树形节点
  * @returns 第一个叶子节点
  */

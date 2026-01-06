@@ -133,15 +133,13 @@ watch(visible, (newValue) => {
   }
 });
 
-/**
- * 文件超出个数限制
+/* * 文件超出个数限制
  */
 function handleFileExceed(): void {
   ElMessage.warning("只能上传一个文件");
 }
 
-/**
- * 下载导入模板
+/* * 下载导入模板
  */
 function downloadTemplate(): void {
   UserAPI.downloadTemplate().then((response: any) => {
@@ -149,8 +147,7 @@ function downloadTemplate(): void {
   });
 }
 
-/**
- * 上传文件
+/* * 上传文件
  */
 async function handleUpload(): Promise<void> {
   if (!importFormData.files.length) {
@@ -172,22 +169,19 @@ async function handleUpload(): Promise<void> {
   }
 }
 
-/**
- * 显示错误信息
+/* * 显示错误信息
  */
 function showResult(): void {
   resultVisible.value = true;
 }
 
-/**
- * 关闭错误信息弹窗
+/* * 关闭错误信息弹窗
  */
 function closeResultDialog(): void {
   resultVisible.value = false;
 }
 
-/**
- * 关闭弹窗
+/* * 关闭弹窗
  */
 function closeDialog(): void {
   importFormData.files.length = 0;

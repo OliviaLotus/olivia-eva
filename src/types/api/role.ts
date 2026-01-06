@@ -1,5 +1,4 @@
-/**
- * Role 角色类型定义
+/* * Role 角色类型定义
  */
 
 import type { BaseQueryParams } from "./common";

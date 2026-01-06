@@ -3,8 +3,7 @@ import type { Directive, DirectiveBinding } from "vue";
 import { useUserStore } from "@/store";
 import { ROLE_ROOT } from "@/constants";
 
-/**
- * 按钮权限
+/* * 按钮权限
  */
 export const hasPerm: Directive = {
   mounted(el: HTMLElement, binding: DirectiveBinding) {
@@ -36,8 +35,7 @@ export const hasPerm: Directive = {
   },
 };
 
-/**
- * 角色权限指令
+/* * 角色权限指令
  */
 export const hasRole: Directive = {
   mounted(el: HTMLElement, binding: DirectiveBinding) {

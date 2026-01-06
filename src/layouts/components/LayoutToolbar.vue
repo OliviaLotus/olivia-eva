@@ -116,8 +116,7 @@ function handleTenantChange(tenantId: number) {
   );
 }
 
-/**
- * 打开个人中心页面
+/* * 打开个人中心页面
  */
 function handleProfileClick() {
   router.push({ name: "Profile" });
@@ -149,8 +148,7 @@ const navbarActionsClass = computed(() => {
   return "navbar-actions--dark-text";
 });
 
-/**
- * 退出登录
+/* * 退出登录
  */
 function logout() {
   ElMessageBox.confirm("确定注销并退出系统吗？", "提示", {
@@ -165,8 +163,7 @@ function logout() {
   });
 }
 
-/**
- * 打开系统设置页面
+/* * 打开系统设置页面
  */
 function handleSettingsClick() {
   settingStore.settingsVisible = true;

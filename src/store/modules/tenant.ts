@@ -5,8 +5,7 @@ import { STORAGE_KEYS } from "@/constants";
 import AuthAPI from "@/api/auth";
 import { AuthStorage } from "@/utils/auth";
 
-/**
- * 租户 Store
+/* * 租户 Store
  */
 export const useTenantStore = defineStore("tenant", () => {
   // 当前租户ID
@@ -16,8 +15,7 @@ export const useTenantStore = defineStore("tenant", () => {
   // 用户可访问的租户列表
   const tenantList = ref<TenantInfo[]>([]);
 
-  /**
-   * 恢复租户信息
+  /*   * 恢复租户信息
    * 从 localStorage 恢复上次使用的租户
    */
   function restoreTenant() {
@@ -37,8 +35,7 @@ export const useTenantStore = defineStore("tenant", () => {
     }
   }
 
-  /**
-   * 获取用户租户列表
+  /*   * 获取用户租户列表
    */
   async function fetchTenantList(): Promise<TenantInfo[]> {
     const data = await TenantAPI.getTenantList();
@@ -46,8 +43,7 @@ export const useTenantStore = defineStore("tenant", () => {
     return data || [];
   }
 
-  /**
-   * 加载租户
+  /*   * 加载租户
    *
    * 执行流程：
    * 1. 获取用户可访问的租户列表
@@ -102,8 +98,7 @@ export const useTenantStore = defineStore("tenant", () => {
     }
   }
 
-  /**
-   * 设置当前租户
+  /*   * 设置当前租户
    *
    * @param tenant 租户信息
    */
@@ -116,8 +111,7 @@ export const useTenantStore = defineStore("tenant", () => {
     localStorage.setItem(STORAGE_KEYS.TENANT_INFO, JSON.stringify(tenant));
   }
 
-  /**
-   * 切换租户
+  /*   * 切换租户
    *
    * @param tenantId 目标租户ID
    */
@@ -145,8 +139,7 @@ export const useTenantStore = defineStore("tenant", () => {
     throw new Error("切换租户后无法获取租户信息");
   }
 
-  /**
-   * 清除租户信息
+  /*   * 清除租户信息
    */
   function clearTenant() {
     currentTenantId.value = null;
@@ -180,8 +173,7 @@ export const useTenantStore = defineStore("tenant", () => {
     }
   }
 
-  /**
-   * 设置租户列表
+  /*   * 设置租户列表
    */
   function setTenantList(list: TenantInfo[]) {
     tenantList.value = list || [];
@@ -203,8 +195,7 @@ export const useTenantStore = defineStore("tenant", () => {
   };
 });
 
-/**
- * 在组件外部使用 TenantStore 的钩子函数
+/* * 在组件外部使用 TenantStore 的钩子函数
  */
 export function useTenantStoreHook() {
   return useTenantStore(store);

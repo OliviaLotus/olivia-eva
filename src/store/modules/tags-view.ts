@@ -4,8 +4,7 @@ export const useTagsViewStore = defineStore("tagsView", () => {
   const router = useRouter();
   const route = useRoute();
 
-  /**
-   * 添加已访问视图到已访问视图列表中
+  /*   * 添加已访问视图到已访问视图列表中
    */
   function addVisitedView(view: TagView) {
     // 如果已经存在于已访问的视图列表中或者是重定向地址，则不再添加
@@ -24,8 +23,7 @@ export const useTagsViewStore = defineStore("tagsView", () => {
     }
   }
 
-  /**
-   * 添加缓存视图到缓存视图列表中
+  /*   * 添加缓存视图到缓存视图列表中
    */
   function addCachedView({ fullPath, keepAlive }: TagView) {
     // 如果缓存视图名称已经存在于缓存视图列表中，则不再添加
@@ -39,8 +37,7 @@ export const useTagsViewStore = defineStore("tagsView", () => {
     }
   }
 
-  /**
-   * 从已访问视图列表中删除指定的视图
+  /*   * 从已访问视图列表中删除指定的视图
    */
   function delVisitedView(view: TagView) {
     return new Promise((resolve) => {
@@ -97,8 +94,7 @@ export const useTagsViewStore = defineStore("tagsView", () => {
     }
   }
 
-  /**
-   * 根据路径更新标签名称
+  /*   * 根据路径更新标签名称
    * @param fullPath 路径
    * @param title 标签名称
    */
@@ -209,8 +205,7 @@ export const useTagsViewStore = defineStore("tagsView", () => {
     });
   }
 
-  /**
-   * 关闭当前tagView
+  /*   * 关闭当前tagView
    */
   function closeCurrentView() {
     const tags: TagView = {

@@ -81,8 +81,7 @@ const scrollContent = ref<HTMLElement | null>(null);
 // 动画持续时间（秒）
 const animationDuration = ref(0);
 
-/**
- * 打字机效果相关状态"
+/* * 打字机效果相关状态"
  */
 // 当前已显示的文本内容
 const currentText = ref("");
@@ -91,8 +90,7 @@ let typewriterTimer: ReturnType<typeof setTimeout> | null = null;
 // 打字机效果是否已完成
 const isTypewriterComplete = ref(false);
 
-/**
- * 计算是否应该滚动
+/* * 计算是否应该滚动
  * 条件：
  * 1. 鼠标未悬停在组件上
  * 2. 如果启用了打字机效果，则需要等待打字效果完成
@@ -104,16 +102,14 @@ const shouldScroll = computed(() => {
   return !isHovered.value;
 });
 
-/**
- * 计算最终显示的内容
+/* * 计算最终显示的内容
  * 如果启用了打字机效果，则显示当前已打出的文本
  * 否则直接显示完整文本
  * 注意：内容支持 HTML，使用时需注意 XSS 风险
  */
 const sanitizedContent = computed(() => (props.typewriter ? currentText.value : props.text));
 
-/**
- * 计算滚动样式
+/* * 计算滚动样式
  * 包括动画持续时间、播放状态和方向
  * 这些值通过 CSS 变量传递给样式
  */
@@ -123,8 +119,7 @@ const scrollStyle = computed(() => ({
   "--animation-direction": props.direction === "left" ? "normal" : "reverse",
 }));
 
-/**
- * 计算动画持续时间
+/* * 计算动画持续时间
  * 根据内容宽度和设定的速度计算出合适的动画持续时间
  * 内容越长或速度值越小，动画持续时间越长
  */
@@ -135,8 +130,7 @@ const calculateDuration = () => {
   }
 };
 
-/**
- * 处理关闭按钮点击事件
+/* * 处理关闭按钮点击事件
  * 触发 close 事件，并直接销毁当前组件
  */
 const handleRightIconClick = () => {
@@ -148,8 +142,7 @@ const handleRightIconClick = () => {
   }
 };
 
-/**
- * 启动打字机效果
+/* * 启动打字机效果
  * 逐字显示文本内容，完成后设置状态以开始滚动
  */
 const startTypewriter = () => {
@@ -196,8 +189,7 @@ onUnmounted(() => {
   }
 });
 
-/**
- * 监听文本内容变化
+/* * 监听文本内容变化
  * 当文本内容变化时，如果启用了打字机效果，重新开始打字
  */
 watch(

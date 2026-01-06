@@ -70,8 +70,7 @@ export const usePermissionStore = defineStore("permission", () => {
 
   let reloadPromise: Promise<RouteRecordRaw[]> | null = null;
 
-  /**
-   * 重新加载动态路由（单飞）。
+  /*   * 重新加载动态路由（单飞）。
    *
    * 典型场景：后端权限变更导致接口返回权限不足（A0301），前端需要刷新路由和菜单以同步最新权限。
    */
@@ -96,8 +95,7 @@ export const usePermissionStore = defineStore("permission", () => {
 
   let snapshotPromise: Promise<void> | null = null;
 
-  /**
-   * 刷新权限快照（单飞）。
+  /*   * 刷新权限快照（单飞）。
    */
   async function reloadPermissionSnapshotOnce(): Promise<void> {
     if (snapshotPromise) return snapshotPromise;
@@ -127,8 +125,7 @@ export const usePermissionStore = defineStore("permission", () => {
   };
 });
 
-/**
- * 转换后端路由数据为Vue Router配置
+/* * 转换后端路由数据为Vue Router配置
  * 处理组件路径映射和Layout层级嵌套
  */
 const transformRoutes = (routes: RouteItem[], isTopLevel: boolean = true): RouteRecordRaw[] => {

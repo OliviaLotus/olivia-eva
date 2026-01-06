@@ -1,33 +1,28 @@
-/**
- * 应用常量定义
+/* * 应用常量定义
  *
  * @description
  * 包含应用中所有的常量定义，包括角色、存储键名等
  */
 
-/**
- * 应用存储前缀
+/* * 应用存储前缀
  */
 export const APP_PREFIX = "vea";
 
-/**
- * 超级管理员角色标识
+/* * 超级管理员角色标识
  *
  * @description
  * 拥有系统最高权限，可以访问所有资源
  */
 export const ROLE_ROOT = "ROOT";
 
-/**
- * 平台租户ID
+/* * 平台租户ID
  *
  * @description
  * 用于前端识别平台租户（不参与套餐/菜单配置）
  */
 export const PLATFORM_TENANT_ID = 0;
 
-/**
- * 存储键名常量
+/* * 存储键名常量
  *
  * @description
  * 统一管理所有 localStorage/sessionStorage 的键名
@@ -66,7 +61,6 @@ export const STORAGE_KEYS = {
   ACTIVE_TOP_MENU_PATH: `${APP_PREFIX}:app:active_top_menu_path`,
 } as const;
 
-/**
- * 存储键名类型
+/* * 存储键名类型
  */
 export type StorageKey = (typeof STORAGE_KEYS)[keyof typeof STORAGE_KEYS];

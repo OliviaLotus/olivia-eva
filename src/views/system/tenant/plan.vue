@@ -276,8 +276,7 @@ const menuKeywords = ref("");
 const menuExpanded = ref(true);
 const menuParentChildLinked = ref(true);
 
-/**
- * 加载租户套餐分页数据
+/* * 加载租户套餐分页数据
  */
 function fetchData(): void {
   loading.value = true;
@@ -291,16 +290,14 @@ function fetchData(): void {
     });
 }
 
-/**
- * 查询按钮点击事件
+/* * 查询按钮点击事件
  */
 function handleQuery(): void {
   queryParams.pageNum = 1;
   fetchData();
 }
 
-/**
- * 重置查询
+/* * 重置查询
  */
 function handleResetQuery(): void {
   queryFormRef.value?.resetFields();
@@ -308,8 +305,7 @@ function handleResetQuery(): void {
   fetchData();
 }
 
-/**
- * 打开弹窗
+/* * 打开弹窗
  * @param planId 套餐ID（编辑时传入）
  */
 async function openDialog(planId?: number): Promise<void> {
@@ -337,8 +333,7 @@ async function openDialog(planId?: number): Promise<void> {
   }
 }
 
-/**
- * 关闭弹窗
+/* * 关闭弹窗
  */
 function closeDialog(): void {
   dialogState.visible = false;
@@ -354,8 +349,7 @@ function closeDialog(): void {
   });
 }
 
-/**
- * 提交表单
+/* * 提交表单
  */
 const handleSubmit = useDebounceFn(async (): Promise<void> => {
   const valid = await dataFormRef.value?.validate().then(
@@ -380,8 +374,7 @@ const handleSubmit = useDebounceFn(async (): Promise<void> => {
   }
 }, 300);
 
-/**
- * 删除套餐
+/* * 删除套餐
  * @param planId 套餐ID
  */
 function handleDelete(planId?: number): void {
@@ -403,8 +396,7 @@ function handleDelete(planId?: number): void {
   });
 }
 
-/**
- * 打开菜单配置弹窗
+/* * 打开菜单配置弹窗
  */
 async function openPlanMenuDialog(row: TenantPlanItem): Promise<void> {
   if (!row.id) return;
@@ -424,8 +416,7 @@ async function openPlanMenuDialog(row: TenantPlanItem): Promise<void> {
   }
 }
 
-/**
- * 关闭菜单配置弹窗
+/* * 关闭菜单配置弹窗
  */
 function closePlanMenuDialog(): void {
   planMenuDialogVisible.value = false;
@@ -435,8 +426,7 @@ function closePlanMenuDialog(): void {
   menuTreeRef.value?.setCheckedKeys([], false);
 }
 
-/**
- * 展开/收缩菜单树
+/* * 展开/收缩菜单树
  */
 function toggleMenuTree(): void {
   menuExpanded.value = !menuExpanded.value;
@@ -451,23 +441,20 @@ function toggleMenuTree(): void {
   }
 }
 
-/**
- * 切换父子联动
+/* * 切换父子联动
  */
 function handleMenuLinkChange(val: string | number | boolean): void {
   menuParentChildLinked.value = Boolean(val);
 }
 
-/**
- * 菜单树过滤逻辑
+/* * 菜单树过滤逻辑
  */
 function handleMenuFilter(value: string, data: { [key: string]: any }): boolean {
   if (!value) return true;
   return data.label.includes(value);
 }
 
-/**
- * 提交菜单配置
+/* * 提交菜单配置
  */
 async function handlePlanMenuSubmit(): Promise<void> {
   const planId = checkedPlan.value.id;

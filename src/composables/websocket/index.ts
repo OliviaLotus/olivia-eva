@@ -1,5 +1,4 @@
-/**
- * WebSocket 服务统一管理
+/* * WebSocket 服务统一管理
  *
  * @description
  * 提供 WebSocket 服务的统一初始化和清理接口
@@ -12,8 +11,7 @@
 import { useDictSync } from "./useDictSync";
 import { useOnlineCount } from "./useOnlineCount";
 
-/**
- * 初始化所有 WebSocket 服务
+/* * 初始化所有 WebSocket 服务
  *
  * 应在应用启动时调用，统一初始化所有 WebSocket 连接
  *
@@ -33,8 +31,7 @@ export function setupWebSocket() {
   onlineCount.initialize();
 }
 
-/**
- * 清理所有 WebSocket 连接
+/* * 清理所有 WebSocket 连接
  *
  * 应在用户登出时调用，释放所有 WebSocket 资源
  *

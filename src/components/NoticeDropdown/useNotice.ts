@@ -1,5 +1,4 @@
-/**
- * 通知中心逻辑
+/* * 通知中心逻辑
  */
 import { ref, onMounted, onBeforeUnmount } from "vue";
 import type { NoticeItem, NoticeDetail, NoticeQueryParams } from "@/types/api";

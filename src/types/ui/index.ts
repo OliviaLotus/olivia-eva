@@ -1,5 +1,4 @@
-/**
- * UI 类型统一导出
+/* * UI 类型统一导出
  */
 
 export * from "./tagsview";

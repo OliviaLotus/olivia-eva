@@ -182,8 +182,7 @@ const rules: FormRules = {
   configValue: [{ required: true, message: "请输入系统配置值", trigger: "blur" }],
 };
 
-/**
- * 加载配置列表数据
+/* * 加载配置列表数据
  */
 function fetchData(): void {
   loading.value = true;
@@ -197,16 +196,14 @@ function fetchData(): void {
     });
 }
 
-/**
- * 查询按钮点击事件
+/* * 查询按钮点击事件
  */
 function handleQuery(): void {
   queryParams.pageNum = 1;
   fetchData();
 }
 
-/**
- * 重置查询
+/* * 重置查询
  */
 function handleResetQuery(): void {
   queryFormRef.value?.resetFields();
@@ -214,15 +211,13 @@ function handleResetQuery(): void {
   fetchData();
 }
 
-/**
- * 表格选择变化事件
+/* * 表格选择变化事件
  */
 function handleSelectionChange(selection: ConfigItem[]): void {
   selectIds.value = selection.map((item) => item.id).filter(Boolean) as string[];
 }
 
-/**
- * 打开弹窗
+/* * 打开弹窗
  * @param id 配置ID（编辑时传入）
  */
 function openDialog(id?: string): void {
@@ -238,8 +233,7 @@ function openDialog(id?: string): void {
   }
 }
 
-/**
- * 刷新缓存
+/* * 刷新缓存
  */
 const refreshCache = useDebounceFn(() => {
   ConfigAPI.refreshCache().then(() => {
@@ -247,8 +241,7 @@ const refreshCache = useDebounceFn(() => {
   });
 }, 1000);
 
-/**
- * 提交表单
+/* * 提交表单
  */
 function handleSubmit(): void {
   dataFormRef.value?.validate((valid) => {
@@ -276,8 +269,7 @@ function handleSubmit(): void {
   });
 }
 
-/**
- * 关闭弹窗
+/* * 关闭弹窗
  */
 function closeDialog(): void {
   dialogState.visible = false;
@@ -286,8 +278,7 @@ function closeDialog(): void {
   formData.id = undefined;
 }
 
-/**
- * 删除配置
+/* * 删除配置
  * @param id 配置ID
  */
 function handleDelete(id: string): void {

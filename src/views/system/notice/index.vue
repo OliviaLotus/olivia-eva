@@ -338,16 +338,14 @@ const detailDialog = reactive({
 });
 const currentNotice = ref<NoticeDetail>({});
 
-/**
- * 查询按钮点击事件
+/* * 查询按钮点击事件
  */
 function handleQuery(): void {
   queryParams.pageNum = 1;
   fetchData();
 }
 
-/**
- * 加载通知公告列表数据
+/* * 加载通知公告列表数据
  */
 function fetchData(): void {
   loading.value = true;
@@ -361,8 +359,7 @@ function fetchData(): void {
     });
 }
 
-/**
- * 重置查询
+/* * 重置查询
  */
 function handleResetQuery(): void {
   queryFormRef.value?.resetFields();
@@ -370,15 +367,13 @@ function handleResetQuery(): void {
   fetchData();
 }
 
-/**
- * 表格选择变化事件
+/* * 表格选择变化事件
  */
 function handleSelectionChange(selection: NoticeItem[]): void {
   selectIds.value = selection.map((item) => item.id);
 }
 
-/**
- * 打开弹窗
+/* * 打开弹窗
  * @param id 通知ID（编辑时传入）
  */
 function openDialog(id?: string): void {
@@ -404,8 +399,7 @@ function openDialog(id?: string): void {
   }
 }
 
-/**
- * 发布通知公告
+/* * 发布通知公告
  * @param id 通知ID
  */
 function handlePublish(id: string): void {
@@ -415,8 +409,7 @@ function handlePublish(id: string): void {
   });
 }
 
-/**
- * 撤回通知公告
+/* * 撤回通知公告
  * @param id 通知ID
  */
 function handleRevoke(id: string): void {
@@ -426,8 +419,7 @@ function handleRevoke(id: string): void {
   });
 }
 
-/**
- * 提交表单
+/* * 提交表单
  */
 function handleSubmit(): void {
   dataFormRef.value?.validate((valid) => {
@@ -460,8 +452,7 @@ function handleSubmit(): void {
   });
 }
 
-/**
- * 关闭弹窗
+/* * 关闭弹窗
  */
 function closeDialog(): void {
   dialogState.visible = false;
@@ -474,8 +465,7 @@ function closeDialog(): void {
   formData.content = "";
 }
 
-/**
- * 标准化目标用户数据
+/* * 标准化目标用户数据
  */
 function normalizeTargetUsers(value?: unknown): number[] {
   if (!value) {
@@ -495,15 +485,13 @@ function normalizeTargetUsers(value?: unknown): number[] {
   return [];
 }
 
-/**
- * 弹窗全屏切换
+/* * 弹窗全屏切换
  */
 function toggleDialogFullscreen(): void {
   dialogState.fullscreen = !dialogState.fullscreen;
 }
 
-/**
- * 删除通知公告
+/* * 删除通知公告
  * @param id 通知ID
  */
 function handleDelete(id?: number): void {
@@ -533,8 +521,7 @@ function handleDelete(id?: number): void {
   );
 }
 
-/**
- * 打开详情弹窗
+/* * 打开详情弹窗
  */
 async function openDetailDialog(id: string): Promise<void> {
   const noticeDetail = await NoticeAPI.getDetail(id);
@@ -542,8 +529,7 @@ async function openDetailDialog(id: string): Promise<void> {
   detailDialog.visible = true;
 }
 
-/**
- * 关闭详情弹窗
+/* * 关闭详情弹窗
  */
 function closeDetailDialog(): void {
   detailDialog.visible = false;

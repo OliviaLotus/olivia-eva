@@ -10,13 +10,11 @@ import type {
 
 const TENANT_BASE_URL = "/api/v1/tenants";
 
-/**
- * 租户信息
+/* * 租户信息
  */
 
 const TenantAPI = {
-  /**
-   * 获取当前用户可访问的租户列表
+  /*   * 获取当前用户可访问的租户列表
    */
   getTenantList() {
     return request<any, TenantInfo[]>({
@@ -25,8 +23,7 @@ const TenantAPI = {
     });
   },
 
-  /**
-   * 获取当前租户信息
+  /*   * 获取当前租户信息
    */
   getCurrentTenant() {
     return request<any, TenantInfo>({
@@ -35,8 +32,7 @@ const TenantAPI = {
     });
   },
 
-  /**
-   * 切换租户
+  /*   * 切换租户
    *
    * @param tenantId 目标租户ID
    */

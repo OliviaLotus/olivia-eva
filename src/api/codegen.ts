@@ -54,8 +54,7 @@ const GeneratorAPI = {
     });
   },
 
-  /**
-   * 下载 ZIP 文件
+  /*   * 下载 ZIP 文件
    * @param url
    * @param fileName
    */

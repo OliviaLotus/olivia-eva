@@ -300,8 +300,7 @@ const isExpanded = ref(true);
 
 const parentChildLinked = ref(true);
 
-/**
- * 加载角色列表数据
+/* * 加载角色列表数据
  */
 async function fetchList(): Promise<void> {
   loading.value = true;
@@ -320,15 +319,13 @@ function handleQuery(): void {
   fetchList();
 }
 
-/**
- * 重置查询条件
+/* * 重置查询条件
  */
 function resetQuery(): void {
   queryFormRef.value?.resetFields();
 }
 
-/**
- * 重置查询条件并重新查询
+/* * 重置查询条件并重新查询
  */
 function handleResetQuery(): void {
   resetQuery();
@@ -340,23 +337,20 @@ function handleSelectionChange(selection: any): void {
   ids.value = selection.map((item: any) => item.id);
 }
 
-/**
- * 打开表单弹窗
+/* * 打开表单弹窗
  */
 function openDialog(): void {
   dialogState.visible = true;
 }
 
-/**
- * 关闭表单弹窗
+/* * 关闭表单弹窗
  */
 function closeDialog(): void {
   dialogState.visible = false;
   resetForm();
 }
 
-/**
- * 重置表单数据和验证状态
+/* * 重置表单数据和验证状态
  */
 function resetForm(): void {
   roleFormRef.value?.resetFields();
@@ -369,8 +363,7 @@ function resetForm(): void {
   formData.deptIds = undefined;
 }
 
-/**
- * 新增按钮点击事件
+/* * 新增按钮点击事件
  */
 async function handleCreateClick(): Promise<void> {
   dialogState.title = "新增角色";
@@ -380,8 +373,7 @@ async function handleCreateClick(): Promise<void> {
   openDialog();
 }
 
-/**
- * 编辑按钮点击事件
+/* * 编辑按钮点击事件
  * @param roleId 角色ID
  */
 async function handleEditClick(roleId: string): Promise<void> {
@@ -452,8 +444,7 @@ function handleDelete(roleId?: number): void {
   );
 }
 
-/**
- * 批量删除按钮点击事件
+/* * 批量删除按钮点击事件
  */
 function handleBatchDelete(): void {
   handleDelete();

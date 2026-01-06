@@ -25,8 +25,7 @@ const tagSize = ref<"default" | "large" | "small">(props.size as "default" | "la
 
 const dictStore = useDictStore();
 
-/**
- * 根据字典项的值获取对应的 label 和 tagType
+/* * 根据字典项的值获取对应的 label 和 tagType
  * @param dictCode 字典编码
  * @param value 字典项的值
  * @returns 包含 label 和 tagType 的对象
@@ -44,8 +43,7 @@ const getLabelAndTagByValue = async (dictCode: string, value: any) => {
   };
 };
 
-/**
- * 更新 label 和 tagType
+/* * 更新 label 和 tagType
  */
 const updateLabelAndTag = async () => {
   if (!props.code || props.modelValue === undefined) return;

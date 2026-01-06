@@ -1,5 +1,4 @@
-/**
- * 菜单搜索逻辑
+/* * 菜单搜索逻辑
  */
 import { ref, onMounted, onBeforeUnmount, toRaw } from "vue";
 import { RouteRecordRaw, LocationQueryRaw } from "vue-router";

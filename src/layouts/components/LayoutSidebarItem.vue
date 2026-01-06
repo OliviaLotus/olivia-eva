@@ -90,24 +90,21 @@ const MenuIcon = defineComponent({
 });
 
 const props = defineProps({
-  /**
-   * 当前路由对象
+  /*   * 当前路由对象
    */
   item: {
     type: Object as PropType<RouteRecordRaw>,
     required: true,
   },
 
-  /**
-   * 父级完整路径
+  /*   * 父级完整路径
    */
   basePath: {
     type: String,
     required: true,
   },
 
-  /**
-   * 是否为嵌套路由
+  /*   * 是否为嵌套路由
    */
   isNest: {
     type: Boolean,
@@ -118,8 +115,7 @@ const props = defineProps({
 // 可见的唯一子节点
 const onlyOneChild = ref();
 
-/**
- * 检查是否仅有一个可见子节点
+/* * 检查是否仅有一个可见子节点
  *
  * @param children 子路由数组
  * @param parent 父级路由
@@ -149,8 +145,7 @@ function hasOneShowingChild(children: RouteRecordRaw[] = [], parent: RouteRecord
   return false;
 }
 
-/**
- * 获取完整路径，适配外部链接
+/* * 获取完整路径，适配外部链接
  *
  * @param routePath 路由路径
  * @returns 绝对路径

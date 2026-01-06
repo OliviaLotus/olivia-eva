@@ -47,8 +47,7 @@ watchEffect(
   }
 );
 
-/**
- * 部门筛选
+/* * 部门筛选
  */
 function handleFilter(value: string, data: any): boolean {
   if (!value) {
@@ -57,8 +56,7 @@ function handleFilter(value: string, data: any): boolean {
   return data.label.indexOf(value) !== -1;
 }
 
-/**
- * 部门树节点点击事件
+/* * 部门树节点点击事件
  */
 function handleNodeClick(data: { [key: string]: any }): void {
   deptId.value = data.value;

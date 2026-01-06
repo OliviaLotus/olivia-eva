@@ -1,5 +1,4 @@
-/**
- * 应用设置相关类型定义
+/* * 应用设置相关类型定义
  */
 
 import type { ThemeMode } from "@/enums";

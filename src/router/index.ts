@@ -72,8 +72,7 @@ export const constantRoutes: RouteRecordRaw[] = [
   },
 ];
 
-/**
- * 创建路由
+/* * 创建路由
  */
 const router = createRouter({
   history: createWebHashHistory(),

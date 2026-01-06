@@ -125,8 +125,7 @@ const isLastView = computed(() => {
   return selectedTag.value.fullPath === visitedViews.value[visitedViews.value.length - 1]?.fullPath;
 });
 
-/**
- * 递归提取固定标签
+/* * 递归提取固定标签
  */
 const extractAffixTags = (routes: RouteRecordRaw[], basePath = "/"): TagView[] => {
   const affixTags: TagView[] = [];
@@ -158,8 +157,7 @@ const extractAffixTags = (routes: RouteRecordRaw[], basePath = "/"): TagView[] =
   return affixTags;
 };
 
-/**
- * 初始化固定标签
+/* * 初始化固定标签
  */
 const initAffixTags = () => {
   const affixTags = extractAffixTags(permissionStore.routes);
@@ -171,8 +169,7 @@ const initAffixTags = () => {
   });
 };
 
-/**
- * 添加当前路由标签
+/* * 添加当前路由标签
  */
 const addCurrentTag = () => {
   if (!route.meta?.title) return;
@@ -188,8 +185,7 @@ const addCurrentTag = () => {
   });
 };
 
-/**
- * 更新当前标签
+/* * 更新当前标签
  */
 const updateCurrentTag = () => {
   nextTick(() => {
@@ -209,8 +205,7 @@ const updateCurrentTag = () => {
   });
 };
 
-/**
- * 处理中键点击
+/* * 处理中键点击
  */
 const handleMiddleClick = (tag: TagView) => {
   if (!tag.affix) {
@@ -218,8 +213,7 @@ const handleMiddleClick = (tag: TagView) => {
   }
 };
 
-/**
- * 打开右键菜单
+/* * 打开右键菜单
  */
 const openContextMenu = (tag: TagView, event: MouseEvent) => {
   contextMenu.x = event.clientX;
@@ -229,15 +223,13 @@ const openContextMenu = (tag: TagView, event: MouseEvent) => {
   selectedTag.value = tag;
 };
 
-/**
- * 关闭右键菜单
+/* * 关闭右键菜单
  */
 const closeContextMenu = () => {
   contextMenu.visible = false;
 };
 
-/**
- * 处理滚轮事件
+/* * 处理滚轮事件
  */
 const handleScroll = (event: WheelEvent) => {
   closeContextMenu();
@@ -254,8 +246,7 @@ const handleScroll = (event: WheelEvent) => {
   scrollbarRef.value.setScrollLeft(newScrollLeft);
 };
 
-/**
- * 刷新标签
+/* * 刷新标签
  */
 const refreshSelectedTag = (tag: TagView | null) => {
   if (!tag) return;
@@ -266,8 +257,7 @@ const refreshSelectedTag = (tag: TagView | null) => {
   });
 };
 
-/**
- * 关闭标签
+/* * 关闭标签
  */
 const closeSelectedTag = (tag: TagView | null) => {
   if (!tag) return;
@@ -279,8 +269,7 @@ const closeSelectedTag = (tag: TagView | null) => {
   });
 };
 
-/**
- * 关闭左侧标签
+/* * 关闭左侧标签
  */
 const closeLeftTags = () => {
   if (!selectedTag.value) return;
@@ -294,8 +283,7 @@ const closeLeftTags = () => {
   });
 };
 
-/**
- * 关闭右侧标签
+/* * 关闭右侧标签
  */
 const closeRightTags = () => {
   if (!selectedTag.value) return;
@@ -309,8 +297,7 @@ const closeRightTags = () => {
   });
 };
 
-/**
- * 关闭其他标签
+/* * 关闭其他标签
  */
 const closeOtherTags = () => {
   if (!selectedTag.value) return;
@@ -321,8 +308,7 @@ const closeOtherTags = () => {
   });
 };
 
-/**
- * 关闭所有标签
+/* * 关闭所有标签
  */
 const closeAllTags = (tag: TagView | null) => {
   tagsViewStore.delAllViews().then((result: any) => {

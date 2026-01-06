@@ -200,8 +200,7 @@ const rules: FormRules = {
   sort: [{ required: true, message: "显示排序不能为空", trigger: "blur" }],
 };
 
-/**
- * 加载部门列表数据
+/* * 加载部门列表数据
  */
 function fetchData(): void {
   loading.value = true;
@@ -214,30 +213,26 @@ function fetchData(): void {
     });
 }
 
-/**
- * 查询按钮点击事件
+/* * 查询按钮点击事件
  */
 function handleQuery(): void {
   fetchData();
 }
 
-/**
- * 重置查询
+/* * 重置查询
  */
 function handleResetQuery(): void {
   queryFormRef.value?.resetFields();
   fetchData();
 }
 
-/**
- * 表格选择变化事件
+/* * 表格选择变化事件
  */
 function handleSelectionChange(selection: DeptItem[]): void {
   selectIds.value = selection.map((item) => item.id).filter(Boolean) as string[];
 }
 
-/**
- * 打开弹窗
+/* * 打开弹窗
  * @param parentId 父部门ID
  * @param deptId 部门ID（编辑时传入）
  */
@@ -263,8 +258,7 @@ async function openDialog(parentId?: string, deptId?: string): Promise<void> {
   }
 }
 
-/**
- * 提交表单
+/* * 提交表单
  */
 function handleSubmit(): void {
   deptFormRef.value?.validate((valid) => {
@@ -292,8 +286,7 @@ function handleSubmit(): void {
   });
 }
 
-/**
- * 删除部门
+/* * 删除部门
  * @param deptId 部门ID
  */
 function handleDelete(deptId?: number): void {
@@ -324,8 +317,7 @@ function handleDelete(deptId?: number): void {
   );
 }
 
-/**
- * 关闭弹窗
+/* * 关闭弹窗
  */
 function closeDialog(): void {
   dialogState.visible = false;

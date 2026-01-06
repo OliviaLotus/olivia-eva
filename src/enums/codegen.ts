@@ -1,12 +1,10 @@
-/**
- * 代码生成相关枚举
+/* * 代码生成相关枚举
  *
  * @description
  * 包含表单类型、查询类型等代码生成功能的枚举定义
  */
 
-/**
- * 表单类型枚举
+/* * 表单类型枚举
  */
 export const FormTypeEnum: Record<string, OptionItem> = {
   INPUT: { value: 1, label: "输入框" },
@@ -21,8 +19,7 @@ export const FormTypeEnum: Record<string, OptionItem> = {
   HIDDEN: { value: 10, label: "隐藏域" },
 };
 
-/**
- * 查询类型枚举
+/* * 查询类型枚举
  */
 export const QueryTypeEnum: Record<string, OptionItem> = {
   /* 等于 */

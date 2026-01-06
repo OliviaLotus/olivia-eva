@@ -10,8 +10,7 @@
 
 <script lang="ts" setup>
 interface Props {
-  /**
-   * 表格数据长度
+  /*   * 表格数据长度
    * 用于性能优化，避免多次计算宽度
    */
   listDataLength: number;
@@ -20,8 +19,7 @@ interface Props {
   fixed?: string;
   align?: string;
   showOverflowTooltip?: boolean;
-  /**
-   * 最小宽度，优先级高于自动计算宽度，默认80px
+  /*   * 最小宽度，优先级高于自动计算宽度，默认80px
    * @default 80px
    */
   minWidth?: number;

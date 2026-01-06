@@ -1,5 +1,4 @@
-/**
- * 应用配置
+/* * 应用配置
  */
 import { LayoutMode, ComponentSize, SidebarColor, ThemeMode, LanguageEnum } from "@/enums";
 

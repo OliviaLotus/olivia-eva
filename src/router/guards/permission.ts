@@ -6,8 +6,7 @@ import { useTenantStoreHook } from "@/store/modules/tenant";
 import { isTenantEnabled } from "@/utils/tenant";
 import { addRecentMenu } from "@/composables/useRecentMenus";
 
-/**
- * 路由权限守卫
+/* * 路由权限守卫
  *
  * 处理登录验证、动态路由生成、404检测等
  */

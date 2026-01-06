@@ -1,5 +1,4 @@
-/**
- * Dict 字典类型定义
+/* * Dict 字典类型定义
  */
 
 import type { BaseQueryParams } from "./common";

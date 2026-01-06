@@ -44,8 +44,7 @@ import FileAPI from "@/api/file";
 import type { FileInfo } from "@/types/api";
 
 const props = defineProps({
-  /**
-   * 请求携带的额外参数
+  /*   * 请求携带的额外参数
    */
   data: {
     type: Object,
@@ -53,29 +52,25 @@ const props = defineProps({
       return {};
     },
   },
-  /**
-   * 上传文件的参数名
+  /*   * 上传文件的参数名
    */
   name: {
     type: String,
     default: "file",
   },
-  /**
-   * 文件上传数量限制
+  /*   * 文件上传数量限制
    */
   limit: {
     type: Number,
     default: 10,
   },
-  /**
-   * 单个文件的最大允许大小
+  /*   * 单个文件的最大允许大小
    */
   maxFileSize: {
     type: Number,
     default: 10,
   },
-  /**
-   * 上传文件类型
+  /*   * 上传文件类型
    */
   accept: {
     type: String,
@@ -93,8 +88,7 @@ const modelValue = defineModel("modelValue", {
 
 const fileList = ref<UploadUserFile[]>([]);
 
-/**
- * 删除图片
+/* * 删除图片
  */
 function handleRemove(imageUrl: string) {
   FileAPI.delete(imageUrl).then(() => {
@@ -107,8 +101,7 @@ function handleRemove(imageUrl: string) {
   });
 }
 
-/**
- * 上传前校验
+/* * 上传前校验
  */
 function handleBeforeUpload(file: UploadRawFile) {
   // 校验文件类型：虽然 accept 属性限制了用户在文件选择器中可选的文件类型，但仍需在上传时再次校验文件实际类型，确保符合 accept 的规则
@@ -167,15 +160,13 @@ function handleUpload(options: UploadRequestOptions) {
   });
 }
 
-/**
- * 上传文件超出限制
+/* * 上传文件超出限制
  */
 function handleExceed() {
   ElMessage.warning("最多只能上传 " + props.limit + " 张图片");
 }
 
-/**
- * 上传成功回调
+/* * 上传成功回调
  */
 const handleSuccess = (fileInfo: FileInfo, uploadFile: UploadUserFile) => {
   ElMessage.success("上传成功");
@@ -187,24 +178,21 @@ const handleSuccess = (fileInfo: FileInfo, uploadFile: UploadUserFile) => {
   }
 };
 
-/**
- * 上传失败回调
+/* * 上传失败回调
  */
 const handleError = (error: any) => {
   console.log("handleError");
   ElMessage.error("上传失败: " + error.message);
 };
 
-/**
- * 预览图片
+/* * 预览图片
  */
 const handlePreviewImage = (imageUrl: string) => {
   previewImageIndex.value = modelValue.value.findIndex((url) => url === imageUrl);
   previewVisible.value = true;
 };
 
-/**
- * 关闭预览
+/* * 关闭预览
  */
 const handlePreviewClose = () => {
   previewVisible.value = false;
