@@ -19,7 +19,7 @@ export const appConfig = {
 export const defaults = {
   theme: prefersDark ? ThemeMode.DARK : ThemeMode.LIGHT,
   themeColor: "#4080FF",
-  sidebarColorScheme: SidebarColor.CLASSIC_BLUE,
+  sidebarColorScheme: SidebarColor.MINIMAL_WHITE,
   layout: LayoutMode.LEFT,
   size: ComponentSize.DEFAULT,
   language: LanguageEnum.ZH_CN,

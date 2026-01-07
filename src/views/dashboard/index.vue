@@ -5,7 +5,7 @@
 
     <el-card shadow="never" class="mt-2">
       <div class="flex flex-wrap">
-        <!-- 左侧问候语区域 -->
+        <!-- 问候语区域 -->
         <div class="flex-1 flex items-start">
           <div style="width: 80px; height: 80px; overflow: hidden; border-radius: 50%">
             <img
