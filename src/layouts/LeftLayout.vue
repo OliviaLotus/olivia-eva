@@ -8,6 +8,7 @@
           <LayoutSidebar :data="routes" base-path="" />
         </el-scrollbar>
       </div>
+      <div class="absolute inset-y-0 -right-[1px] z-1000 w-[1px] bg-gray-200"></div>
     </div>
 
     <!-- 主内容区 -->
