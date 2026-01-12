@@ -2,7 +2,7 @@
   <div class="logo">
     <transition enter-active-class="animate__animated animate__fadeInLeft">
       <router-link :key="+collapse" class="wh-full flex-center" to="/">
-        <img :src="logo" class="w20px h20px" />
+        <img :src="logo" class="w32px h32px" />
         <span v-if="!collapse" class="title">
           {{ appConfig.title }}
         </span>
@@ -32,7 +32,7 @@ defineProps({
   .title {
     flex-shrink: 0;
     margin-left: 10px;
-    font-size: 14px;
+    font-size: 18px;
     font-weight: bold;
     color: $sidebar-logo-text-color;
   }
