@@ -2,7 +2,7 @@ import { useDictStoreHook } from "@/store/modules/dict";
 import { useStomp } from "./useStomp";
 import type { IMessage } from "@stomp/stompjs";
 
-/* * 字典变更消息结构
+/* 字典变更消息结构
  */
 export interface DictChangeMessage {
   /* 字典编码 */
@@ -11,19 +11,19 @@ export interface DictChangeMessage {
   timestamp: number;
 }
 
-/* * 字典消息别名（向后兼容）
+/* 字典消息别名（向后兼容）
  */
 export type DictMessage = DictChangeMessage;
 
-/* * 字典变更事件回调函数类型
+/* 字典变更事件回调函数类型
  */
 export type DictChangeCallback = (message: DictChangeMessage) => void;
 
-/* * 全局单例实例
+/* 全局单例实例
  */
 let singletonInstance: ReturnType<typeof createDictSyncComposable> | null = null;
 
-/* * 创建字典同步组合式函数（内部工厂函数）
+/* 创建字典同步组合式函数（内部工厂函数）
  */
 function createDictSyncComposable() {
   const dictStore = useDictStoreHook();
@@ -47,7 +47,7 @@ function createDictSyncComposable() {
   // 订阅 ID（用于取消订阅）
   let subscriptionId: string | null = null;
 
-  /*   * 处理字典变更事件
+  /* 处理字典变更事件
    */
   const handleDictChangeMessage = (message: IMessage) => {
     if (!message.body) {
@@ -79,7 +79,7 @@ function createDictSyncComposable() {
     }
   };
 
-  /*   * 初始化 WebSocket 连接并订阅字典主题
+  /* 初始化 WebSocket 连接并订阅字典主题
    */
   const initialize = () => {
     // 检查是否配置了 WebSocket 端点
@@ -104,7 +104,7 @@ function createDictSyncComposable() {
     // }
   };
 
-  /*   * 关闭 WebSocket 连接并清理资源
+  /* 关闭 WebSocket 连接并清理资源
    */
   const cleanup = () => {
     // 取消订阅（如果有的话）
@@ -123,7 +123,7 @@ function createDictSyncComposable() {
     messageCallbacks.value = [];
   };
 
-  /*   * 注册字典变更回调函数
+  /* 注册字典变更回调函数
    *
    * @param callback 回调函数
    * @returns 返回一个取消注册的函数
@@ -152,7 +152,7 @@ function createDictSyncComposable() {
   };
 }
 
-/* * 字典同步组合式函数（单例模式）
+/* 字典同步组合式函数（单例模式）
  *
  * 用于监听后端字典变更并自动同步到前端缓存
  *

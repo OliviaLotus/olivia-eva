@@ -1,6 +1,6 @@
 import { ref } from "vue";
 
-/* * 最近访问菜单项
+/* 最近访问菜单项
  */
 export interface RecentMenuItem {
   path: string;
@@ -15,7 +15,7 @@ const MAX_COUNT = 8;
 // 全局状态
 const recentMenus = ref<RecentMenuItem[]>([]);
 
-/* * 从 localStorage 加载数据
+/* 从 localStorage 加载数据
  */
 function loadFromStorage(): RecentMenuItem[] {
   try {
@@ -26,7 +26,7 @@ function loadFromStorage(): RecentMenuItem[] {
   }
 }
 
-/* * 保存到 localStorage
+/* 保存到 localStorage
  */
 function saveToStorage(menus: RecentMenuItem[]) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(menus));
@@ -35,17 +35,17 @@ function saveToStorage(menus: RecentMenuItem[]) {
 // 初始化
 recentMenus.value = loadFromStorage();
 
-/* * 最近访问菜单 composable
+/* 最近访问菜单 composable
  */
 export function useRecentMenus() {
-  /*   * 清空所有记录
+  /* 清空所有记录
    */
   function clearRecentMenus() {
     recentMenus.value = [];
     localStorage.removeItem(STORAGE_KEY);
   }
 
-  /*   * 格式化访问时间
+  /* 格式化访问时间
    */
   function formatVisitTime(timestamp: number): string {
     const now = Date.now();
@@ -67,7 +67,7 @@ export function useRecentMenus() {
   };
 }
 
-/* * 添加最近访问记录（全局方法，供路由守卫调用）
+/* 添加最近访问记录（全局方法，供路由守卫调用）
  */
 export function addRecentMenu(path: string, title: string, icon?: string) {
   if (!path || !title) return;

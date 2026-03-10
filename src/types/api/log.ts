@@ -1,4 +1,4 @@
-/* * Log 日志类型定义
+/* Log 日志类型定义
  */
 
 import type { BaseQueryParams } from "./common";

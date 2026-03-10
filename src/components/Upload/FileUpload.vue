@@ -57,7 +57,7 @@ import FileAPI from "@/api/file";
 import type { FileInfo } from "@/types/api";
 
 const props = defineProps({
-  /*   * 请求携带的额外参数
+  /* 请求携带的额外参数
    */
   data: {
     type: Object,
@@ -65,38 +65,38 @@ const props = defineProps({
       return {};
     },
   },
-  /*   * 上传文件的参数名
+  /* 上传文件的参数名
    */
   name: {
     type: String,
     default: "file",
   },
-  /*   * 文件上传数量限制
+  /* 文件上传数量限制
    */
   limit: {
     type: Number,
     default: 10,
   },
-  /*   * 单个文件上传大小限制(单位MB)
+  /* 单个文件上传大小限制(单位MB)
    */
   maxFileSize: {
     type: Number,
     default: 10,
   },
-  /*   * 上传文件类型
+  /* 上传文件类型
    */
   accept: {
     type: String,
     default: "*",
   },
-  /*   * 上传按钮文本
+  /* 上传按钮文本
    */
   uploadBtnText: {
     type: String,
     default: "上传文件",
   },
 
-  /*   * 样式
+  /* 样式
    */
   style: {
     type: Object,
@@ -134,7 +134,7 @@ watch(
   }
 );
 
-/* * 上传前校验
+/* 上传前校验
  */
 function handleBeforeUpload(file: UploadRawFile) {
   // 限制文件大小
@@ -175,13 +175,13 @@ function handleUpload(options: UploadRequestOptions) {
   });
 }
 
-/* * 上传文件超出限制
+/* 上传文件超出限制
  */
 function handleExceed() {
   ElMessage.warning("最多只能上传 " + props.limit + " 个文件");
 }
 
-/* * 上传成功
+/* 上传成功
  */
 const handleSuccess = (response: any, uploadFile: UploadFile, files: UploadFiles) => {
   ElMessage.success("上传成功");
@@ -213,14 +213,14 @@ const handleSuccess = (response: any, uploadFile: UploadFile, files: UploadFiles
   }
 };
 
-/* * 上传失败
+/* 上传失败
  */
 const handleError = (_error: any) => {
   console.error(_error);
   ElMessage.error("上传失败");
 };
 
-/* * 删除文件
+/* 删除文件
  */
 function handleRemove(fileUrl: string) {
   FileAPI.delete(fileUrl).then(() => {
@@ -228,7 +228,7 @@ function handleRemove(fileUrl: string) {
   });
 }
 
-/* * 下载文件
+/* 下载文件
  */
 function handleDownload(file: UploadUserFile) {
   const { url, name } = file;

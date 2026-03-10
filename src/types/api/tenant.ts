@@ -1,4 +1,4 @@
-/* * Tenant 租户类型定义
+/* Tenant 租户类型定义
  */
 
 import type { BaseQueryParams } from "./common";

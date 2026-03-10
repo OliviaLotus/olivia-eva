@@ -195,7 +195,7 @@ const rules: FormRules = {
   label: [{ required: true, message: "请输入字典标签", trigger: "blur" }],
 };
 
-/* * 加载字典项列表数据
+/* 加载字典项列表数据
  */
 function fetchData(): void {
   loading.value = true;
@@ -209,14 +209,14 @@ function fetchData(): void {
     });
 }
 
-/* * 查询按钮点击事件
+/* 查询按钮点击事件
  */
 function handleQuery(): void {
   queryParams.pageNum = 1;
   fetchData();
 }
 
-/* * 重置查询
+/* 重置查询
  */
 function handleResetQuery(): void {
   queryFormRef.value?.resetFields();
@@ -224,13 +224,13 @@ function handleResetQuery(): void {
   fetchData();
 }
 
-/* * 表格选择变化事件
+/* 表格选择变化事件
  */
 function handleSelectionChange(selection: DictItem[]): void {
   ids.value = selection.map((item) => item.id);
 }
 
-/* * 打开弹窗
+/* 打开弹窗
  * @param row 字典项数据（编辑时传入）
  */
 function openDialog(row?: DictItem): void {
@@ -244,7 +244,7 @@ function openDialog(row?: DictItem): void {
   }
 }
 
-/* * 提交表单
+/* 提交表单
  */
 function handleSubmit(): void {
   dataFormRef.value?.validate((isValid) => {
@@ -274,7 +274,7 @@ function handleSubmit(): void {
   });
 }
 
-/* * 关闭弹窗
+/* 关闭弹窗
  */
 function closeDialog(): void {
   dialogState.visible = false;
@@ -286,7 +286,7 @@ function closeDialog(): void {
   formData.tagType = "";
 }
 
-/* * 删除字典项
+/* 删除字典项
  * @param id 字典项ID
  */
 function handleDelete(id?: number): void {

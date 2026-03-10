@@ -312,7 +312,7 @@ const rules: FormRules = {
   mobile: [{ pattern: /^1[3-9]\d{9}$/, message: "请输入正确的手机号码", trigger: "blur" }],
 };
 
-/* * 加载用户列表数据
+/* 加载用户列表数据
  */
 async function fetchList(): Promise<void> {
   loading.value = true;
@@ -325,7 +325,7 @@ async function fetchList(): Promise<void> {
   }
 }
 
-/* * 加载表单下拉选项数据
+/* 加载表单下拉选项数据
  */
 async function loadFormOptions(): Promise<void> {
   [roleOptions.value, deptOptions.value] = await Promise.all([
@@ -336,14 +336,14 @@ async function loadFormOptions(): Promise<void> {
 
 const { selectedIds, hasSelection, handleSelectionChange } = useTableSelection<UserItem>();
 
-/* * 执行查询（重置页码）
+/* 执行查询（重置页码）
  */
 function handleQuery(): void {
   queryParams.pageNum = 1;
   fetchList();
 }
 
-/* * 重置查询条件
+/* 重置查询条件
  */
 function resetQuery(): void {
   queryFormRef.value?.resetFields();
@@ -351,14 +351,14 @@ function resetQuery(): void {
   queryParams.createTime = undefined;
 }
 
-/* * 重置查询条件并重新查询
+/* 重置查询条件并重新查询
  */
 function handleResetQuery(): void {
   resetQuery();
   handleQuery();
 }
 
-/* * 重置用户密码
+/* 重置用户密码
  * @param userId 用户ID
  * @param password 新密码
  */
@@ -367,7 +367,7 @@ async function resetPassword(userId: string, password: string): Promise<void> {
   ElMessage.success("密码重置成功");
 }
 
-/* * 删除用户
+/* 删除用户
  * @param userIds 用户ID列表，多个ID用逗号分隔
  */
 async function deleteUsers(userIds: string): Promise<void> {
@@ -376,20 +376,20 @@ async function deleteUsers(userIds: string): Promise<void> {
   handleQuery();
 }
 
-/* * 打开表单弹窗
+/* 打开表单弹窗
  */
 function openDialog(): void {
   dialogState.visible = true;
 }
 
-/* * 关闭表单弹窗
+/* 关闭表单弹窗
  */
 function closeDialog(): void {
   dialogState.visible = false;
   resetForm();
 }
 
-/* * 重置表单数据和验证状态
+/* 重置表单数据和验证状态
  */
 function resetForm(): void {
   userFormRef.value?.resetFields();
@@ -397,7 +397,7 @@ function resetForm(): void {
   Object.assign(formData, initialFormData);
 }
 
-/* * 重置密码按钮点击事件
+/* 重置密码按钮点击事件
  * @param row 用户数据
  */
 function handleResetPassword(row: UserItem): void {
@@ -414,7 +414,7 @@ function handleResetPassword(row: UserItem): void {
   );
 }
 
-/* * 新增按钮点击事件
+/* 新增按钮点击事件
  */
 async function handleCreateClick(): Promise<void> {
   dialogState.title = "新增用户";
@@ -423,7 +423,7 @@ async function handleCreateClick(): Promise<void> {
   openDialog();
 }
 
-/* * 编辑按钮点击事件
+/* 编辑按钮点击事件
  * @param id 用户ID
  */
 async function handleEditClick(id: string): Promise<void> {
@@ -435,7 +435,7 @@ async function handleEditClick(id: string): Promise<void> {
   openDialog();
 }
 
-/* * 提交表单（防抖处理）
+/* 提交表单（防抖处理）
  */
 const handleSubmit = useDebounceFn(async () => {
   const valid = await userFormRef.value?.validate().then(
@@ -460,7 +460,7 @@ const handleSubmit = useDebounceFn(async () => {
   }
 }, 300);
 
-/* * 删除按钮点击事件
+/* 删除按钮点击事件
  * @param id 用户ID，不传则删除选中的用户
  */
 function handleDelete(id?: string): void {
@@ -494,7 +494,7 @@ function handleDelete(id?: string): void {
   );
 }
 
-/* * 导出用户列表
+/* 导出用户列表
  */
 async function exportUsers(): Promise<void> {
   const response = await UserAPI.export(queryParams);
@@ -502,7 +502,7 @@ async function exportUsers(): Promise<void> {
   ElMessage.success("导出成功");
 }
 
-/* * 打开导入弹窗
+/* 打开导入弹窗
  */
 function openImportDialog(): void {
   importDialogVisible.value = true;

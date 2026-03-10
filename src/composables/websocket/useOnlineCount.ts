@@ -2,18 +2,18 @@ import { ref, onMounted, onUnmounted, getCurrentInstance } from "vue";
 import { useStomp } from "./useStomp";
 import { AuthStorage } from "@/utils/auth";
 
-/* * 在线用户数量消息结构
+/* 在线用户数量消息结构
  */
 interface OnlineCountMessage {
   count?: number;
   timestamp?: number;
 }
 
-/* * 全局单例实例
+/* 全局单例实例
  */
 let globalInstance: ReturnType<typeof createOnlineCountComposable> | null = null;
 
-/* * 创建在线用户计数组合式函数（内部工厂函数）
+/* 创建在线用户计数组合式函数（内部工厂函数）
  */
 function createOnlineCountComposable() {
   // ==================== 状态管理 ====================
@@ -36,7 +36,7 @@ function createOnlineCountComposable() {
   // 订阅 ID
   let subscriptionId: string | null = null;
 
-  /*   * 处理在线用户数量消息
+  /* 处理在线用户数量消息
    */
   const handleOnlineCountMessage = (message: any) => {
     try {
@@ -59,7 +59,7 @@ function createOnlineCountComposable() {
     }
   };
 
-  /*   * 订阅在线用户计数主题
+  /* 订阅在线用户计数主题
    */
   const subscribeToOnlineCount = () => {
     if (subscriptionId) {
@@ -70,7 +70,7 @@ function createOnlineCountComposable() {
     subscriptionId = stomp.subscribe(ONLINE_COUNT_TOPIC, handleOnlineCountMessage);
   };
 
-  /*   * 初始化 WebSocket 连接并订阅在线用户主题
+  /* 初始化 WebSocket 连接并订阅在线用户主题
    */
   const initialize = () => {
     // 检查 WebSocket 端点是否配置
@@ -94,7 +94,7 @@ function createOnlineCountComposable() {
     subscribeToOnlineCount();
   };
 
-  /*   * 关闭 WebSocket 连接并清理资源
+  /* 关闭 WebSocket 连接并清理资源
    */
   const cleanup = () => {
     // 取消订阅
@@ -127,7 +127,7 @@ function createOnlineCountComposable() {
   };
 }
 
-/* * 在线用户计数组合式函数（单例模式）
+/* 在线用户计数组合式函数（单例模式）
  *
  * 用于实时显示系统在线用户数量
  *

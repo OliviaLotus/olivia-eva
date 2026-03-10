@@ -1,6 +1,6 @@
 /// <reference types="vite/client" />
 
-/* * Vite 环境变量类型定义
+/* Vite 环境变量类型定义
  */
 interface ImportMetaEnv {
   readonly VITE_APP_PORT: number;

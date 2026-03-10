@@ -1,4 +1,4 @@
-/* * Notice 通知类型定义
+/* Notice 通知类型定义
  */
 
 import type { BaseQueryParams } from "./common";

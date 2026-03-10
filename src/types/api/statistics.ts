@@ -1,4 +1,4 @@
-/* * Statistics 统计类型定义
+/* Statistics 统计类型定义
  */
 
 /* 访问趋势查询参数 */

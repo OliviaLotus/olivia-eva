@@ -44,7 +44,7 @@ export const AuthStorage = {
   },
 };
 
-/* * 权限判断
+/* 权限判断
  */
 export function hasPerm(value: string | string[], type: "button" | "role" = "button"): boolean {
   const { roles, perms } = useUserStoreHook().userInfo;
@@ -64,7 +64,7 @@ export function hasPerm(value: string | string[], type: "button" | "role" = "but
     : value.some((perm) => auths.includes(perm));
 }
 
-/* * 重定向到登录页面
+/* 重定向到登录页面
  */
 export async function redirectToLogin(message: string = "请重新登录"): Promise<void> {
   ElNotification({

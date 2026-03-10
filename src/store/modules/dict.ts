@@ -10,7 +10,7 @@ export const useDictStore = defineStore("dict", () => {
   // 请求队列（防止重复请求）
   const requestQueue: Record<string, Promise<void>> = {};
 
-  /*   * 缓存字典数据
+  /* 缓存字典数据
    * @param dictCode 字典编码
    * @param data 字典项列表
    */
@@ -18,7 +18,7 @@ export const useDictStore = defineStore("dict", () => {
     dictCache.value[dictCode] = data;
   };
 
-  /*   * 加载字典数据（如果缓存中没有则请求）
+  /* 加载字典数据（如果缓存中没有则请求）
    * @param dictCode 字典编码
    */
   const loadDictItems = async (dictCode: string) => {
@@ -39,7 +39,7 @@ export const useDictStore = defineStore("dict", () => {
     await requestQueue[dictCode];
   };
 
-  /*   * 获取字典项列表
+  /* 获取字典项列表
    * @param dictCode 字典编码
    * @returns 字典项列表
    */
@@ -47,7 +47,7 @@ export const useDictStore = defineStore("dict", () => {
     return dictCache.value[dictCode] || [];
   };
 
-  /*   * 移除指定字典项
+  /* 移除指定字典项
    * @param dictCode 字典编码
    */
   const removeDictItem = (dictCode: string) => {
@@ -56,7 +56,7 @@ export const useDictStore = defineStore("dict", () => {
     }
   };
 
-  /*   * 清空字典缓存
+  /* 清空字典缓存
    */
   const clearDictCache = () => {
     dictCache.value = {};

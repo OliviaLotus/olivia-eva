@@ -1,10 +1,10 @@
-/* * 通用枚举
+/* 通用枚举
  *
  * @description
  * 包含对话框模式、通用状态等跨业务的枚举定义
  */
 
-/* * 对话框模式枚举
+/* 对话框模式枚举
  *
  * @description
  * 定义对话框的操作模式（创建、编辑、查看）
@@ -18,7 +18,7 @@ export enum DialogMode {
   VIEW = "view",
 }
 
-/* * 通用状态枚举
+/* 通用状态枚举
  *
  * @description
  * 适用于大多数业务实体的启用/禁用状态
@@ -30,7 +30,7 @@ export enum CommonStatus {
   ENABLED = 1,
 }
 
-/* * 审核状态枚举
+/* 审核状态枚举
  */
 export enum AuditStatus {
   /* 待审核 */

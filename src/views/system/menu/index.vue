@@ -445,7 +445,7 @@ const rules: FormRules = {
   visible: [{ required: true, message: "请选择显示状态", trigger: "change" }],
 };
 
-/* * 加载菜单列表数据
+/* 加载菜单列表数据
  */
 function fetchData(): void {
   loading.value = true;
@@ -458,26 +458,26 @@ function fetchData(): void {
     });
 }
 
-/* * 查询按钮点击事件
+/* 查询按钮点击事件
  */
 function handleQuery(): void {
   fetchData();
 }
 
-/* * 重置查询
+/* 重置查询
  */
 function handleResetQuery(): void {
   queryFormRef.value?.resetFields();
   fetchData();
 }
 
-/* * 行点击事件
+/* 行点击事件
  */
 function handleRowClick(row: MenuItem): void {
   selectedMenuId.value = row.id;
 }
 
-/* * 打开弹窗
+/* 打开弹窗
  * @param parentId 父菜单ID
  * @param menuId 菜单ID（编辑时传入）
  */
@@ -501,7 +501,7 @@ function openDialog(parentId?: string, menuId?: string): void {
     });
 }
 
-/* * 菜单类型切换事件
+/* 菜单类型切换事件
  */
 function handleMenuTypeChange(): void {
   if (formData.value.type !== initialMenuFormData.value.type) {
@@ -516,7 +516,7 @@ function handleMenuTypeChange(): void {
   }
 }
 
-/* * 提交表单
+/* 提交表单
  */
 function handleSubmit(): void {
   menuFormRef.value?.validate((isValid) => {
@@ -543,7 +543,7 @@ function handleSubmit(): void {
   });
 }
 
-/* * 删除菜单
+/* 删除菜单
  * @param menuId 菜单ID
  */
 function handleDelete(menuId: string): void {
@@ -574,7 +574,7 @@ function handleDelete(menuId: string): void {
   );
 }
 
-/* * 关闭弹窗
+/* 关闭弹窗
  */
 function closeDialog(): void {
   dialogState.visible = false;

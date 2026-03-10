@@ -20,24 +20,24 @@ export interface UseStompOptions {
   debug?: boolean;
   /* 是否在重连时自动恢复订阅，默认为 true */
   autoRestoreSubscriptions?: boolean;
-  /*   * 心跳接收间隔，单位毫秒，默认为 4000
+  /* 心跳接收间隔，单位毫秒，默认为 4000
    * 注意：标签页失活时，浏览器会节流定时器，建议设置较长的间隔（如 10000）以减少失活影响
    */
   heartbeatIncoming?: number;
-  /*   * 心跳发送间隔，单位毫秒，默认为 4000
+  /* 心跳发送间隔，单位毫秒，默认为 4000
    * 注意：标签页失活时，浏览器会节流定时器，建议设置较长的间隔（如 10000）以减少失活影响
    */
   heartbeatOutgoing?: number;
 }
 
-/* * 订阅配置信息
+/* 订阅配置信息
  */
 interface SubscriptionConfig {
   destination: string;
   callback: (message: IMessage) => void;
 }
 
-/* * 连接状态枚举
+/* 连接状态枚举
  */
 enum ConnectionState {
   DISCONNECTED = "DISCONNECTED",
@@ -46,7 +46,7 @@ enum ConnectionState {
   RECONNECTING = "RECONNECTING",
 }
 
-/* * STOMP WebSocket 连接管理组合式函数
+/* STOMP WebSocket 连接管理组合式函数
  *
  * 核心功能：
  * - 自动连接管理（连接、断开、重连）
@@ -95,7 +95,7 @@ export function useStomp(options: UseStompOptions = {}) {
 
   // ==================== 工具函数 ====================
 
-  /*   * 清理所有定时器
+  /* 清理所有定时器
    */
   const clearAllTimers = () => {
     if (reconnectTimer) {
@@ -108,13 +108,13 @@ export function useStomp(options: UseStompOptions = {}) {
     }
   };
 
-  /*   * 日志输出（支持调试模式控制）
+  /* 日志输出（支持调试模式控制）
    */
   const log = config.debug ? (...args: any[]) => console.log("[useStomp]", ...args) : () => {};
   const logWarn = (...args: any[]) => console.warn("[useStomp]", ...args);
   const logError = (...args: any[]) => console.error("[useStomp]", ...args);
 
-  /*   * 恢复所有订阅
+  /* 恢复所有订阅
    */
   const restoreSubscriptions = () => {
     if (!config.autoRestoreSubscriptions || subscriptionRegistry.size === 0) {
@@ -132,7 +132,7 @@ export function useStomp(options: UseStompOptions = {}) {
     }
   };
 
-  /*   * 初始化 STOMP 客户端
+  /* 初始化 STOMP 客户端
    */
   const initializeClient = () => {
     // 如果客户端已存在且处于活动状态，直接返回
@@ -245,7 +245,7 @@ export function useStomp(options: UseStompOptions = {}) {
     };
   };
 
-  /*   * 调度重连任务
+  /* 调度重连任务
    */
   const scheduleReconnect = () => {
     // 如果正在连接或手动断开，不重连
@@ -306,7 +306,7 @@ export function useStomp(options: UseStompOptions = {}) {
 
   // ==================== 标签页可见性监听 ====================
 
-  /*   * 处理标签页可见性变化
+  /* 处理标签页可见性变化
    * 当标签页从失活变为激活时，检查连接状态并尝试重连
    */
   const handleVisibilityChange = () => {
@@ -340,7 +340,7 @@ export function useStomp(options: UseStompOptions = {}) {
 
   // ==================== 公共接口 ====================
 
-  /*   * 建立 WebSocket 连接
+  /* 建立 WebSocket 连接
    */
   const connect = () => {
     // 重置手动断开标志
@@ -404,7 +404,7 @@ export function useStomp(options: UseStompOptions = {}) {
     }
   };
 
-  /*   * 执行订阅操作（内部方法）
+  /* 执行订阅操作（内部方法）
    */
   const performSubscribe = (destination: string, callback: (message: IMessage) => void): string => {
     if (!stompClient.value || !stompClient.value.connected) {
@@ -424,7 +424,7 @@ export function useStomp(options: UseStompOptions = {}) {
     }
   };
 
-  /*   * 订阅指定主题
+  /* 订阅指定主题
    *
    * @param destination 目标主题地址（如：/topic/message）
    * @param callback 接收到消息时的回调函数
@@ -443,7 +443,7 @@ export function useStomp(options: UseStompOptions = {}) {
     return "";
   };
 
-  /*   * 取消订阅
+  /* 取消订阅
    *
    * @param subscriptionId 订阅 ID（由 subscribe 方法返回）
    */
@@ -460,7 +460,7 @@ export function useStomp(options: UseStompOptions = {}) {
     }
   };
 
-  /*   * 取消指定主题的订阅（从注册表中移除）
+  /* 取消指定主题的订阅（从注册表中移除）
    *
    * @param destination 主题地址
    */
@@ -483,7 +483,7 @@ export function useStomp(options: UseStompOptions = {}) {
     log(`✓ 已移除主题订阅配置: ${destination}`);
   };
 
-  /*   * 断开 WebSocket 连接
+  /* 断开 WebSocket 连接
    *
    * @param clearSubscriptions 是否清除订阅注册表（默认为 true）
    */

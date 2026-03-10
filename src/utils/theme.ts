@@ -22,7 +22,7 @@ function rgbToHex(r: number, g: number, b: number): string {
   return rgbToHex(...newRgb);
 } */
 
-/* * 加深颜色值
+/* 加深颜色值
  * @param {String} color 颜色值字符串
  * @param {Number} level 加深的程度，限0-1之间
  * @returns {String} 返回处理后的颜色值
@@ -33,7 +33,7 @@ export function getDarkColor(color: string, level: number): string {
   return rgbToHex(rgb[0], rgb[1], rgb[2]);
 }
 
-/* * 变浅颜色值
+/* 变浅颜色值
  * @param {String} color 颜色值字符串
  * @param {Number} level 加深的程度，限0-1之间
  * @returns {String} 返回处理后的颜色值
@@ -44,7 +44,7 @@ export const getLightColor = (color: string, level: number): string => {
   return rgbToHex(rgb[0], rgb[1], rgb[2]);
 };
 
-/* * 生成主题色
+/* 生成主题色
  * @param primary 主题色
  * @param theme 主题类型
  */
@@ -82,7 +82,7 @@ export function applyTheme(colors: Record<string, string>) {
   });
 }
 
-/* * 切换暗黑模式
+/* 切换暗黑模式
  *
  * @param isDark 是否启用暗黑模式
  */
@@ -94,7 +94,7 @@ export function toggleDarkMode(isDark: boolean) {
   }
 }
 
-/* * 切换浅色主题下的侧边栏颜色方案
+/* 切换浅色主题下的侧边栏颜色方案
  *
  * @param isBlue 布尔值，表示是否开启深蓝色侧边栏颜色方案
  */

@@ -471,7 +471,7 @@ const rules: FormRules = {
 
 const hasPermTenantMenu = computed(() => hasPerm("sys:tenant:plan-assign"));
 
-/* * 根据套餐ID解析显示名称
+/* 根据套餐ID解析显示名称
  */
 function resolvePlanLabel(planId?: number): string {
   if (planId == null) return "-";
@@ -479,7 +479,7 @@ function resolvePlanLabel(planId?: number): string {
   return matched?.label || String(planId);
 }
 
-/* * 加载租户列表数据
+/* 加载租户列表数据
  */
 function fetchData(): void {
   loading.value = true;
@@ -496,7 +496,7 @@ function fetchData(): void {
     });
 }
 
-/* * 打开更换套餐弹窗
+/* 打开更换套餐弹窗
  */
 async function openTenantPlanDialog(row: TenantItem): Promise<void> {
   const tenantId = row.id;
@@ -536,19 +536,19 @@ async function openTenantPlanDialog(row: TenantItem): Promise<void> {
   }
 }
 
-/* * 关闭套餐选择弹窗
+/* 关闭套餐选择弹窗
  */
 function closeTenantPlanSelectDialog(): void {
   resetTenantPlanState();
 }
 
-/* * 关闭套餐功能配置抽屉
+/* 关闭套餐功能配置抽屉
  */
 function closeTenantPlanDialog(): void {
   resetTenantPlanState();
 }
 
-/* * 重置套餐相关的所有状态
+/* 重置套餐相关的所有状态
  */
 function resetTenantPlanState(): void {
   tenantPlanDialogVisible.value = false;
@@ -571,7 +571,7 @@ function resetTenantPlanState(): void {
   menuTreeRef.value?.setCheckedKeys([], false);
 }
 
-/* * 切换目标套餐时更新可用菜单
+/* 切换目标套餐时更新可用菜单
  */
 async function handlePlanChange(planId?: number): Promise<void> {
   if (!planId) {
@@ -612,14 +612,14 @@ function updateCheckedMenus() {
   menuCheckedCount.value = checkedMenuIds.length;
 }
 
-/* * 更新已勾选菜单数量
+/* 更新已勾选菜单数量
  */
 function handleMenuCheckedChange(): void {
   const checkedKeys = menuTreeRef.value?.getCheckedKeys(false) || [];
   menuCheckedCount.value = checkedKeys.length;
 }
 
-/* * 打开套餐功能配置抽屉
+/* 打开套餐功能配置抽屉
  */
 async function openTenantCustomizeDialog(row?: TenantItem): Promise<void> {
   const tenantId = row?.id ?? checkedTenant.value.id;
@@ -664,7 +664,7 @@ async function openTenantCustomizeDialog(row?: TenantItem): Promise<void> {
   }
 }
 
-/* * 提交更换套餐操作
+/* 提交更换套餐操作
  */
 async function handleTenantPlanSelectSubmit(): Promise<void> {
   const tenantId = checkedTenant.value.id;
@@ -724,7 +724,7 @@ async function handleTenantPlanSelectSubmit(): Promise<void> {
   }
 }
 
-/* * 过滤菜单树，仅保留套餐允许的节点
+/* 过滤菜单树，仅保留套餐允许的节点
  */
 function filterMenuOptionsByIds(
   options: OptionItem[],
@@ -745,7 +745,7 @@ function filterMenuOptionsByIds(
   }, []);
 }
 
-/* * 提交套餐功能配置更新
+/* 提交套餐功能配置更新
  */
 async function handleTenantPlanSubmit(): Promise<void> {
   const tenantId = checkedTenant.value.id;
@@ -789,13 +789,13 @@ async function handleTenantPlanSubmit(): Promise<void> {
   }
 }
 
-/* * 统一菜单ID为number并过滤无效值
+/* 统一菜单ID为number并过滤无效值
  */
 function normalizeMenuIds(menuIds: Array<number | string>): number[] {
   return menuIds.map((menuId) => Number(menuId)).filter((menuId) => !Number.isNaN(menuId));
 }
 
-/* * 递归设置菜单节点禁用状态
+/* 递归设置菜单节点禁用状态
  */
 function applyMenuOptionsDisabled(options: OptionItem[], disabled: boolean): OptionItem[] {
   return options.map((option) => ({
@@ -805,14 +805,14 @@ function applyMenuOptionsDisabled(options: OptionItem[], disabled: boolean): Opt
   }));
 }
 
-/* * 查询按钮点击事件
+/* 查询按钮点击事件
  */
 function handleQuery(): void {
   queryParams.pageNum = 1;
   fetchData();
 }
 
-/* * 重置查询
+/* 重置查询
  */
 function handleResetQuery(): void {
   queryFormRef.value?.resetFields();
@@ -820,13 +820,13 @@ function handleResetQuery(): void {
   fetchData();
 }
 
-/* * 表格选择变化事件
+/* 表格选择变化事件
  */
 function handleSelectionChange(selection: TenantItem[]): void {
   ids.value = selection.map((item) => Number(item.id));
 }
 
-/* * 打开弹窗
+/* 打开弹窗
  * @param tenantId 租户ID（编辑时传入）
  */
 async function openDialog(tenantId?: string): Promise<void> {
@@ -859,7 +859,7 @@ async function openDialog(tenantId?: string): Promise<void> {
   }
 }
 
-/* * 关闭弹窗
+/* 关闭弹窗
  */
 function closeDialog(): void {
   dialogState.visible = false;
@@ -881,7 +881,7 @@ function closeDialog(): void {
   });
 }
 
-/* * 提交表单
+/* 提交表单
  */
 const handleSubmit = useDebounceFn(async (): Promise<void> => {
   const valid = await dataFormRef.value?.validate().then(
@@ -933,7 +933,7 @@ const handleSubmit = useDebounceFn(async (): Promise<void> => {
   }
 }, 300);
 
-/* * 删除租户
+/* 删除租户
  * @param tenantId 租户ID
  */
 function handleDelete(tenantId?: string): void {
@@ -964,7 +964,7 @@ function handleDelete(tenantId?: string): void {
   );
 }
 
-/* * 加载租户套餐选项
+/* 加载租户套餐选项
  */
 async function fetchPlanOptions(): Promise<void> {
   const options = await TenantPlanAPI.getOptions();

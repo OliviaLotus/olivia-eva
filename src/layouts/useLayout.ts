@@ -1,4 +1,4 @@
-/* * 布局 Composable
+/* 布局 Composable
  *
  * 整合布局状态、设备检测、菜单数据
  */

@@ -170,7 +170,7 @@ const rules: FormRules = {
   dictCode: [{ required: true, message: "请输入字典编码", trigger: "blur" }],
 };
 
-/* * 加载字典列表数据
+/* 加载字典列表数据
  */
 function fetchData(): void {
   loading.value = true;
@@ -184,14 +184,14 @@ function fetchData(): void {
     });
 }
 
-/* * 查询按钮点击事件
+/* 查询按钮点击事件
  */
 function handleQuery(): void {
   queryParams.pageNum = 1;
   fetchData();
 }
 
-/* * 重置查询
+/* 重置查询
  */
 function handleResetQuery(): void {
   queryFormRef.value?.resetFields();
@@ -199,20 +199,20 @@ function handleResetQuery(): void {
   fetchData();
 }
 
-/* * 表格选择变化事件
+/* 表格选择变化事件
  */
 function handleSelectionChange(selection: DictTypeItem[]): void {
   ids.value = selection.map((item) => item.id);
 }
 
-/* * 新增按钮点击事件
+/* 新增按钮点击事件
  */
 function handleCreateClick(): void {
   dialogState.visible = true;
   dialogState.title = "新增字典";
 }
 
-/* * 编辑按钮点击事件
+/* 编辑按钮点击事件
  * @param id 字典ID
  */
 function handleEditClick(id: string): void {
@@ -223,7 +223,7 @@ function handleEditClick(id: string): void {
   });
 }
 
-/* * 提交表单
+/* 提交表单
  */
 function handleSubmit(): void {
   dataFormRef.value?.validate((isValid) => {
@@ -251,7 +251,7 @@ function handleSubmit(): void {
   });
 }
 
-/* * 关闭弹窗
+/* 关闭弹窗
  */
 function closeDialog(): void {
   dialogState.visible = false;
@@ -260,7 +260,7 @@ function closeDialog(): void {
   formData.id = undefined;
 }
 
-/* * 删除字典
+/* 删除字典
  * @param id 字典ID
  */
 function handleDelete(id?: number): void {
@@ -286,7 +286,7 @@ function handleDelete(id?: number): void {
   );
 }
 
-/* * 打开字典数据页面
+/* 打开字典数据页面
  * @param row 字典数据
  */
 function openDictData(row: DictTypeItem): void {

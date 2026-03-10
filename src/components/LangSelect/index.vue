@@ -35,9 +35,9 @@ const langOptions = [
 const appStore = useAppStore();
 const { locale, t } = useI18n();
 
-/* * 处理语言切换
+/* 处理语言切换
  *
- * @param lang  语言（zh-cn、en�?
+ * @param lang  语言（zh-cn、en）
  */
 function handleLanguageChange(lang: string) {
   locale.value = lang;

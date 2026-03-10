@@ -441,7 +441,7 @@ const visitTrendDateRange = ref(7);
 // 访问趋势图表配置
 const visitTrendChartOptions = ref();
 
-/* * 获取访客统计数据
+/* 获取访客统计数据
  */
 const fetchVisitStatsData = () => {
   StatisticsAPI.getVisitOverview()
@@ -453,7 +453,7 @@ const fetchVisitStatsData = () => {
     });
 };
 
-/* * 获取访问趋势数据，并更新图表配置
+/* 获取访问趋势数据，并更新图表配置
  */
 const fetchVisitTrendData = () => {
   const startDate = dayjs()
@@ -469,7 +469,7 @@ const fetchVisitTrendData = () => {
   });
 };
 
-/* * 更新访问趋势图表的配置项
+/* 更新访问趋势图表的配置项
  *
  * @param data - 访问趋势数据
  */
@@ -536,7 +536,7 @@ const updateVisitTrendChartOptions = (data: VisitTrendDetail) => {
   };
 };
 
-/* * 根据增长率计算对应的 CSS 类名
+/* 根据增长率计算对应的 CSS 类名
  *
  * @param growthRate - 增长率数值
  */

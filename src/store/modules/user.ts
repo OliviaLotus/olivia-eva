@@ -48,7 +48,7 @@ export const useUserStore = defineStore("user", () => {
 
   let refreshPromise: Promise<void> | null = null;
 
-  /*   * 刷新 token（单飞）。
+  /* 刷新 token（单飞）。
    *
    * 多个并发请求遇到 token 过期时，共享同一次 refresh 请求。
    */
@@ -62,7 +62,7 @@ export const useUserStore = defineStore("user", () => {
     return refreshPromise;
   }
 
-  /*   * 获取用户信息
+  /* 获取用户信息
    *
    * @returns {UserInfo} 用户信息
    */
@@ -83,7 +83,7 @@ export const useUserStore = defineStore("user", () => {
     });
   }
 
-  /*   * 重置所有系统状态
+  /* 重置所有系统状态
    * 统一处理所有清理工作，包括用户凭证、路由、缓存等
    */
   function resetAllState() {
@@ -105,7 +105,7 @@ export const useUserStore = defineStore("user", () => {
     return Promise.resolve();
   }
 
-  /*   * 重置用户状态
+  /* 重置用户状态
    * 仅处理用户模块内的状态
    */
   function resetUserState() {
@@ -115,7 +115,7 @@ export const useUserStore = defineStore("user", () => {
     userInfo.value = {} as UserInfo;
   }
 
-  /*   * 刷新 token
+  /* 刷新 token
    */
   function refreshToken() {
     const refreshToken = AuthStorage.getRefreshToken();

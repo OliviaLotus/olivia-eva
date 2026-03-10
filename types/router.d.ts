@@ -1,4 +1,4 @@
-/* * Vue Router 类型扩展
+/* Vue Router 类型扩展
  */
 import "vue-router";
 

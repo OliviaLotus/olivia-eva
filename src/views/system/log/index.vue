@@ -87,7 +87,7 @@ const pageData = ref<LogItem[]>();
 const total = ref(0);
 const loading = ref(false);
 
-/* * 加载日志列表数据
+/* 加载日志列表数据
  */
 function fetchData(): void {
   loading.value = true;
@@ -101,14 +101,14 @@ function fetchData(): void {
     });
 }
 
-/* * 查询按钮点击事件
+/* 查询按钮点击事件
  */
 function handleQuery(): void {
   queryParams.pageNum = 1;
   fetchData();
 }
 
-/* * 重置查询
+/* 重置查询
  */
 function handleResetQuery(): void {
   queryFormRef.value?.resetFields();

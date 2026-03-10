@@ -1,4 +1,4 @@
-/* * User 用户类型定义
+/* User 用户类型定义
  */
 
 import type { BaseQueryParams } from "./common";

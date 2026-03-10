@@ -158,7 +158,7 @@ onClickOutside(iconSelectRef, () => (popoverVisible.value = false), {
   ignore: [popoverContentRef],
 });
 
-/* * 清空已选图标
+/* 清空已选图标
  */
 function clearSelectedIcon() {
   selectedIcon.value = "";

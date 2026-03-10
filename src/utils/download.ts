@@ -1,7 +1,7 @@
-/* * 文件下载工具函数
+/* 文件下载工具函数
  */
 
-/* * 从响应头中提取文件名
+/* 从响应头中提取文件名
  * @param contentDisposition Content-Disposition 响应头
  * @returns 解码后的文件名
  */
@@ -27,7 +27,7 @@ function extractFileName(contentDisposition: string): string {
   return `download_${Date.now()}`;
 }
 
-/* * 下载文件
+/* 下载文件
  * @param response Axios 响应对象
  * @param customFileName 自定义文件名（可选）
  *

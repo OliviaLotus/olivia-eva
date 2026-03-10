@@ -1,7 +1,7 @@
-/* * 数据格式化相关工具函数
+/* 数据格式化相关工具函数
  */
 
-/* * 格式化增长率
+/* 格式化增长率
  * 保留两位小数，去掉末尾的 0，取绝对值
  *
  * @param growthRate 增长率（小数形式，如 0.15 表示 15%）
@@ -27,7 +27,7 @@ export function formatGrowthRate(growthRate: number): string {
   return formattedRate + "%";
 }
 
-/* * 格式化文件大小
+/* 格式化文件大小
  * @param bytes 字节数
  * @param decimals 保留小数位数，默认 2
  * @returns 格式化后的文件大小字符串
@@ -49,7 +49,7 @@ export function formatFileSize(bytes: number, decimals: number = 2): string {
   return parseFloat((bytes / Math.pow(k, i)).toFixed(decimals)) + " " + sizes[i];
 }
 
-/* * 格式化数字，添加千分位分隔符
+/* 格式化数字，添加千分位分隔符
  * @param num 数字
  * @returns 格式化后的字符串
  *
@@ -63,7 +63,7 @@ export function formatNumber(num: number): string {
   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-/* * 格式化金额（人民币）
+/* 格式化金额（人民币）
  * @param amount 金额
  * @param decimals 保留小数位数，默认 2
  * @returns 格式化后的金额字符串

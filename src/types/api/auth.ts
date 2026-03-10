@@ -1,7 +1,7 @@
-/* * 认证相关类型定义
+/* 认证相关类型定义
  */
 
-/* * 登录请求参数
+/* 登录请求参数
  */
 export interface LoginRequest {
   /* 用户名 */
@@ -18,7 +18,7 @@ export interface LoginRequest {
   tenantId?: number;
 }
 
-/* * 登录响应
+/* 登录响应
  */
 export interface LoginResponse {
   /* 访问令牌 */
@@ -31,7 +31,7 @@ export interface LoginResponse {
   expiresIn: number;
 }
 
-/* * 验证码响应
+/* 验证码响应
  */
 export interface CaptchaInfo {
   /* 验证码缓存key */
