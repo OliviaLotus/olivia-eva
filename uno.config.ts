@@ -4,7 +4,7 @@ import {
   presetAttributify,
   presetIcons,
   presetTypography,
-  presetUno,
+  presetWind4,
   presetWebFonts,
   transformerDirectives,
   transformerVariantGroup,
@@ -53,7 +53,7 @@ export default defineConfig({
     ),
   },
   presets: [
-    presetUno(),
+    presetWind4(),
     presetAttributify(),
     presetIcons({
       // 额外属性
