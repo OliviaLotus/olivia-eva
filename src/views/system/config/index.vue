@@ -1,303 +1,207 @@
 <template>
-  <div class="app-container">
-    <div class="filter-section">
-      <el-form ref="queryFormRef" :model="queryParams" :inline="true">
-        <el-form-item label="关键字" prop="keywords">
-          <el-input
-            v-model="queryParams.keywords"
-            placeholder="请输入配置键\配置名称"
-            clearable
-            @keyup.enter="handleQuery"
-          />
-        </el-form-item>
-
-        <el-form-item class="search-buttons">
-          <el-button type="primary" icon="search" @click="handleQuery">搜索</el-button>
-          <el-button icon="refresh" @click="handleResetQuery">重置</el-button>
-        </el-form-item>
-      </el-form>
-    </div>
-
-    <el-card shadow="hover" class="table-section">
-      <div class="table-section__toolbar">
-        <div class="table-section__toolbar--actions">
-          <el-button
-            v-hasPerm="['sys:config:create']"
-            type="success"
-            icon="plus"
-            @click="openDialog()"
-          >
-            新增
-          </el-button>
-          <el-button
-            v-hasPerm="['sys:config:refresh']"
-            color="#626aef"
-            icon="RefreshLeft"
-            @click="refreshCache"
-          >
-            刷新缓存
-          </el-button>
-        </div>
-      </div>
-
-      <el-table
-        ref="dataTableRef"
-        v-loading="loading"
-        :data="pageData"
-        highlight-current-row
-        class="table-section__content"
-        border
-        @selection-change="handleSelectionChange"
-      >
-        <el-table-column type="index" label="序号" width="60" />
-        <el-table-column key="configName" label="配置名称" prop="configName" min-width="100" />
-        <el-table-column key="configKey" label="配置项" prop="configKey" min-width="100" />
-        <el-table-column key="configValue" label="配置项" prop="configValue" min-width="100" />
-        <el-table-column key="remark" label="描述" prop="remark" min-width="100" />
-        <el-table-column fixed="right" label="操作" width="220">
-          <template #default="scope">
-            <el-button
-              v-hasPerm="['sys:config:update']"
-              type="primary"
-              size="small"
-              link
-              icon="edit"
-              @click="openDialog(scope.row.id)"
-            >
-              编辑
-            </el-button>
-            <el-button
-              v-hasPerm="['sys:config:delete']"
-              type="danger"
-              size="small"
-              link
-              icon="delete"
-              @click="handleDelete(scope.row.id)"
-            >
-              删除
-            </el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-
-      <pagination
-        v-if="total > 0"
-        v-model:total="total"
-        v-model:page="queryParams.pageNum"
-        v-model:limit="queryParams.pageSize"
-        @pagination="fetchData"
-      />
-    </el-card>
-
-    <el-dialog
-      v-model="dialogState.visible"
-      :title="dialogState.title"
-      width="500px"
-      @close="closeDialog"
+  <div>
+    <TablePro
+      v-model="query"
+      :form-config="formConfig"
+      :columns="columns"
+      :table-data="tableData"
+      :total="total"
+      :loading="loading"
+      :row-key="(row) => row.id"
+      @query="handleQuery"
+      @reset="handleQuery"
     >
-      <el-form
-        ref="dataFormRef"
-        :model="formData"
-        :rules="rules"
-        label-suffix=":"
-        label-width="100px"
-      >
-        <el-form-item label="配置名称" prop="configName">
-          <el-input v-model="formData.configName" placeholder="请输入配置名称" :maxlength="50" />
-        </el-form-item>
-        <el-form-item label="配置项" prop="configKey">
-          <el-input v-model="formData.configKey" placeholder="请输入配置键" :maxlength="50" />
-        </el-form-item>
-        <el-form-item label="配置项" prop="configValue">
-          <el-input v-model="formData.configValue" placeholder="请输入配置项" :maxlength="100" />
-        </el-form-item>
-        <el-form-item label="描述" prop="remark">
-          <el-input
-            v-model="formData.remark"
-            :rows="4"
-            :maxlength="100"
-            show-word-limit
-            type="textarea"
-            placeholder="请输入描述"
-          />
-        </el-form-item>
-      </el-form>
-      <template #footer>
-        <div class="dialog-footer">
-          <el-button type="primary" @click="handleSubmit">确定</el-button>
-          <el-button @click="closeDialog">取消</el-button>
-        </div>
+      <template #controls>
+        <n-button v-has-perm="['sys:config:create']" type="primary" @click="openDrawer()">
+          <template #icon>
+            <icon-park-outline-plus />
+          </template>
+          {{ t("button.add") }}
+        </n-button>
+        <n-button
+          v-has-perm="['sys:config:refresh']"
+          type="warning"
+          :loading="spin"
+          @click="handleRefreshCache()"
+        >
+          <template #icon>
+            <icon-park-outline-refresh />
+          </template>
+          {{ t("button.refreshCache") }}
+        </n-button>
       </template>
-    </el-dialog>
+    </TablePro>
+
+    <!-- 新增、编辑 -->
+    <DrawerForm
+      ref="drawerForm"
+      v-model="modelValue"
+      :form="editFormConfig"
+      :loading="spin"
+      @submit="submitForm"
+    />
   </div>
 </template>
+<script setup lang="tsx">
+import { type DataTableColumns, NButton, NFlex } from "naive-ui";
 
-<script setup lang="ts">
+import ConfigAPI from "@/api/system/config";
+
+import { useLoading } from "@/hooks";
+import { spin, startSpin, endSpin, InquiryBox, executeAsync } from "@/utils";
+
+import Icones from "@/components/icones.vue";
+
 defineOptions({
   name: "Config",
   inheritAttrs: false,
 });
 
-import ConfigAPI from "@/api/system/config";
-import type { ConfigItem, ConfigForm, ConfigQueryParams } from "@/types/api";
-import { ElMessage, ElMessageBox, type FormInstance, type FormRules } from "element-plus";
-import { useDebounceFn } from "@vueuse/core";
+const { t } = useI18n();
 
-// 表单引用
-const queryFormRef = ref<FormInstance>();
-const dataFormRef = ref<FormInstance>();
-
-// 查询参数
-const queryParams = reactive<ConfigQueryParams>({
+// 定义表单的初始值
+const query = ref<Config.Query>({
   pageNum: 1,
   pageSize: 10,
-  keywords: "",
 });
 
-// 列表数据
-const pageData = ref<ConfigItem[]>([]);
-const total = ref(0);
-const loading = ref(false);
-const selectIds = ref<string[]>([]);
+const tableData = ref<Config.VO[]>([]);
+const total = ref<number>(0);
 
-// 弹窗状态
-const dialogState = reactive({
-  title: "",
-  visible: false,
-});
+const { loading, startLoading, endLoading } = useLoading();
 
-// 表单数据
-const formData = reactive<ConfigForm>({
-  id: undefined,
-  configName: "",
-  configKey: "",
-  configValue: "",
-  remark: "",
-});
-
-// 验证规则
-const rules: FormRules = {
-  configName: [{ required: true, message: "请输入系统配置名称", trigger: "blur" }],
-  configKey: [{ required: true, message: "请输入系统配置编码", trigger: "blur" }],
-  configValue: [{ required: true, message: "请输入系统配置值", trigger: "blur" }],
-};
-
-/* 加载配置列表数据
- */
-function fetchData(): void {
-  loading.value = true;
-  ConfigAPI.getPage(queryParams)
-    .then((data) => {
-      pageData.value = data.list;
+onMounted(() => handleQuery());
+/** 查询方法 */
+const handleQuery = () => {
+  startLoading();
+  ConfigAPI.getPage(query.value)
+    .then(async (data) => {
+      tableData.value = data.list;
       total.value = data.total ?? 0;
     })
-    .finally(() => {
-      loading.value = false;
-    });
-}
+    .finally(() => endLoading());
+};
 
-/* 查询按钮点击事件
- */
-function handleQuery(): void {
-  queryParams.pageNum = 1;
-  fetchData();
-}
+// 查询表单
+const formConfig = ref<FormPro.FormItemConfig[]>([
+  {
+    name: "keywords",
+    label: t("tableHeader.keywords"),
+    props: { placeholder: t("tableHeader.configName") + " / " + t("tableHeader.configKey") },
+  },
+]);
 
-/* 重置查询
- */
-function handleResetQuery(): void {
-  queryFormRef.value?.resetFields();
-  queryParams.pageNum = 1;
-  fetchData();
-}
+const columns = ref<DataTableColumns<Config.VO>>([
+  { title: t("tableHeader.configName"), key: "configName", align: "center" },
+  { title: t("tableHeader.configKey"), key: "configKey", align: "center" },
+  { title: t("tableHeader.configValue"), key: "configValue", align: "center" },
+  { title: t("tableHeader.remark"), key: "remark", align: "center" },
+  {
+    title: t("tableHeader.action"),
+    key: "action",
+    align: "center",
+    render: (row) => (
+      <NFlex justify="center">
+        <NButton
+          text
+          type="info"
+          v-has-perm={["sys:config:update"]}
+          v-slots={{ icon: () => <Icones icon="ant-design:edit-outlined" /> }}
+          onClick={() => openDrawer(row)}
+        >
+          {t("button.edit")}
+        </NButton>
+        <NButton
+          text
+          type="error"
+          v-has-perm={["sys:config:delete"]}
+          v-slots={{ icon: () => <Icones icon="ant-design:delete-outlined" /> }}
+          onClick={() => handleDelete(row)}
+        >
+          {t("button.delete")}
+        </NButton>
+      </NFlex>
+    ),
+  },
+]);
 
-/* 表格选择变化事件
- */
-function handleSelectionChange(selection: ConfigItem[]): void {
-  selectIds.value = selection.map((item) => item.id).filter(Boolean) as string[];
-}
+const editFormConfig: DialogForm.Form = {
+  config: [
+    { name: "configName", label: t("tableHeader.configName") },
+    { name: "configKey", label: t("tableHeader.configKey") },
+    { name: "configValue", label: t("tableHeader.configValue") },
+    { name: "remark", label: t("tableHeader.remark"), component: "textarea" },
+  ],
+  props: {
+    rules: {
+      configName: [
+        {
+          required: true,
+          message: t("input") + t("tableHeader.configName"),
+          trigger: "blur",
+        },
+      ],
+      configKey: [
+        {
+          required: true,
+          message: t("input") + t("tableHeader.configKey"),
+          trigger: "blur",
+        },
+      ],
+      configValue: [
+        {
+          required: true,
+          message: t("input") + t("tableHeader.configValue"),
+          trigger: "blur",
+        },
+      ],
+    },
+  },
+};
 
-/* 打开弹窗
- * @param id 配置ID（编辑时传入）
- */
-function openDialog(id?: string): void {
-  dialogState.visible = true;
-  if (id) {
-    dialogState.title = "修改系统配置";
-    ConfigAPI.getFormData(id).then((data) => {
-      Object.assign(formData, data);
-    });
-  } else {
-    dialogState.title = "新增系统配置";
-    formData.id = undefined;
-  }
-}
+/** 初始化表单 */
+const modelValue = ref<Config.Form>({});
 
-/* 刷新缓存
- */
-const refreshCache = useDebounceFn(() => {
-  ConfigAPI.refreshCache().then(() => {
-    ElMessage.success("刷新成功");
-  });
-}, 1000);
+/** 新增、编辑 */
+const drawerFormRef = useTemplateRef("drawerForm");
+const openDrawer = (row?: Config.VO) => {
+  drawerFormRef.value?.open(row ? t("config.edit") : t("config.add"), modelValue.value);
 
-/* 提交表单
- */
-function handleSubmit(): void {
-  dataFormRef.value?.validate((valid) => {
-    if (valid) {
-      loading.value = true;
-      const id = formData.id;
-      if (id) {
-        ConfigAPI.update(id, formData)
-          .then(() => {
-            ElMessage.success("修改成功");
-            closeDialog();
-            handleResetQuery();
-          })
-          .finally(() => (loading.value = false));
-      } else {
-        ConfigAPI.create(formData)
-          .then(() => {
-            ElMessage.success("新增成功");
-            closeDialog();
-            handleResetQuery();
-          })
-          .finally(() => (loading.value = false));
-      }
-    }
-  });
-}
-
-/* 关闭弹窗
- */
-function closeDialog(): void {
-  dialogState.visible = false;
-  dataFormRef.value?.resetFields();
-  dataFormRef.value?.clearValidate();
-  formData.id = undefined;
-}
-
-/* 删除配置
- * @param id 配置ID
- */
-function handleDelete(id: string): void {
-  ElMessageBox.confirm("确认删除该项配置?", "警告", {
-    confirmButtonText: "确定",
-    cancelButtonText: "取消",
-    type: "warning",
-  }).then(() => {
-    loading.value = true;
-    ConfigAPI.deleteById(id)
-      .then(() => {
-        ElMessage.success("删除成功");
-        handleResetQuery();
+  if (row) {
+    startSpin();
+    ConfigAPI.getFormData(row.id)
+      .then((data) => {
+        modelValue.value = { ...data };
       })
-      .finally(() => (loading.value = false));
-  });
-}
+      .finally(() => endSpin());
+  }
+};
 
-onMounted(() => {
-  handleQuery();
-});
+/** 表单提交 */
+const submitForm = (val: Config.Form) =>
+  executeAsync(
+    () => (val.id ? ConfigAPI.update(val.id, val) : ConfigAPI.create(val)),
+    () => {
+      drawerFormRef.value?.close();
+      handleQuery();
+    }
+  );
+
+// 删除配置
+const handleDelete = ({ configName: name, id }: Config.VO) => {
+  InquiryBox(t("config.delete", { name })).then(() => {
+    ConfigAPI.deleteById(id).then(() => {
+      window.$message.success(t("message.deleteSuccess"));
+      handleQuery();
+    });
+  });
+};
+
+// 刷新缓存
+const handleRefreshCache = () => {
+  startSpin();
+  ConfigAPI.refreshCache()
+    .then(() => window.$message.success(t("config.refreshCache")))
+    .finally(() => endSpin());
+};
 </script>

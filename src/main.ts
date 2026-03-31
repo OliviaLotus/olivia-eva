@@ -1,62 +1,35 @@
-/* 应用启动入口
- *
- * @description
- * Vue3 应用初始化，包括样式、插件、配置的加载
- */
+import { type App, createApp } from "vue";
+import { installPinia } from "@/store";
+import { installRouter } from "@/router";
+import { setupSse, setupAppVersion } from "@/plugins";
 
-import { createApp } from "vue";
-import App from "./App.vue";
+import AppVue from "@/App";
+import AppLoading from "@/components/app-loading.vue";
 
-// ===== 样式导入 =====
-import "element-plus/dist/index.css";
-import "element-plus/theme-chalk/dark/css-vars.css";
-import "vxe-table/lib/style.css";
-import "@/styles/index.scss";
-import "uno.css";
-import "animate.css";
+/** 载入全局loading加载状态 */
+const appLoading: App<Element> = createApp(AppLoading);
 
-// ===== 核心配置 =====
-import { setupDirective } from "@/directives";
-import { setupI18n } from "@/lang";
-import { setupRouter } from "@/router";
-import { setupStore } from "@/store";
+appLoading.mount("#appLoading");
 
-// ===== 全局组件 =====
-import * as ElementPlusIcons from "@element-plus/icons-vue";
+/** 创建vue实例 */
+const app: App<Element> = createApp(AppVue);
 
-// ===== 第三方插件 =====
-import VXETable from "vxe-table";
-import { InstallCodeMirror } from "codemirror-editor-vue3";
-import { configureVxeTable } from "@/plugins/vxe-table";
+/** 注册模块 指令/静态资源 */
+Object.values(
+  import.meta.glob<{ install: (app: App) => void }>("./modules/*.ts", {
+    eager: true,
+  })
+).map((i) => app.use(i));
 
-// ===== 路由守卫 =====
-import { setupPermissionGuard } from "@/router/guards/permission";
+/** 注册模块 Pinia */
+installPinia(app);
 
-// ===== 业务服务 =====
-import { setupWebSocket } from "@/composables";
+/** 注册模块 VueRouter */
+installRouter(app)
+  .then(() => setupSse()) // 创建 SSE 连接
+  .then(() => setupAppVersion()) // App更新后提示用户刷新
+  .catch((error) => console.error("Error during app initialization:", error))
+  .finally(() => appLoading.unmount());
 
-// 创建 Vue 应用实例
-const app = createApp(App);
-
-// 1️⃣ 核心配置
-setupDirective(app);
-setupRouter(app);
-setupStore(app);
-setupI18n(app);
-
-// 2️⃣ 全局组件（Element Plus 图标）
-Object.entries(ElementPlusIcons).forEach(([name, comp]) => app.component(name, comp));
-
-// 3️⃣ 第三方插件
-configureVxeTable();
-app.use(VXETable);
-app.use(InstallCodeMirror);
-
-// 4️⃣ 路由守卫
-setupPermissionGuard();
-
-// 5️⃣ WebSocket 初始化
-setupWebSocket();
-
-// 6️⃣ 挂载应用
+/** 挂载 App */
 app.mount("#app");

@@ -1,226 +1,266 @@
 <template>
-  <div class="auth-panel-form">
-    <h3 class="auth-panel-form__title" text-center>{{ t("login.login") }}</h3>
-    <el-form
-      ref="loginFormRef"
-      :model="loginFormData"
-      :rules="loginRules"
-      size="large"
-      :validate-on-rule-change="false"
-    >
-      <!-- 用户名 -->
-      <el-form-item prop="username">
-        <el-input v-model.trim="loginFormData.username" :placeholder="t('login.username')">
+  <div>
+    <n-h3 mt-0 depth="3" text-center>{{ t("login.login") }}</n-h3>
+    <n-form ref="form" :rules="rules" :model="model" :show-label="false" size="large">
+      <n-form-item path="username">
+        <n-input
+          v-model:value="model.username"
+          clearable
+          :placeholder="t('input') + t('login.username')"
+          @keyup.enter="handleLoginSubmit"
+        >
           <template #prefix>
-            <el-icon><User /></el-icon>
+            <Icones :size="22" icon="ant-design:user-outlined" />
           </template>
-        </el-input>
-      </el-form-item>
-
-      <!-- 密码 -->
-      <el-tooltip :visible="isCapsLock" :content="t('login.capsLock')" placement="right">
-        <el-form-item prop="password">
-          <el-input
-            v-model.trim="loginFormData.password"
-            :placeholder="t('login.password')"
-            type="password"
-            show-password
-            @keyup="checkCapsLock"
-            @keyup.enter="handleLoginSubmit"
-          >
-            <template #prefix>
-              <el-icon><Lock /></el-icon>
-            </template>
-          </el-input>
-        </el-form-item>
-      </el-tooltip>
-
-      <!-- 验证码 -->
-      <el-form-item prop="captchaCode">
-        <div flex items-center gap-10px>
-          <el-input
-            v-model.trim="loginFormData.captchaCode"
-            :placeholder="t('login.captchaCode')"
+        </n-input>
+      </n-form-item>
+      <n-form-item path="password">
+        <n-input
+          v-model:value="model.password"
+          :placeholder="t('input') + t('login.password')"
+          type="password"
+          clearable
+          show-password-on="mousedown"
+          @keyup.enter="handleLoginSubmit"
+        >
+          <template #password-invisible-icon>
+            <icon-park-outline-preview-close-one />
+          </template>
+          <template #password-visible-icon>
+            <icon-park-outline-preview-open />
+          </template>
+          <template #prefix>
+            <Icones :size="20" icon="ant-design:lock-outlined" />
+          </template>
+        </n-input>
+      </n-form-item>
+      <n-form-item path="captchaCode">
+        <n-flex align="center" :size="10">
+          <n-input
+            ref="captcha"
+            v-model:value="model.captchaCode"
+            :placeholder="t('input') + t('login.captcha')"
             clearable
             class="flex-1"
             @keyup.enter="handleLoginSubmit"
           >
             <template #prefix>
-              <div class="i-svg:captcha" />
+              <Icones :size="20" icon="ant-design:verified-outlined" />
             </template>
-          </el-input>
-          <div cursor-pointer h-44px w-140px flex-center @click="getCaptcha">
-            <el-icon v-if="codeLoading" class="is-loading" size="20"><Loading /></el-icon>
-            <img
-              v-else-if="captchaBase64"
-              border-rd-4px
-              w-full
-              h-full
-              block
-              object-cover
-              shadow="[0_0_0_1px_var(--el-border-color)_inset]"
-              :src="captchaBase64"
-              alt="captchaCode"
-              title="点击刷新验证码"
-              @error="getCaptcha"
-            />
-            <el-text v-else type="info" size="small">点击获取验证码</el-text>
-          </div>
+          </n-input>
+          <n-spin size="small" :show="captchaLoading">
+            <n-el
+              cursor-pointer
+              h="[40px]"
+              w="[120px]"
+              flex
+              items-center
+              justify-center
+              border-rd-3px
+              overflow-hidden
+              bg="hover:var(--n-color-target)"
+              transition-all
+              duration-200
+              @click="getCaptcha"
+            >
+              <img
+                v-if="captchaBase64"
+                w="[100%]"
+                h="[100%]"
+                object-cover
+                :src="captchaBase64"
+                alt="captchaCode"
+              />
+              <n-text v-else depth="3" text="12px">点击获取验证码</n-text>
+            </n-el>
+          </n-spin>
+        </n-flex>
+      </n-form-item>
+      <n-flex vertical :size="20">
+        <div class="flex-y-center justify-between">
+          <n-checkbox v-model:checked="model.rememberMe">{{ t("login.rememberMe") }}</n-checkbox>
+          <n-button type="primary" text @click="toOtherForm('resetPasswd')">
+            {{ t("login.forget") }}
+          </n-button>
         </div>
-      </el-form-item>
+        <n-button
+          block
+          type="primary"
+          size="large"
+          :loading="loading"
+          :disabled="loading"
+          @click="handleLoginSubmit"
+        >
+          {{ loading ? t("login.logIn") : t("login.login") }}
+        </n-button>
+        <n-flex align="center" justify="center">
+          <n-text>{{ t("login.noAccount") }}</n-text>
+          <n-button type="primary" text @click="toOtherForm('register')">
+            {{ t("register.register") }}
+          </n-button>
+        </n-flex>
+      </n-flex>
+    </n-form>
 
-      <div class="flex-x-between w-full">
-        <el-checkbox v-model="loginFormData.rememberMe">{{ t("login.rememberMe") }}</el-checkbox>
-        <el-link type="primary" underline="never" @click="toOtherForm()">
-          {{ t("login.forgetPassword") }}
-        </el-link>
-      </div>
-
-      <!-- 登录按钮 -->
-      <el-form-item>
-        <el-button :loading="loading" type="primary" class="w-full" @click="handleLoginSubmit">
-          {{ t("login.login") }}
-        </el-button>
-      </el-form-item>
-    </el-form>
-
-    <div flex-center gap-10px>
-      <el-text size="default">{{ t("login.noAccount") }}</el-text>
-      <el-link type="primary" underline="never" @click="toOtherForm()">
-        {{ t("login.reg") }}
-      </el-link>
-    </div>
+    <n-divider>
+      <span op-80>{{ t("common.others") }}</span>
+    </n-divider>
+    <n-flex justify="center">
+      <CommonWrapper>
+        <Icones :size="20" icon="icon-park-outline:phone-telephone" />
+      </CommonWrapper>
+      <CommonWrapper>
+        <Icones :size="20" icon="icon-park-outline:wechat" />
+      </CommonWrapper>
+      <CommonWrapper>
+        <Icones :size="20" icon="icon-park-outline:tencent-qq" />
+      </CommonWrapper>
+      <CommonWrapper>
+        <Icones :size="20" icon="icon-park-outline:github-one" />
+      </CommonWrapper>
+    </n-flex>
   </div>
 </template>
-<script setup lang="ts">
-import type { FormInstance } from "element-plus";
+<script setup lang="tsx">
+import type { FormInst, FormRules, InputInst } from "naive-ui";
+import { useAuthStoreHook } from "@/store";
 import AuthAPI from "@/api/auth";
-import type { LoginRequest } from "@/types/api";
-import router from "@/router";
-import { useUserStore } from "@/store";
-import { AuthStorage } from "@/utils/auth";
+import { router } from "@/router";
+import { LocationQuery, RouteLocationRaw } from "vue-router";
+import { decrypt, encrypt, local } from "@/utils";
 
-const { t } = useI18n();
-const userStore = useUserStore();
 const route = useRoute();
+const t = useI18n().t;
+const authStore = useAuthStoreHook();
 
-onMounted(() => getCaptcha());
+const emit = defineEmits(["update:modelValue"]);
+const toOtherForm = (type: "register" | "resetPasswd") => emit("update:modelValue", type);
 
-const loginFormRef = ref<FormInstance>();
-const loading = ref(false);
-// 是否大写锁定
-const isCapsLock = ref(false);
-// 验证码图片 Base64
-const captchaBase64 = ref();
-// 记住我
-const rememberMe = AuthStorage.getRememberMe();
-const loginFormData = ref<LoginRequest>({
+onMounted(() => {
+  getCaptcha();
+  getCookie();
+});
+
+const formRef = useTemplateRef<FormInst>("form");
+
+const captchaRef = useTemplateRef<InputInst>("captcha");
+
+const loading = ref(false); // 按钮 loading 状态
+
+const model = ref<Auth.LoginFormData>({
   username: "admin",
   password: "123456",
   captchaId: "",
   captchaCode: "",
-  rememberMe,
+  rememberMe: false,
 });
 
-const loginRules = computed(() => {
-  return {
-    username: [
-      {
-        required: true,
-        trigger: "blur",
-        message: t("login.message.username.required"),
-      },
-    ],
-    password: [
-      {
-        required: true,
-        trigger: "blur",
-        message: t("login.message.password.required"),
-      },
-      {
-        min: 6,
-        message: t("login.message.password.min"),
-        trigger: "blur",
-      },
-    ],
-    captchaCode: [
-      {
-        required: true,
-        trigger: "blur",
-        message: t("login.message.captchaCode.required"),
-      },
-    ],
-  };
+const rules = ref<FormRules>({
+  username: [{ required: true, trigger: "blur", message: t("input") + t("login.username") }],
+  password: [
+    { required: true, trigger: "blur", message: t("input") + t("login.password") },
+    { min: 6, message: t("rules.passwordLength"), trigger: "blur" },
+  ],
+  captchaCode: [{ required: true, trigger: "blur", message: t("input") + t("login.captcha") }],
 });
 
 // 获取验证码
-const codeLoading = ref(false);
-function getCaptcha() {
-  codeLoading.value = true;
+const captchaLoading = ref(false); // 验证码按钮 loading 状态
+const captchaBase64 = ref(); // 验证码图片Base64字符串
+const getCaptcha = () => {
+  captchaLoading.value = true;
   AuthAPI.getCaptcha()
     .then((data) => {
-      loginFormData.value.captchaId = data.captchaId;
+      model.value.captchaId = data.captchaId;
       captchaBase64.value = data.captchaBase64;
     })
-    .finally(() => (codeLoading.value = false));
-}
+    .finally(() => (captchaLoading.value = false));
+};
 
-// 登录提交
-async function handleLoginSubmit() {
+const getCookie = () => {
+  const loginInfo = local.get("remember");
+
+  if (loginInfo) {
+    model.value.username =
+      loginInfo.username === undefined ? loginInfo.username : loginInfo.username;
+    model.value.password =
+      loginInfo.password === undefined ? loginInfo.password : decrypt(loginInfo.password) || "";
+    model.value.rememberMe =
+      loginInfo.rememberMe === undefined ? false : Boolean(loginInfo.rememberMe);
+  }
+};
+
+const handleLoginSubmit = async () => {
   // 1. 表单验证
-  const valid = await loginFormRef.value?.validate().then(
-    () => true,
-    () => false
-  );
-  if (!valid) return;
+  await formRef.value?.validate();
 
-  loading.value = true;
   try {
+    loading.value = true;
+
     // 2. 执行登录
-    await userStore.login(loginFormData.value).then(
-      async () => {
-        // 登录成功，跳转到目标页面
-        const redirectPath = (route.query.redirect as string) || "/";
-        await router.push(decodeURIComponent(redirectPath));
-      },
-      (error) => {
-        // 登录失败，刷新验证码
-        getCaptcha();
-        throw error;
-      }
-    );
+    await authStore.login(model.value);
+
+    // 3. 勾选了需要记住密码设置在 cookie 中设置记住用户名和密码
+    if (model.value.rememberMe) {
+      const pwd = encrypt(model.value.password);
+
+      local.set(
+        "remember",
+        {
+          username: model.value.username,
+          password: typeof pwd === "string" ? pwd : "",
+          rememberMe: model.value.rememberMe,
+        },
+        60 * 60 * 24 * 10
+      );
+    } else {
+      // 否则移除
+      local.remove("remember");
+    }
+
+    // 4. 解析并跳转目标地址
+    const redirect = resolveRedirectTarget(route.query);
+
+    console.log(redirect, "redirect");
+
+    await router.push(redirect);
+
+    window.$message.success(t("login.success"));
+  } catch (e) {
+    console.log(e);
+    getCaptcha();
+    model.value.captchaCode = "";
+    captchaRef.value?.focus();
   } finally {
     loading.value = false;
   }
-}
+};
 
-// 检查输入大小写
-function checkCapsLock(event: KeyboardEvent) {
-  // 防止浏览器密码自动填充时报错
-  if (event instanceof KeyboardEvent) {
-    isCapsLock.value = event.getModifierState("CapsLock");
+/**
+ * 解析重定向目标
+ * @param query 路由查询参数
+ * @returns 标准化后的路由地址对象
+ */
+function resolveRedirectTarget(query: LocationQuery): RouteLocationRaw {
+  // 默认跳转路径
+  const defaultPath = "/";
+
+  // 获取原始重定向路径
+  const rawRedirect = (query.redirect as string) || defaultPath;
+
+  try {
+    // 6. 使用Vue Router解析路径
+    const resolved = router.resolve(rawRedirect);
+
+    return {
+      path: resolved.path,
+      query: resolved.query,
+    };
+  } catch {
+    // 7. 异常处理：返回安全路径
+    return { path: defaultPath };
   }
-}
-
-// const emit = defineEmits(["update:modelValue"]);
-// function toOtherForm(type: "register" | "resetPwd") {
-//   emit("update:modelValue", type);
-// }
-function toOtherForm() {
-  ElMessage.warning("暂不开放");
 }
 </script>
 
-<style lang="scss" scoped>
-.auth-panel-form {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.auth-panel-form__title {
-  margin: 0 0 0.5rem;
-  font-size: 1.125rem;
-  font-weight: 600;
-}
-</style>
+<style scoped></style>

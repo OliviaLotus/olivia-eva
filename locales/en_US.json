@@ -1,0 +1,723 @@
+{
+  "input": "Please enter ",
+  "select": "Please select ",
+  "common": {
+    "loading": "Loading...",
+    "sysTip": "System Tip",
+    "downloading": "Downloading data, please wait...",
+    "notImplemented": "Not implemented yet, under development ...",
+    "processing": "Data is being processed, please do not submit repeatedly",
+    "sysError": "System error",
+    "backendError": "Backend interface connection exception",
+    "backendTimeout": "System interface request timeout",
+    "backendException": "System interface {code} exception",
+    "sessionTimeout": "Your session has expired, please log in again",
+    "cannotOperate": "Demo mode! Operation not allowed 😁",
+    "message": "No doubt, you're the brightest star in the office!",
+    "backToTop": "Back to Top",
+    "defaultExpandOne": "Default expand the first item",
+    "yes": "Yes",
+    "no": "No",
+    "others": "Others",
+    "messageType": {
+      "info": "Info",
+      "notice": "Notice",
+      "activity": "Activity",
+      "announcement": "Announcement",
+      "remind": "Reminder",
+      "message": "Message"
+    }
+  },
+  "app": {
+    "systemUpdateTitle": "System Update",
+    "systemUpdateContent": "A new version of the system has been detected. please refresh immediately!",
+    "refreshNow": "Refresh Now"
+  },
+  "button": {
+    "refresh": "Refresh",
+    "search": "Search",
+    "ok": "OK",
+    "clear": "Clear",
+    "select": "Select",
+    "switch": "Switch",
+    "copy": "Copy",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "reset": "Reset",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "add": "Add",
+    "export": "Export",
+    "import": "Import",
+    "query": "Query",
+    "back": "Back",
+    "submit": "Submit",
+    "close": "Close",
+    "download": "Download",
+    "upload": "Upload",
+    "view": "View",
+    "operation": "Operation",
+    "more": "More...",
+    "replace": "Replace",
+    "detail": "Detail",
+    "expand": "Expand",
+    "collapse": "Collapse",
+    "clearCache": "Clear Cache",
+    "refreshCache": "Refresh Cache",
+    "linkage": "Parent-Child Linkage",
+    "resetPassword": "Reset Password",
+    "downloadTemplate": "Download Template",
+    "backHomepage": "Back to Homepage",
+    "logout": "Logout",
+    "confirmDelete": "Are you sure to delete?",
+    "confirmReset": "Are you sure to reset?"
+  },
+  "system": {
+    "tooltip": {
+      "fullSwitch": "Full Screen Toggle",
+      "themeSwitch": "Theme Toggle",
+      "languageSwitch": "Language Toggle",
+      "settings": "System Settings",
+      "fullScreen": "Content Full Screen",
+      "cancelFullScreen": "Cancel Content Full Screen",
+      "hideSearch": "Hide Search",
+      "expandSearch": "Expand Search",
+      "exportSvg": "Export SVG",
+      "tableSize": "Table Size",
+      "tableSetting": "Table Setting",
+      "singleLine": "Vertical Border",
+      "singleColumn": "Horizontal Border",
+      "striped": "Striped",
+      "expandMenu": "Expand Menu",
+      "collapseMenu": "Collapse Menu"
+    },
+    "search": {
+      "placeholder": "Search pages or paths",
+      "history": "Search History"
+    },
+    "layout": {
+      "left": "Left Menu",
+      "top": "Top Menu",
+      "mixLeft": "Mixed Left Menu",
+      "right": "Right Menu",
+      "mixRight": "Mixed Right Menu"
+    },
+    "theme": {
+      "mode": {
+        "mode": "Theme Mode",
+        "light": "Light",
+        "dark": "Dark",
+        "auto": "Auto",
+        "reverseStyle": "Style Inversion",
+        "reverseStyleTip": "To enhance the visual effect of menus and dropdowns",
+        "grey": "Grayscale Mode",
+        "colorWeakness": "Color Weakness Mode"
+      },
+      "color": {
+        "color": "Theme Color",
+        "colorTip": "Theme color scheme copied to clipboard",
+        "copyAndPaste": "Copy and paste to replace",
+        "content": "content in",
+        "primary": "Primary",
+        "success": "Success",
+        "warning": "Warning",
+        "error": "Error",
+        "info": "Info",
+        "followPrimary": "Follow Primary"
+      }
+    },
+    "interface": {
+      "function": "Interface Functions",
+      "borderRadius": "Border Radius",
+      "pageTransition": "Page Transition",
+      "sidebarWidth": "Sidebar Width",
+      "sidebarCollapseWidth": "Sidebar Collapse Width",
+      "sidebarTriggerStyle": "Sidebar Trigger Style",
+      "msgPlacement": "Message Placement",
+      "logo": "Logo Display",
+      "topProgress": "Top Progress",
+      "breadcrumb": "Breadcrumb Display",
+      "breadcrumbIcon": "Breadcrumb Icon",
+      "tabs": "Tabs Display",
+      "tabsIcon": "Tabs Icon",
+      "fixedTopAndBottom": "Fixed Top and Bottom",
+      "copyright": "Bottom Copyright",
+      "watermark": "Watermark",
+      "watermarkTip": "Please enter watermark text"
+    },
+    "transitionList": {
+      "none": "No Transition",
+      "slideFade": "Slide Fade",
+      "bottomFade": "Bottom Fade",
+      "collapseFade": "Collapse Fade",
+      "expandFade": "Expand Fade",
+      "collapse": "Collapse",
+      "soft": "Soft",
+      "gradual": "Gradual"
+    },
+    "borderRadius": {
+      "none": "No Radius",
+      "small": "Small",
+      "default": "Default",
+      "large": "Large",
+      "round": "Round"
+    },
+    "messagePositions": {
+      "top": "Top",
+      "bottom": "Bottom",
+      "top-left": "Top Left",
+      "top-right": "Top Right",
+      "bottom-left": "Bottom Left",
+      "bottom-right": "Bottom Right"
+    },
+    "sideBarShowTrigger": {
+      "bar": "Bar",
+      "arrow-circle": "Arrow Circle"
+    },
+    "dialog": {
+      "title": {
+        "resetSettings": "Reset Settings"
+      },
+      "content": {
+        "resetSettings": "Are you sure to reset all settings?"
+      }
+    }
+  },
+  "route": {
+    "Home": "Home",
+    "/system": "System",
+    "/utils": "System Utils",
+    "/api": "API Docs",
+    "/doc": "Docs",
+    "/multiLevel": "Multi-Menu",
+    "/component": "Components",
+    "/routeParam": "Params",
+    "/function": "Demo",
+    "Profile": "Personal Center",
+    "User": "Users",
+    "Role": "Roles",
+    "SysMenu": "Menus",
+    "Dept": "Departments",
+    "Dict": "Dictionaries",
+    "DictItem": "Dictionary Items",
+    "Log": "Logs",
+    "Config": "Config",
+    "Notice": "Notice",
+    "Codegen": "CodeGen",
+    "Multilevel1": "L1 Menu",
+    "Multilevel2": "L2 Menu",
+    "Multilevel31": "L3-1 Menu",
+    "Multilevel32": "L3-2 Menu",
+    "Apifox": "Apifox",
+    "InternalDoc": "Docs",
+    "Https://juejin": {
+      "cn/post/7228990409909108793": "External Docs"
+    },
+    "Https://youlai": {
+      "blog": {
+        "csdn": {
+          "net/article/details/145178880": "Backend",
+          "net/article/details/143222890": "Mobile"
+        }
+      }
+    },
+    "Curd": "CRUD",
+    "Cron": "Cron Gen",
+    "WangEditor": "Editor",
+    "Upload": "Upload",
+    "IconSelector": "Icons",
+    "Dictionary": "Dict",
+    "RouteParamType1": "Param (1)",
+    "RouteParamType2": "Param (2)",
+    "Icon": "Icon",
+    "Websocket": "WebSocket"
+  },
+  "directive": {
+    "nonsupportCopy": "Your browser does not support clipboard API",
+    "notAllowedCopy": "Clipboard API is not currently allowed",
+    "copySuccess": "Copy successful",
+    "errorPermission": "Permission identifier required! Example: v-has-perm=\"'sys:user:add'\" or v-has-perm=\"['sys:user:add', 'sys:user:edit']\"",
+    "errorRole": "Role identifier required! Example: v-has-role=\"'ADMIN'\" or v-has-role=\"['ADMIN', 'TEST']\""
+  },
+  "statusTag": {
+    "normal": "Normal",
+    "disable": "Disabled"
+  },
+  "errorPage": {
+    "403": {
+      "title": "403 Forbidden",
+      "desc": "Some doors are always closed to you"
+    },
+    "404": {
+      "title": "404 Resource Not Found",
+      "desc": "Life always has some absurdity"
+    },
+    "500": {
+      "title": "500 Server Error",
+      "desc": "Server error might mean it's time to hire more programmers"
+    }
+  },
+  "components": {
+    "iconSelect": {
+      "title": "Icon Selection",
+      "search": "Search Icons",
+      "placeholder": "Please select or enter icon name",
+      "localhost": "Local Icons"
+    },
+    "upload": {
+      "cut": "Image Crop",
+      "select": "Select Image",
+      "promptStart": "Please upload",
+      "sizeLimit": "Size no more than",
+      "fileTypes": " Format:",
+      "promptEnd": "file(s)",
+      "incorrectFormat": "Incorrect file format, please upload {type} format file!",
+      "incorrectSize": "Upload file size cannot exceed {size} MB!"
+    }
+  },
+  "pagination": {
+    "total": "Total {total} items",
+    "goto": "Go to"
+  },
+  "message": {
+    "operateSuccess": "Operate successful",
+    "resetSuccess": "Reset successful",
+    "placement": "I will show here 😊",
+    "deleteSuccess": "Delete successful",
+    "uploadSuccess": "Upload successful",
+    "uploadError": "Upload failed:  {message}",
+    "logoutSuccess": "Logout successful",
+    "initRouteError": "Init route error!"
+  },
+  "confirm": {
+    "delete": "Are you sure to delete {name}?",
+    "deleteSelect": "Are you sure to delete the selected data items?",
+    "logout": "Are you sure you want to exit the system?"
+  },
+  "login": {
+    "login": "Login",
+    "logIn": "Logging in...",
+    "username": "Username",
+    "password": "Password",
+    "captcha": "Captcha",
+    "forget": "Forgot password?",
+    "rememberMe": "Remember me",
+    "noAccount": "Don't have an account?",
+    "success": "Login successful"
+  },
+  "register": {
+    "register": "Register",
+    "haveAccount": "Already have an account?",
+    "readAndAgree": "I have agree to",
+    "userAgreement": "User Agreement",
+    "noSpecialChars": "Password cannot contain special characters",
+    "passwordNotMatch": "Passwords do not match",
+    "readAndAgreeFirst": "Please read and agree to the User Agreement first"
+  },
+  "resetPwd": {
+    "reset": "Reset Password",
+    "recall": "Remembered your password?"
+  },
+  "rules": {
+    "passwordLength": "Password length cannot be less than 6 characters",
+    "email": "Please enter a valid email address",
+    "phone": "Please enter a valid phone number",
+    "illegalChar": "Cannot contain illegal characters < > \" ' | \\"
+  },
+  "tabBar": {
+    "refresh": "Refresh",
+    "close": "Close",
+    "closeOthers": "Close Others",
+    "closeLeft": "Close Left",
+    "closeRight": "Close Right",
+    "closeAll": "Close All"
+  },
+  "tableHeader": {
+    "keywords": "Keywords",
+    "username": "Username",
+    "nickname": "Nickname",
+    "sex": "Gender",
+    "role": "Role",
+    "phone": "Phone",
+    "dept": "Department",
+    "email": "Email",
+    "status": "Status",
+    "createTime": "Create Time",
+    "updateTime": "Update Time",
+    "action": "Action",
+
+    "roleName": "Role Name",
+    "roleCode": "Role Code",
+    "sort": "Sort",
+
+    "menuName": "Menu Name",
+    "menuType": "Menu Type",
+    "routeName": "Route Name",
+    "routePath": "Route Path",
+    "componentPath": "Component Path",
+    "permission": "Permission",
+
+    "deptName": "Department Name",
+    "deptCode": "Department Code",
+
+    "dictName": "Dictionary Name",
+    "dictCode": "Dictionary Code",
+    "remark": "Remark",
+    "dictLabel": "Dictionary Label",
+    "dictValue": "Dictionary Value",
+
+    "apiPath": "API Path",
+    "logModule": "Log Module",
+    "logContent": "Log Content",
+    "ip": "IP Address",
+    "region": "Region",
+    "browser": "Browser",
+    "os": "OS",
+    "executeTime": "Execute Time",
+    "operator": "Operator",
+    "operateTime": "Operate Time",
+
+    "configName": "Config Name",
+    "configKey": "Config Key",
+    "configValue": "Config Value",
+
+    "no": "No",
+    "title": "Title",
+    "publishAuthor": "Publish Author",
+    "noticeLevel": "Notice Level",
+    "noticeTarget": "Notice Target"
+  },
+  "home": {
+    "about": {
+      "vite": "A new generation frontend build tool based on native ESM modules with extremely fast build speed",
+      "vue": "A progressive JavaScript framework for building user interfaces",
+      "pinia": "A lightweight state management library based on Vue's Composition API",
+      "ts": "A superset of JavaScript for writing type-safe code in development",
+      "naive": "An open-source Vue3 component library by TuSimple, comprehensive with adjustable themes, using TypeScript",
+      "unocss": "A high-performance atomic CSS engine that lets you control element styles with short class names"
+    },
+    "card": {
+      "online": "Online Users",
+      "realTime": "Real-time",
+      "connected": "Connected",
+      "disconnected": "Disconnected",
+      "updateTime": "Update Time",
+      "day": "Day",
+      "totalVisits": "Total Visitors",
+      "totalView": "Total Views",
+      "visitTrend": "Visit Trend"
+    },
+    "list": {
+      "0": "We are all moving forward with burdens.",
+      "1": "Are you afraid that this life is the next life you mentioned in your previous life?",
+      "2": "The most important thing here is to keep faith, unless you have the power not to.",
+      "3": "The best way to be lazy is to do it right the first time.",
+      "4": "Some people rise because of sin, some fall because of virtue.",
+      "5": "We must move towards the future, not dwell on the past!",
+      "6": "The wise set long-term goals, the aimless constantly set new goals.",
+      "7": "Friendship is like a lighthouse, illuminating each other's direction in confusion.",
+      "8": "If you always care about what others think, you will achieve nothing!",
+      "9": "With hope in your heart, you will be invincible.",
+      "10": "Do everything with love."
+    },
+    "chart": {
+      "pv": "Page Views(PV)",
+      "uv": "Unique Visitors(UV)"
+    },
+    "time": {
+      "week": "Last Week",
+      "month": "Last Month",
+      "quarter": "Last Quarter",
+      "year": "Last Year"
+    }
+  },
+  "user": {
+    "enterNewPassword": "Please enter {name}'s new password",
+    "rememberNewPassword": "Password reset successful. Please remember the new password: {value}",
+    "add": "Add User",
+    "edit": "Edit User",
+    "import": {
+      "user": "Import Users",
+      "table": {
+        "no": "No.",
+        "title": "Error Message"
+      },
+      "upload": "Click here or drag files to this area to upload",
+      "uploadTip": "Please do not upload sensitive data to avoid unnecessary losses.",
+      "uploadTip2": "Only import",
+      "uploadTip3": "format files allowed",
+      "success": "Import successful, imported data: {value} items",
+      "result": "Import result: {invalid} invalid data items, {valid} valid data items"
+    }
+  },
+  "role": {
+    "add": "Add Role",
+    "edit": "Edit Role",
+    "dataPermission": "Data Permission",
+    "allData": "All Data",
+    "departmentData": "Department and Sub-department Data",
+    "currentDepartmentData": "Current Department Data",
+    "selfData": "Self Data",
+    "permission": "Permission Assignment"
+  },
+  "menu": {
+    "type": {
+      "catalog": "Catalog",
+      "menu": "Menu",
+      "button": "Button",
+      "extlink": "External Link"
+    },
+    "form": {
+      "add": "Add Menu",
+      "edit": "Edit Menu",
+      "addSub": "Add Submenu",
+      "topMenu": "Top-level Menu",
+      "icon": "Icon",
+      "name": "Name",
+      "parentMenu": "Parent Menu",
+      "externalLink": "External Link",
+      "routeParam": "Route Parameter",
+      "params": {
+        "key": "Parameter Name",
+        "value": "Parameter Value"
+      },
+      "route": "Jump Route",
+      "alwaysShow": "Always Show",
+      "cache": "Page Cache",
+      "parentMenuTip": "Parent menu cannot be the current menu"
+    },
+    "tip": {
+      "routeName": "If you need to enable caching, ensure that the name in defineOptions on the page matches this field. It is recommended to use camelCase.\nExample: User",
+      "routePath": "Define the URL path corresponding to different pages in the application. Directories must start with /, menu items do not.\nExample: System management directory /system, user management menu under system management: user",
+      "componentPath": "Complete component page path, relative to src/views/\nSuch as system/user/index, default suffix .vue is omitted",
+      "routeParam": "Component page uses `useRoute().query.parameterName` to get route parameter values",
+      "alwaysShow": "Select 'Yes', even if there is only one child node under the directory or menu, the parent node will be displayed.\nSelect 'No', if there is only one child node under the directory or menu, only that child node will be displayed, and the parent node will be hidden.\nIf it is a leaf node, please select 'No'"
+    }
+  },
+  "dept": {
+    "top": "Top Department",
+    "add": "Add Department",
+    "edit": "Edit Department"
+  },
+  "dict": {
+    "add": "Add Dictionary",
+    "edit": "Edit Dictionary",
+    "clear": "Clear Dictionary Item '{dict}' Successfully",
+    "tag": {
+      "type": "Tag Type",
+      "default": "Default",
+      "primary": "Primary",
+      "success": "Success",
+      "info": "Info",
+      "warning": "Warning",
+      "error": "Error"
+    },
+    "addItem": "Add Dictionary Item",
+    "editItem": "Edit Dictionary Item"
+  },
+  "config": {
+    "add": "Add Config",
+    "edit": "Edit Config",
+    "delete": "Are you sure you want to delete the {name} config?",
+    "refreshCache": "Cache Refreshed Successfully"
+  },
+  "notice": {
+    "add": "Add Notice",
+    "edit": "Edit Notice",
+    "info": "Notice Details",
+    "type": "Notice Type",
+    "content": "Notice Content",
+    "publishTime": "Publish Time",
+    "status": {
+      "unpublished": "Unpublished",
+      "published": "Published",
+      "revoked": "Revoked"
+    },
+    "target": {
+      "users": "Target Users",
+      "all": "All Users",
+      "placeholder": "Select Users"
+    },
+    "time": {
+      "create": "Create",
+      "publish": "Publish",
+      "revoke": "Revoke"
+    },
+    "inquiry": {
+      "publish": "Confirm to publish the notice?",
+      "revoke": "Confirm to revoke the notice?",
+      "publishSuccess": "Notice published successfully",
+      "revokeSuccess": "Notice revoked successfully"
+    },
+    "title": "Message Notification",
+    "more": "View More",
+    "allRead": "All Read",
+    "noMessage": "No Messages"
+  },
+  "codeGen": {
+    "tableHeader": {
+      "name": "Table Name",
+      "comment": "Table Comment",
+      "engine": "Storage Engine",
+      "collation": "Collation",
+
+      "bizName": "Business Name",
+      "mainPackage": "Main Package",
+      "moduleName": "Module Name",
+      "entityName": "Entity Name",
+      "author": "Author",
+      "parentMenu": "Parent Menu",
+
+      "columnName": "Name",
+      "columnType": "Type",
+      "fieldName": "Field Name",
+      "fieldType": "Field Type",
+      "fieldComment": "Comment",
+      "maxLength": "Max Length",
+      "isShowInQuery": "Query",
+      "isShowInList": "List",
+      "isShowInForm": "Form",
+      "isRequired": "Required",
+      "queryType": "Query Type",
+      "formType": "Form Type",
+      "dictType": "Dict Type"
+    },
+    "generate": "Generate Code",
+    "resetConfig": "Reset Config",
+    "resetConfigConfirm": "Are you sure you want to reset the configuration of {tableName}?",
+    "resetConfigSuccess": "Reset Success",
+    "drawer": {
+      "parentMenuTip": "Select the parent menu, and the menu will be automatically created after the code is generated. \nNote 1: After generating the menu, you need to assign permissions to the role, otherwise the menu will not be displayed. \nNote 2: The demo environment does not generate menus by default. If you need to generate menus, please deploy the database locally.",
+      "alert": "The code in index.vue is not applicable here, and it is only used for demonstration purposes!",
+      "configPreview": "Configuration Preview",
+      "downloading": "Downloading...",
+      "downloadCode": "Download Code"
+    },
+    "formType": {
+      "input": "Input Box",
+      "select": "Dropdown Box",
+      "radio": "Radio Box",
+      "checkbox": "Checkbox",
+      "number": "Number Input Box",
+      "switch": "Switch",
+      "textarea": "Textarea",
+      "date": "Date Picker",
+      "dataTime": "Date Time Picker",
+      "hidden": "Hidden Field"
+    }
+  },
+  "profile": {
+    "accountInfo": "Account Info",
+    "changeAccountInfo": "Change Account Info",
+    "securitySetting": "Security Setting",
+    "accountPassword": "Account Password",
+    "changePasswordTip": "Regularly modify passwords can help protect account security",
+    "changePassword": {
+      "title": "Change Password",
+      "oldPassword": "Old Password",
+      "newPassword": "New Password",
+      "confirmPassword": "Confirm Password",
+      "success": "Password Modified Successfully"
+    },
+    "changePhone": "Change Phone",
+    "changeEmail": "Change Email",
+    "sendCode": "Send Code",
+    "sendCodeSuccess": "Code Sent Successfully!",
+    "bindPhoneSuccess": "Phone Bound Successfully!",
+    "bindEmailSuccess": "Email Bound Successfully!",
+    "updateAvatarSuccess": "Avatar Updated Successfully!",
+    "updateAvatarFailed": "Avatar Upload Failed!",
+    "seconds": "{val} seconds later"
+  },
+  "crontab": {
+    "button": "Generate Expression",
+    "title": "Cron Generator",
+    "second": "Second",
+    "min": "Minute",
+    "hour": "Hour",
+    "day": "Day",
+    "month": "Month",
+    "week": "Week",
+    "year": "Year",
+    "timeExpression": "Time Expression",
+    "cronExpression": "Cron Expression",
+    "last10RunTime": "Last 10 Run Times",
+    "wildcard": {
+      "second": "Every second, allowed wildcards [, - * /]",
+      "min": "Every minute, allowed wildcards [, - * /]",
+      "hour": "Every hour, allowed wildcards [, - * /]",
+      "day": "Every day, allowed wildcards [, - * ? / L W]",
+      "month": "Every month, allowed wildcards [, - * /]",
+      "week": "Every week, allowed wildcards [, - * ? / L #]",
+      "year": "Every year, allowed wildcards [, - * /]"
+    },
+    "cycle": "Cycle from",
+    "to": "to",
+    "start": "Start, every",
+    "executeOnce": "execute once",
+    "specify": "Specify",
+    "none": "None",
+    "minutes": "minutes",
+    "hours": {
+      "title": "Hours",
+      "am": "AM:",
+      "pm": "PM:"
+    },
+    "days": {
+      "title": "Days",
+      "month": "Monthly",
+      "workday": "Nearest weekday",
+      "last": "Last day of month"
+    },
+    "weeks": {
+      "first": "First",
+      "of": "of",
+      "last": "Last week of month",
+      "list": {
+        "0": "Sunday",
+        "1": "Monday",
+        "2": "Tuesday",
+        "3": "Wednesday",
+        "4": "Thursday",
+        "5": "Friday",
+        "6": "Saturday"
+      }
+    },
+    "everyYear": "Every year",
+    "computation": "Computation Result ...",
+    "invalidCron": "Please input a valid cron expression",
+    "invalidFormat": "cron expression format is incorrect",
+    "noResult": "No result meets the conditions!",
+    "recent100Years": "Only {val} results in the last 100 years!"
+  },
+  "watermark": {
+    "title": "Watermark Setting",
+    "fontSize": "Font Size",
+    "fontColor": "Font Color",
+    "fontStyle": {
+      "title": "Font Style",
+      "normal": "Normal",
+      "italic": "Italic",
+      "oblique": "Oblique"
+    },
+    "fontWeight": "Font Weight",
+    "rotate": "Rotation Angle",
+    "globalRotate": "Global Rotation",
+    "cross": "Cross Boundary",
+    "lineHeight": "Line Height",
+    "height": "Height",
+    "width": "Width",
+    "xGap": "X-axis Gap",
+    "yGap": "Y-axis Gap",
+    "xOffset": "X-axis Offset",
+    "yOffset": "Y-axis Offset",
+    "zIndex": "Z-index",
+    "textAlign": {
+      "title": "Text Alignment",
+      "left": "Left Align",
+      "center": "Center Align",
+      "right": "Right Align"
+    }
+  }
+}

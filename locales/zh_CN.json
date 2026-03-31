@@ -1,0 +1,723 @@
+{
+  "input": "请输入",
+  "select": "请选择",
+  "common": {
+    "loading": "加载中...",
+    "sysTip": "系统提示",
+    "downloading": "正在下载数据，请稍候...",
+    "notImplemented": "暂未实现，开发中 ...",
+    "processing": "数据正在处理，请勿重复提交",
+    "sysError": "系统出错",
+    "backendError": "后端接口连接异常",
+    "backendTimeout": "系统接口请求超时",
+    "backendException": "系统接口 {code} 异常",
+    "sessionTimeout": "您的会话已过期，请重新登录",
+    "cannotOperate": "演示模式！不允许操作😁",
+    "message": "毫无疑问，你就是办公室最亮的星！",
+    "backToTop": "返回顶部",
+    "defaultExpandOne": "默认展开第一项",
+    "yes": "是",
+    "no": "否",
+    "others": "其他",
+    "messageType": {
+      "info": "信息",
+      "notice": "通知",
+      "activity": "活动",
+      "announcement": "公告",
+      "remind": "提醒",
+      "message": "消息"
+    }
+  },
+  "app": {
+    "systemUpdateTitle": "系统更新啦",
+    "systemUpdateContent": "检测到系统有新版本发布，请立即刷新！",
+    "refreshNow": "立即刷新"
+  },
+  "button": {
+    "refresh": "刷新",
+    "search": "搜索",
+    "ok": "确定",
+    "clear": "清空",
+    "select": "选择",
+    "switch": "切换",
+    "copy": "复制",
+    "cancel": "取消",
+    "confirm": "确定",
+    "reset": "重置",
+    "save": "保存",
+    "edit": "编辑",
+    "delete": "删除",
+    "add": "新增",
+    "export": "导出",
+    "import": "导入",
+    "query": "查询",
+    "back": "返回",
+    "submit": "提交",
+    "close": "关闭",
+    "download": "下载",
+    "upload": "上传",
+    "view": "查看",
+    "operation": "操作",
+    "replace": "更换",
+    "more": "更多...",
+    "detail": "详情",
+    "expand": "展开",
+    "collapse": "收起",
+    "clearCache": "清除缓存",
+    "refreshCache": "刷新缓存",
+    "linkage": "父子联动",
+    "resetPassword": "重置密码",
+    "downloadTemplate": "下载模板",
+    "backHomepage": "返回首页",
+    "logout": "退出登录",
+    "confirmDelete": "确定删除吗？",
+    "confirmReset": "确定重置吗？"
+  },
+  "system": {
+    "tooltip": {
+      "fullSwitch": "全屏切换",
+      "themeSwitch": "主题切换",
+      "languageSwitch": "语言切换",
+      "settings": "系统设置",
+      "fullScreen": "内容区全屏",
+      "cancelFullScreen": "取消内容区全屏",
+      "hideSearch": "隐藏搜索",
+      "expandSearch": "展开搜索",
+      "exportSvg": "导出SVG",
+      "tableSize": "表格尺寸",
+      "tableSetting": "表格设置",
+      "singleLine": "垂直边框",
+      "singleColumn": "水平边框",
+      "striped": "斑马纹",
+      "expandMenu": "展开菜单",
+      "collapseMenu": "收起菜单"
+    },
+    "search": {
+      "placeholder": "搜索页面或者路径",
+      "history": "搜索历史"
+    },
+    "layout": {
+      "left": "左侧菜单",
+      "top": "顶部菜单",
+      "mixLeft": "混合左侧菜单",
+      "right": "右侧菜单",
+      "mixRight": "混合右侧菜单"
+    },
+    "theme": {
+      "mode": {
+        "mode": "主题模式",
+        "light": "浅色",
+        "dark": "深色",
+        "auto": "自动",
+        "reverseStyle": "样式反转",
+        "reverseStyleTip": "来增强菜单和下拉菜单的视觉效果",
+        "grey": "黑白模式",
+        "colorWeakness": "色弱模式"
+      },
+      "color": {
+        "color": "主题颜色",
+        "colorTip": "主题配色已复制到剪贴板",
+        "copyAndPaste": "复制后可粘贴替换",
+        "content": "中的内容",
+        "primary": "主色",
+        "success": "成功色",
+        "warning": "警告色",
+        "error": "错误色",
+        "info": "信息色",
+        "followPrimary": "跟随主色"
+      }
+    },
+    "interface": {
+      "function": "界面功能",
+      "borderRadius": "圆角大小",
+      "pageTransition": "页面过渡",
+      "sidebarWidth": "侧边栏宽度",
+      "sidebarCollapseWidth": "侧边栏折叠宽度",
+      "sidebarTriggerStyle": "侧边栏触发器样式",
+      "msgPlacement": "Message提示位置",
+      "logo": "logo显示",
+      "topProgress": "顶部进度",
+      "breadcrumb": "面包屑显示",
+      "breadcrumbIcon": "面包屑图标",
+      "tabs": "多页签显示",
+      "tabsIcon": "多页签图标",
+      "fixedTopAndBottom": "固定顶部和底部",
+      "copyright": "底部版权",
+      "watermark": "水印",
+      "watermarkTip": "请输入水印文字"
+    },
+    "transitionList": {
+      "none": "无过度",
+      "slideFade": "侧边淡出",
+      "bottomFade": "底边淡出",
+      "collapseFade": "收缩淡出",
+      "expandFade": "扩大淡出",
+      "collapse": "收缩",
+      "soft": "柔和",
+      "gradual": "渐变"
+    },
+    "borderRadius": {
+      "none": "无圆角",
+      "small": "小型",
+      "default": "默认",
+      "large": "大型",
+      "round": "圆润"
+    },
+    "messagePositions": {
+      "top": "顶部",
+      "bottom": "底部",
+      "top-left": "左上",
+      "top-right": "右上",
+      "bottom-left": "左下",
+      "bottom-right": "右下"
+    },
+    "sideBarShowTrigger": {
+      "bar": "条形",
+      "arrow-circle": "原型箭头"
+    },
+    "dialog": {
+      "title": {
+        "resetSettings": "重置设置"
+      },
+      "content": {
+        "resetSettings": "确认重置所有设置？"
+      }
+    }
+  },
+  "route": {
+    "Home": "首页",
+    "/system": "系统管理",
+    "/utils": "系统工具",
+    "/api": "接口文档",
+    "/doc": "平台文档",
+    "/multiLevel": "多级菜单",
+    "/component": "组件封装",
+    "/routeParam": "路由参数",
+    "/function": "功能演示",
+    "Profile": "个人中心",
+    "User": "用户管理",
+    "Role": "角色管理",
+    "SysMenu": "菜单管理",
+    "Dept": "部门管理",
+    "Dict": "字典管理",
+    "DictItem": "字典数据项",
+    "Log": "系统日志",
+    "Config": "参数配置",
+    "Notice": "通知公告",
+    "Codegen": "代码生成",
+    "Multilevel1": "菜单一级",
+    "Multilevel2": "菜单二级",
+    "Multilevel31": "菜单三级-1",
+    "Multilevel32": "菜单三级-2",
+    "Apifox": "Apifox",
+    "InternalDoc": "Document",
+    "Https://juejin": {
+      "cn/post/7228990409909108793": "平台文档(外链)"
+    },
+    "Https://youlai": {
+      "blog": {
+        "csdn": {
+          "net/article/details/145178880": "后端文档",
+          "net/article/details/143222890": "移动端文档"
+        }
+      }
+    },
+    "Curd": "增删改查",
+    "Cron": "Cron表达式生成器",
+    "WangEditor": "富文本编辑器",
+    "Upload": "文件上传",
+    "IconSelector": "图标选择器",
+    "Dictionary": "字典组件",
+    "RouteParamType1": "参数(type=1)",
+    "RouteParamType2": "参数(type=2)",
+    "Icon": "Icon",
+    "Websocket": "WebSocket"
+  },
+  "directive": {
+    "nonsupportCopy": "您的浏览器不支持剪贴板API",
+    "notAllowedCopy": "目前不允许使用剪贴板API",
+    "copySuccess": "复制成功",
+    "errorPermission": "需要提供权限标识！例如：v-has-perm=\"'sys:user:add'\" 或 v-has-perm=\"['sys:user:add', 'sys:user:edit']\"",
+    "errorRole": "需要提供角色标识！例如：v-has-role=\"'ADMIN'\" 或 v-has-role=\"['ADMIN', 'TEST']\""
+  },
+  "statusTag": {
+    "normal": "正常",
+    "disable": "禁用"
+  },
+  "errorPage": {
+    "403": {
+      "title": "403 禁止访问",
+      "desc": "总有些门是对你关闭的"
+    },
+    "404": {
+      "title": "404 资源不存在",
+      "desc": "生活总归带点荒谬"
+    },
+    "500": {
+      "title": "500 服务器错误",
+      "desc": "服务器出错可能说明该雇更多程序员了"
+    }
+  },
+  "components": {
+    "iconSelect": {
+      "title": "图标选择",
+      "search": "搜索图标",
+      "placeholder": "请选择或者输入图标名称",
+      "localhost": "本地图标"
+    },
+    "upload": {
+      "cut": "图片裁剪",
+      "select": "选择图片",
+      "promptStart": "请上传",
+      "sizeLimit": "大小不超过",
+      "fileTypes": " 格式为",
+      "promptEnd": "的文件",
+      "incorrectFormat": "文件格式不正确, 请上传 {type} 的格式文件!",
+      "incorrectSize": "上传文件大小不能超过 {size} MB!"
+    }
+  },
+  "pagination": {
+    "total": "共 {total} 条",
+    "goto": "前往"
+  },
+  "message": {
+    "operateSuccess": "操作成功",
+    "resetSuccess": "重置成功",
+    "placement": "我会显示在这里哦😊",
+    "deleteSuccess": "删除成功",
+    "uploadSuccess": "上传成功",
+    "uploadError": "上传失败:  {message}",
+    "logoutSuccess": "退出成功",
+    "initRouteError": "初始化路由失败!"
+  },
+  "confirm": {
+    "delete": "确定要删除 {name} 吗？",
+    "deleteSelect": "确认删除已选中的数据项吗？",
+    "logout": "确定要退出系统吗？"
+  },
+  "login": {
+    "login": "登 录",
+    "logIn": "登 录 中...",
+    "username": "用户名",
+    "password": "密码",
+    "captcha": "验证码",
+    "forget": "忘记密码？",
+    "rememberMe": "记住我",
+    "noAccount": "您没有账号？",
+    "success": "登录成功"
+  },
+  "register": {
+    "register": "注 册",
+    "haveAccount": "已有账户？",
+    "readAndAgree": "我已同意并阅读",
+    "userAgreement": "用户协议",
+    "noSpecialChars": "密码不能包含特殊字符",
+    "passwordNotMatch": "两次密码输入不一致",
+    "readAndAgreeFirst": "请先阅读并同意用户协议"
+  },
+  "resetPwd": {
+    "reset": "重置密码",
+    "recall": "想起密码？"
+  },
+  "rules": {
+    "passwordLength": "密码长度必须介于 6 和 20 之间",
+    "email": "请输入正确的邮箱地址",
+    "phone": "请输入正确的手机号码",
+    "illegalChar": "不能包含非法字符 < > \" ' | \\"
+  },
+  "tabBar": {
+    "refresh": "刷新",
+    "close": "关闭",
+    "closeOthers": "关闭其他",
+    "closeLeft": "关闭左侧",
+    "closeRight": "关闭右侧",
+    "closeAll": "关闭所有"
+  },
+  "tableHeader": {
+    "keywords": "关键字",
+    "username": "用户名",
+    "nickname": "昵称",
+    "sex": "性别",
+    "role": "角色",
+    "phone": "手机号",
+    "dept": "部门",
+    "email": "邮箱",
+    "status": "状态",
+    "createTime": "创建时间",
+    "updateTime": "更新时间",
+    "action": "操作",
+
+    "roleName": "角色名称",
+    "roleCode": "角色编码",
+    "sort": "排序",
+
+    "menuName": "菜单名称",
+    "menuType": "菜单类型",
+    "routeName": "路由名称",
+    "routePath": "路由路径",
+    "componentPath": "组件路径",
+    "permission": "权限标识",
+
+    "deptName": "部门名称",
+    "deptCode": "部门编号",
+
+    "dictName": "字典名称",
+    "dictCode": "字典编码",
+    "remark": "备注",
+    "dictLabel": "字典标签",
+    "dictValue": "字典值",
+
+    "apiPath": "请求路径",
+    "logModule": "日志模块",
+    "logContent": "日志内容",
+    "ip": "IP 地址",
+    "region": "地区",
+    "browser": "浏览器",
+    "os": "终端系统",
+    "executeTime": "执行时间",
+    "operator": "操作人",
+    "operateTime": "操作时间",
+
+    "configName": "配置名称",
+    "configKey": "配置键",
+    "configValue": "配置值",
+
+    "no": "序号",
+    "title": "标题",
+    "publishAuthor": "发布人",
+    "noticeLevel": "通知等级",
+    "noticeTarget": "公告目标"
+  },
+  "home": {
+    "about": {
+      "vite": "新型前端构建工具，它基于原生 ESM 模块，具有极快的构建速度",
+      "vue": "用于构建用户界面的渐进式 JavaScript 框架",
+      "pinia": "轻量级的状态管理库，基于 Vue 的 Composition API",
+      "ts": "JavaScript 的超集，用于在开发中写出类型安全的代码",
+      "naive": "图森未来开源的一个 Vue3 组件库，比较完整，主题可调，使用 TypeScript",
+      "unocss": "一个高性能的原子化 CSS 引擎, 让你用简短的类名来控制元素的样式"
+    },
+    "card": {
+      "online": "在线用户",
+      "realTime": "实时",
+      "connected": "已连接",
+      "disconnected": "未连接",
+      "updateTime": "更新时间",
+      "day": "日",
+      "totalVisits": "总访客数",
+      "totalView": "总浏览量",
+      "visitTrend": "访问趋势"
+    },
+    "list": {
+      "0": "我们都在负重前行。",
+      "1": "你怕不怕这辈子就是你上辈子所说的下辈子？",
+      "2": "我们这最重要的是讲信义，除非你有不讲的实力。",
+      "3": "最好的偷懒就是一次完成。",
+      "4": "有些人因罪恶而升迁，有些人因美德而没落。",
+      "5": "我们要迈向未来，而不是沉湎于过去！",
+      "6": "有智者立长志，无志者长立志。",
+      "7": "友谊如同灯塔，在迷茫时照亮彼此的方向。",
+      "8": "如果总是在意别人怎么想，你将一事无成！",
+      "9": "满怀希望，就会所向披靡。",
+      "10": "用爱心去做每一件事。"
+    },
+    "chart": {
+      "pv": "浏览量(PV)",
+      "uv": "访客数(UV)"
+    },
+    "time": {
+      "week": "近一周",
+      "month": "近一月",
+      "quarter": "近三月",
+      "year": "近一年"
+    }
+  },
+  "user": {
+    "enterNewPassword": "请输入 {name} 的新密码",
+    "rememberNewPassword": "密码重置成功，请牢记新密码：{value}",
+    "add": "新增用户",
+    "edit": "编辑用户",
+    "import": {
+      "user": "导入用户",
+      "table": {
+        "no": "序号",
+        "title": "错误信息"
+      },
+      "upload": "点击此处或者拖动文件到该区域上传",
+      "uploadTip": "请不要上传敏感数据，以免造成不必要的损失。",
+      "uploadTip2": "仅允许导入",
+      "uploadTip3": "的格式文件",
+      "success": "导入成功，导入数据：{value} 条",
+      "result": "导入结果：{invalid} 条无效数据，{valid} 条有效数据"
+    }
+  },
+  "role": {
+    "add": "新增角色",
+    "edit": "编辑角色",
+    "dataPermission": "数据权限",
+    "allData": "全部数据",
+    "departmentData": "部门及子部门数据",
+    "currentDepartmentData": "本部门数据",
+    "selfData": "本人数据",
+    "permission": "权限分配"
+  },
+  "menu": {
+    "type": {
+      "catalog": "目录",
+      "menu": "菜单",
+      "button": "按钮",
+      "extlink": "外链"
+    },
+    "form": {
+      "add": "新增菜单",
+      "edit": "编辑菜单",
+      "addSub": "新增下级",
+      "topMenu": "顶级菜单",
+      "icon": "图标",
+      "name": "名称",
+      "parentMenu": "上级菜单",
+      "externalLink": "外链地址",
+      "routeParam": "路由参数",
+      "params": {
+        "key": "参数名",
+        "value": "参数值"
+      },
+      "route": "跳转路由",
+      "alwaysShow": "始终显示",
+      "cache": "页面缓存",
+      "parentMenuTip": "父级菜单不能为当前菜单"
+    },
+    "tip": {
+      "routeName": "如果需要开启缓存，需保证页面 defineOptions 中的 name 与此处一致，建议使用驼峰\n例如: User",
+      "routePath": "定义应用中不同页面对应的 URL 路径，目录需以 / 开头，菜单项不用\n例如：系统管理目录/system, 系统管理下的用户管理菜单 user",
+      "componentPath": "组件页面完整路径，相对于 src/views/\n如 system/user/index, 缺省后缀 .vue",
+      "routeParam": "组件页面使用 `useRoute().query.参数名` 获取路由参数值",
+      "alwaysShow": "选择“是”，即使目录或菜单下只有一个子节点，也会显示父节点\n选择“否”，如果目录或菜单下只有一个子节点，则只显示该子节点，隐藏父节点\n如果是叶子节点，请选择“否”"
+    }
+  },
+  "dept": {
+    "top": "顶级部门",
+    "add": "新增部门",
+    "edit": "编辑部门"
+  },
+  "dict": {
+    "add": "新增字典",
+    "edit": "编辑字典",
+    "clear": "清除字典项 '{dict}' 成功",
+    "tag": {
+      "type": "标签类型",
+      "default": "默认",
+      "primary": "主要",
+      "success": "成功",
+      "info": "信息",
+      "warning": "警告",
+      "error": "错误"
+    },
+    "addItem": "新增字典项",
+    "editItem": "编辑字典项"
+  },
+  "config": {
+    "add": "新增配置",
+    "edit": "编辑配置",
+    "delete": "确定要删除 {name} 配置吗？",
+    "refreshCache": "缓存刷新成功"
+  },
+  "notice": {
+    "add": "新增公告",
+    "edit": "编辑公告",
+    "info": "通知公告详情",
+    "type": "通知类型",
+    "content": "通知内容",
+    "publishTime": "发布时间",
+    "status": {
+      "unpublished": "未发布",
+      "published": "已发布",
+      "revoked": "已撤销"
+    },
+    "target": {
+      "users": "指定用户",
+      "all": "全体用户",
+      "placeholder": "请选择用户"
+    },
+    "time": {
+      "create": "创建",
+      "publish": "发布",
+      "revoke": "撤回"
+    },
+    "inquiry": {
+      "publish": "确认发布该通知？",
+      "revoke": "确认撤回该通知？",
+      "publishSuccess": "发布成功",
+      "revokeSuccess": "撤回成功"
+    },
+    "title": "消息通知",
+    "more": "查看更多",
+    "allRead": "全部已读",
+    "noMessage": "暂无消息"
+  },
+  "codeGen": {
+    "tableHeader": {
+      "name": "表名",
+      "comment": "描述",
+      "engine": "存储引擎",
+      "collation": "排序规则",
+
+      "bizName": "业务名",
+      "mainPackage": "主包名",
+      "moduleName": "模块名",
+      "entityName": "实体名",
+      "author": "作者",
+      "parentMenu": "上级菜单",
+
+      "columnName": "列名",
+      "columnType": "列类型",
+      "fieldName": "字段名",
+      "fieldType": "字段类型",
+      "fieldComment": "字段注释",
+      "maxLength": "最大长度",
+      "isShowInQuery": "查询",
+      "isShowInList": "列表",
+      "isShowInForm": "表单",
+      "isRequired": "必填",
+      "queryType": "查询方式",
+      "formType": "表单类型",
+      "dictType": "字典类型"
+    },
+    "generate": "生成代码",
+    "resetConfig": "重置配置",
+    "resetConfigConfirm": "确定要重置 {tableName} 的配置吗？",
+    "resetConfigSuccess": "重置成功",
+    "drawer": {
+      "parentMenuTip": "选择上级菜单，生成代码后会自动创建对应菜单。\n注意1: 生成菜单后需分配权限给角色，否则菜单将无法显示。\n注意2: 演示环境默认不生成菜单，如需生成，请在本地部署数据库。",
+      "alert": "index.vue 中的代码在此不适用，仅用于演示！",
+      "configPreview": "配置预览",
+      "downloading": "下载中...",
+      "downloadCode": "下载代码"
+    },
+    "formType": {
+      "input": "输入框",
+      "select": "下拉框",
+      "radio": "单选框",
+      "checkbox": "复选框",
+      "number": "数字输入框",
+      "switch": "开关",
+      "textarea": "文本域",
+      "date": "日期选择器",
+      "dataTime": "日期时间选择器",
+      "hidden": "隐藏域"
+    }
+  },
+  "profile": {
+    "accountInfo": "账号信息",
+    "changeAccountInfo": "修改账号信息",
+    "securitySetting": "安全设置",
+    "accountPassword": "账户密码",
+    "changePasswordTip": "定期修改密码有助于保护账户安全",
+    "changePassword": {
+      "title": "修改密码",
+      "oldPassword": "旧密码",
+      "newPassword": "新密码",
+      "confirmPassword": "确认密码",
+      "success": "密码修改成功"
+    },
+    "changePhone": "修改手机号",
+    "changeEmail": "修改邮箱",
+    "sendCode": "发送验证码",
+    "sendCodeSuccess": "验证码发送成功！",
+    "bindPhoneSuccess": "手机号绑定成功！",
+    "bindEmailSuccess": "邮箱绑定成功！",
+    "updateAvatarSuccess": "头像更新成功！",
+    "updateAvatarFailed": "头像上传失败！",
+    "seconds": "{val} 秒后重试"
+  },
+  "crontab": {
+    "button": "生成表达式",
+    "title": "Cron表达式生成器",
+    "second": "秒",
+    "min": "分",
+    "hour": "时",
+    "day": "日",
+    "month": "月",
+    "week": "周",
+    "year": "年",
+    "timeExpression": "时间表达式",
+    "cronExpression": "Cron表达式",
+    "last10RunTime": "最近10次运行时间",
+    "wildcard": {
+      "second": "每秒，允许的通配符[, - * /]",
+      "min": "每分钟，允许的通配符[, - * /]",
+      "hour": "每小时，允许的通配符[, - * /]",
+      "day": "每日，允许的通配符[, - * ? / L W]",
+      "month": "每月，允许的通配符[, - * /]",
+      "week": "每周，允许的通配符[, - * ? / L #]",
+      "year": "每年，允许的通配符[, - * /]"
+    },
+    "cycle": "周期从",
+    "to": "到",
+    "start": "开始，每",
+    "executeOnce": "执行一次",
+    "specify": "指定",
+    "none": "不指定",
+    "minutes": "分钟",
+    "hours": {
+      "title": "小时",
+      "am": "上午：",
+      "pm": "下午："
+    },
+    "days": {
+      "title": "号",
+      "month": "每月的",
+      "workday": "最近那个工作日",
+      "last": "本月最后一天"
+    },
+    "weeks": {
+      "first": "第",
+      "of": "的",
+      "last": "本月最后一个",
+      "list": {
+        "0": "周日",
+        "1": "周一",
+        "2": "周二",
+        "3": "周三",
+        "4": "周四",
+        "5": "周五",
+        "6": "周六"
+      }
+    },
+    "everyYear": "每年",
+    "computation": "计算结果中...",
+    "invalidCron": "请输入有效的cron表达式",
+    "invalidFormat": "cron表达式格式不正确",
+    "noResult": "没有达到条件的结果！",
+    "recent100Years": "最近100年内只有 {val} 条结果！"
+  },
+  "watermark": {
+    "title": "水印设置",
+    "fontSize": "字体大小",
+    "fontColor": "字体颜色",
+    "fontStyle": {
+      "title": "字体样式",
+      "normal": "正常",
+      "italic": "斜体",
+      "oblique": "倾斜"
+    },
+    "fontWeight": "字重",
+    "rotate": "旋转角度",
+    "globalRotate": "整体旋转",
+    "cross": "跨越边界",
+    "lineHeight": "行高",
+    "height": "高度",
+    "width": "宽度",
+    "xGap": "X轴间隔",
+    "yGap": "Y轴间隔",
+    "xOffset": "X轴偏移",
+    "yOffset": "Y轴偏移",
+    "zIndex": "层级",
+    "textAlign": {
+      "title": "对齐方式",
+      "left": "左对齐",
+      "center": "居中对齐",
+      "right": "右对齐"
+    }
+  }
+}

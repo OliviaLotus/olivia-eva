@@ -1,37 +1,41 @@
-import request from "@/utils/request";
-import type { DeptQueryParams, DeptItem, DeptForm, OptionItem } from "@/types/api";
+import { del, get, post, put } from "@/utils";
 
 const DEPT_BASE_URL = "/api/v1/depts";
 
-const DeptAPI = {
-  /* 获取部门树形列表 */
-  getList(queryParams?: DeptQueryParams) {
-    return request<any, DeptItem[]>({
-      url: `${DEPT_BASE_URL}`,
-      method: "get",
-      params: queryParams,
-    });
-  },
-  /* 获取部门下拉数据源 */
-  getOptions() {
-    return request<any, OptionItem[]>({ url: `${DEPT_BASE_URL}/options`, method: "get" });
-  },
-  /* 获取部门表单数据 */
-  getFormData(id: string) {
-    return request<any, DeptForm>({ url: `${DEPT_BASE_URL}/${id}/form`, method: "get" });
-  },
-  /* 新增部门 */
-  create(data: DeptForm) {
-    return request({ url: `${DEPT_BASE_URL}`, method: "post", data });
-  },
-  /* 修改部门 */
-  update(id: string, data: DeptForm) {
-    return request({ url: `${DEPT_BASE_URL}/${id}`, method: "put", data });
-  },
-  /* 批量删除部门，多个以英文逗号(,)分割 */
-  deleteByIds(ids: string) {
-    return request({ url: `${DEPT_BASE_URL}/${ids}`, method: "delete" });
-  },
-};
+export default {
+  /**
+   * 获取部门列表
+   * @param params 查询参数（可选）
+   */
+  getList: (params?: Dept.Query) => get<Dept.VO[]>(`${DEPT_BASE_URL}`, params),
 
-export default DeptAPI;
+  /**
+   * 获取部门下拉列表
+   */
+  getOptions: () => get<OptionItem[]>(`${DEPT_BASE_URL}/options`),
+
+  /**
+   * 获取部门表单数据
+   * @param id 部门id
+   */
+  getFormData: (id: string) => get<Dept.Form>(`${DEPT_BASE_URL}/${id}/form`),
+
+  /**
+   * 新增部门
+   * @param data 部门表单数据
+   */
+  create: (data: Dept.Form) => post(`${DEPT_BASE_URL}`, data),
+
+  /**
+   * 修改部门
+   * @param id 部门id
+   * @param data 部门表单数据
+   */
+  update: (id: string, data: Dept.Form) => put(`${DEPT_BASE_URL}/${id}`, data),
+
+  /**
+   * 删除部门
+   * @param ids 部门id，多个以英文逗号(,)分隔
+   */
+  deleteByIds: (ids: string) => del(`${DEPT_BASE_URL}/${ids}`),
+};

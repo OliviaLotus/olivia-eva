@@ -1,83 +1,31 @@
-// https://unocss.nodejs.cn/guide/config-file
 import {
   defineConfig,
   presetAttributify,
   presetIcons,
+  presetWind3,
   presetTypography,
-  presetWind4,
-  presetWebFonts,
   transformerDirectives,
   transformerVariantGroup,
 } from "unocss";
 
-import { FileSystemIconLoader } from "@iconify/utils/lib/loader/node-loaders";
-import fs from "fs";
-
-// 本地SVG图标目录
-const iconsDir = "./src/assets/icons";
-
-// 读取本地 SVG 目录，自动生成 safelist
-const generateSafeList = () => {
-  try {
-    return fs
-      .readdirSync(iconsDir)
-      .filter((file) => file.endsWith(".svg"))
-      .map((file) => `i-svg:${file.replace(".svg", "")}`);
-  } catch (error) {
-    console.error("无法读取图标目录:", error);
-    return [];
-  }
-};
-
+// https://github.com/unocss/unocss
 export default defineConfig({
+  presets: [
+    presetWind3(), // UnoCSS 的默认预设
+    presetAttributify(), // 属性化模式预设，允许你通过属性来使用类名
+    presetIcons(), // 图标预设
+    presetTypography(), // 版预设
+  ],
   // 自定义快捷类
   shortcuts: {
     "wh-full": "w-full h-full",
     "flex-center": "flex justify-center items-center",
+    "flex-col-center": "flex-center flex-col",
     "flex-x-center": "flex justify-center",
     "flex-y-center": "flex items-center",
-    "flex-x-start": "flex items-center justify-start",
-    "flex-x-between": "flex items-center justify-between",
-    "flex-x-end": "flex items-center justify-end",
   },
-  theme: {
-    colors: {
-      primary: "var(--el-color-primary)",
-      primary_dark: "var(--el-color-primary-light-5)",
-    },
-    breakpoints: Object.fromEntries(
-      [640, 768, 1024, 1280, 1536, 1920, 2560].map((size, index) => [
-        ["sm", "md", "lg", "xl", "2xl", "3xl", "4xl"][index],
-        `${size}px`,
-      ])
-    ),
-  },
-  presets: [
-    presetWind4(),
-    presetAttributify(),
-    presetIcons({
-      // 额外属性
-      extraProperties: {
-        display: "inline-block",
-        width: "1em",
-        height: "1em",
-      },
-      // 图表集合
-      collections: {
-        // svg 是图标集合名称，使用 `i-svg:图标名` 调用
-        svg: FileSystemIconLoader(iconsDir, (svg) => {
-          // 如果 `fill` 没有定义，则添加 `fill="currentColor"`
-          return svg.includes('fill="') ? svg : svg.replace(/^<svg /, '<svg fill="currentColor" ');
-        }),
-      },
-    }),
-    presetTypography(),
-    presetWebFonts({
-      fonts: {
-        // ...
-      },
-    }),
+  transformers: [
+    transformerDirectives(), // 启用指令转换器，允许动态绑定 UnoCSS 类
+    transformerVariantGroup(), // 启用变体分组转换器，允许对样式变体进行分组。
   ],
-  safelist: generateSafeList(),
-  transformers: [transformerDirectives(), transformerVariantGroup()],
 });

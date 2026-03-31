@@ -1,11 +1,13 @@
-/* 工具函数统一导出
- */
+import request from "./request";
 
-// 数据验证
-export { isExternal, isValidURL, isEmail, isMobile, VALIDATORS } from "./validate";
+export default request;
 
-// 数据格式化
-export { formatGrowthRate, formatFileSize, formatNumber, formatCurrency } from "./format";
-
-// 文件下载
-export { downloadFile } from "./download";
+export * from "./comm";
+export * from "./icon";
+export * from "./is";
+export * from "./jsencrypt";
+export * from "./request";
+export * from "./router";
+export * from "./storage";
+export * from "./spin";
+export * from "./i18n";

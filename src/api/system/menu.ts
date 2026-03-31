@@ -1,45 +1,50 @@
-import request from "@/utils/request";
-import type { MenuQueryParams, MenuItem, MenuForm, RouteItem, OptionItem } from "@/types/api";
+import { del, get, post, put } from "@/utils";
 
+// 菜单基础URL
 const MENU_BASE_URL = "/api/v1/menus";
 
-const MenuAPI = {
-  /* 获取当前用户的路由列表 */
-  getRoutes() {
-    return request<any, RouteItem[]>({ url: `${MENU_BASE_URL}/routes`, method: "get" });
-  },
-  /* 获取菜单树形列表 */
-  getList(queryParams: MenuQueryParams) {
-    return request<any, MenuItem[]>({
-      url: `${MENU_BASE_URL}`,
-      method: "get",
-      params: queryParams,
-    });
-  },
-  /* 获取菜单下拉数据源 */
-  getOptions(onlyParent?: boolean, scope?: number) {
-    return request<any, OptionItem[]>({
-      url: `${MENU_BASE_URL}/options`,
-      method: "get",
-      params: { onlyParent, scope },
-    });
-  },
-  /* 获取菜单表单数据 */
-  getFormData(id: string) {
-    return request<any, MenuForm>({ url: `${MENU_BASE_URL}/${id}/form`, method: "get" });
-  },
-  /* 新增菜单 */
-  create(data: MenuForm) {
-    return request({ url: `${MENU_BASE_URL}`, method: "post", data });
-  },
-  /* 修改菜单 */
-  update(id: string, data: MenuForm) {
-    return request({ url: `${MENU_BASE_URL}/${id}`, method: "put", data });
-  },
-  /* 删除菜单 */
-  deleteById(id: string) {
-    return request({ url: `${MENU_BASE_URL}/${id}`, method: "delete" });
-  },
-};
+export default {
+  /**
+   * 获取当前用户的路由列表
+   *  - 无需传入角色，后端解析token获取角色自行判断是否拥有路由的权限
+   */
+  getRoutes: () => get<AppRoute.RouteVO[]>(`${MENU_BASE_URL}/routes`, { datasource: "naiveui" }),
 
-export default MenuAPI;
+  /**
+   * 获取菜单树形列表
+   * @param params 查询参数
+   */
+  getList: (params: Menu.Query) => get<Menu.VO[]>(`${MENU_BASE_URL}`, params),
+
+  /**
+   * 获取菜单下拉数据源
+   * @param onlyParent 是否只返回一级菜单
+   */
+  getOptions: (onlyParent?: boolean) =>
+    get<OptionItem[]>(`${MENU_BASE_URL}/options`, { onlyParent }),
+
+  /**
+   * 获取菜单表单数据
+   * @param id 菜单id
+   */
+  getFormData: (id: string) => get<Menu.Form>(`${MENU_BASE_URL}/${id}/form`),
+
+  /**
+   * 添加菜单
+   * @param data 菜单表单数据
+   */
+  create: (data: Menu.Form) => post(`${MENU_BASE_URL}`, data),
+
+  /**
+   * 修改菜单
+   * @param id 菜单id
+   * @param data 菜单表单数据
+   */
+  update: (id: string, data: Menu.Form) => put(`${MENU_BASE_URL}/${id}`, data),
+
+  /**
+   * 删除菜单
+   * @param id 菜单id
+   */
+  deleteById: (id: string) => del(`${MENU_BASE_URL}/${id}`),
+};

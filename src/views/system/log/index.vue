@@ -1,123 +1,92 @@
 <template>
-  <div class="app-container">
-    <div class="filter-section">
-      <el-form ref="queryFormRef" :model="queryParams" :inline="true" label-width="auto">
-        <el-form-item prop="keywords" label="关键字">
-          <el-input
-            v-model="queryParams.keywords"
-            placeholder="日志内容"
-            clearable
-            @keyup.enter="handleQuery"
-          />
-        </el-form-item>
-
-        <el-form-item prop="createTime" label="操作时间">
-          <el-date-picker
-            v-model="queryParams.createTime"
-            :editable="false"
-            type="daterange"
-            range-separator="~"
-            start-placeholder="开始时间"
-            end-placeholder="截止时间"
-            value-format="YYYY-MM-DD"
-            style="width: 260px"
-          />
-        </el-form-item>
-
-        <el-form-item class="search-buttons">
-          <el-button type="primary" icon="search" @click="handleQuery">搜索</el-button>
-          <el-button icon="refresh" @click="handleResetQuery">重置</el-button>
-        </el-form-item>
-      </el-form>
-    </div>
-
-    <el-card shadow="hover" class="data-table">
-      <el-table
-        v-loading="loading"
-        :data="pageData"
-        highlight-current-row
-        border
-        class="data-table__content"
-      >
-        <el-table-column label="操作时间" prop="createTime" width="220" />
-        <el-table-column label="操作人" prop="operator" width="120" />
-        <el-table-column label="日志模块" prop="module" width="100" />
-        <el-table-column label="日志内容" prop="content" min-width="200" />
-        <el-table-column label="IP 地址" prop="ip" width="150" />
-        <el-table-column label="地区" prop="region" width="150" />
-        <el-table-column label="浏览器" prop="browser" width="150" />
-        <el-table-column label="终端系统" prop="os" width="200" show-overflow-tooltip />
-        <el-table-column label="执行时间(ms)" prop="executionTime" width="150" />
-      </el-table>
-
-      <pagination
-        v-if="total > 0"
-        v-model:total="total"
-        v-model:page="queryParams.pageNum"
-        v-model:limit="queryParams.pageSize"
-        @pagination="fetchData"
-      />
-    </el-card>
+  <div>
+    <TablePro
+      v-model="query"
+      :form-config="formConfig"
+      :columns="columns"
+      :table-data="tableData"
+      :total="total"
+      :loading="loading"
+      :row-key="(row) => row.id"
+      @query="handleQuery"
+      @reset="handleQuery"
+    />
   </div>
 </template>
 
-<script setup lang="ts">
+<script lang="tsx" setup>
+import { type DataTableColumns } from "naive-ui";
+
+import LogAPI from "@/api/system/log";
+
+import { useLoading } from "@/hooks";
+
 defineOptions({
   name: "Log",
   inheritAttrs: false,
 });
 
-import LogAPI from "@/api/system/log";
-import type { LogItem, LogQueryParams } from "@/types/api";
-import type { FormInstance } from "element-plus";
+const { t } = useI18n();
 
-// 表单引用
-const queryFormRef = ref<FormInstance>();
+const { loading, startLoading, endLoading } = useLoading(true);
 
-// 查询参数
-const queryParams = reactive<LogQueryParams>({
+onMounted(() => handleQuery());
+
+// 定义表单的初始值
+const query = ref<Log.Query>({
   pageNum: 1,
   pageSize: 10,
-  keywords: "",
-  createTime: undefined as [string, string] | undefined,
 });
 
-// 列表数据
-const pageData = ref<LogItem[]>();
-const total = ref(0);
-const loading = ref(false);
+/** 查询表单配置 */
+const formConfig = ref<FormPro.FormItemConfig[]>([
+  { name: "keywords", label: t("tableHeader.keywords") },
+  {
+    name: "createTime",
+    label: t("tableHeader.operateTime"),
+    span: 5,
+    component: "date",
+    props: {
+      type: "daterange",
+      closeOnSelect: true,
+      onUpdateFormattedValue: (value: [string, string]) => (query.value.createTime = value),
+    },
+  },
+]);
 
-/* 加载日志列表数据
- */
-function fetchData(): void {
-  loading.value = true;
-  LogAPI.getPage(queryParams)
+const tableData = ref<Log.VO[]>([]);
+const total = ref<number>(0);
+
+const columns: DataTableColumns<Log.VO> = [
+  { title: t("tableHeader.apiPath"), key: "requestUri" },
+  { title: t("tableHeader.logModule"), key: "module" },
+  { title: t("tableHeader.logContent"), key: "content" },
+  { title: t("tableHeader.ip"), key: "ip", sorter: "default" },
+  {
+    title: t("tableHeader.region"),
+    key: "region",
+    sorter: "default",
+    render: ({ region }) => region.replaceAll("0", "").trim(),
+  },
+  { title: t("tableHeader.browser"), key: "browser", sorter: "default" },
+  { title: t("tableHeader.os"), key: "os", sorter: "default" },
+  {
+    title: t("tableHeader.executeTime"),
+    key: "executionTime",
+    sorter: "default",
+    render: ({ executionTime }) => `${executionTime} ms`,
+  },
+  { title: t("tableHeader.operator"), key: "operator", sorter: "default" },
+  { title: t("tableHeader.operateTime"), key: "createTime", sorter: "default" },
+];
+
+const handleQuery = () => {
+  startLoading();
+  LogAPI.getPage(query.value)
     .then((data) => {
-      pageData.value = data.list;
+      tableData.value = data.list;
       total.value = data.total ?? 0;
     })
-    .finally(() => {
-      loading.value = false;
-    });
-}
-
-/* 查询按钮点击事件
- */
-function handleQuery(): void {
-  queryParams.pageNum = 1;
-  fetchData();
-}
-
-/* 重置查询
- */
-function handleResetQuery(): void {
-  queryFormRef.value?.resetFields();
-  queryParams.pageNum = 1;
-  queryParams.createTime = undefined;
-  fetchData();
-}
-
-onMounted(() => {
-  handleQuery();
-});
+    .finally(() => endLoading());
+};
 </script>

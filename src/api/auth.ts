@@ -1,66 +1,52 @@
-import request from "@/utils/request";
-import type { LoginRequest, LoginResponse, CaptchaInfo } from "@/types/api/auth";
+import request, { del, get } from "@/utils";
 
 const AUTH_BASE_URL = "/api/v1/auth";
 
-const AuthAPI = {
-  /* 登录接口*/
-  login(data: LoginRequest) {
+export default {
+  /**
+   * 用户登录
+   * @param data 登录表单数据
+   */
+  login: (data: Auth.LoginFormData) => {
     const payload: Record<string, any> = {
       username: data.username,
       password: data.password,
-      captchaId: data.captchaId,
-      captchaCode: data.captchaCode,
+      captchaId: (data as any).captchaId,
+      captchaCode: (data as any).captchaCode,
     };
 
-    // tenantId is optional — include only when provided (multi-tenant feature)
-    if (typeof data.tenantId !== "undefined") {
-      payload.tenantId = data.tenantId;
+    if (typeof (data as any).tenantId !== "undefined") {
+      payload.tenantId = (data as any).tenantId;
     }
 
-    return request<any, LoginResponse>({
+    return request<any, Auth.LoginResult>({
       url: `${AUTH_BASE_URL}/login`,
       method: "post",
       data: payload,
     });
   },
 
-  /* 切换租户(平台用户) - 返回新的 token */
-  switchTenant(tenantId: number) {
-    return request<any, LoginResponse>({
-      url: `${AUTH_BASE_URL}/switch-tenant`,
-      method: "post",
-      params: { tenantId },
-    });
-  },
-
-  /* 刷新 token 接口*/
-  refreshToken(refreshToken: string) {
-    return request<any, LoginResponse>({
+  /**
+   * 刷新 token
+   * @param refreshToken 刷新 token
+   */
+  refreshToken: (refreshToken: string) =>
+    request<any, Auth.LoginResult>({
       url: `${AUTH_BASE_URL}/refresh-token`,
       method: "post",
       params: { refreshToken },
-      headers: {
-        Authorization: "no-auth",
-      },
-    });
-  },
+      headers: { isToken: false },
+    }),
 
-  /* 退出登录接口 */
-  logout() {
-    return request({
-      url: `${AUTH_BASE_URL}/logout`,
-      method: "delete",
-    });
-  },
+  /**
+   * 获取验证码
+   * @return 验证码信息
+   */
+  getCaptcha: () => get<Auth.CaptchaInfo>(`${AUTH_BASE_URL}/captcha`),
 
-  /* 获取验证码接口*/
-  getCaptcha() {
-    return request<any, CaptchaInfo>({
-      url: `${AUTH_BASE_URL}/captcha`,
-      method: "get",
-    });
-  },
+  /**
+   * 登出
+   * @return void
+   */
+  logout: () => del<string>(`${AUTH_BASE_URL}/logout`),
 };
-
-export default AuthAPI;

@@ -1,18 +1,21 @@
 import type { App } from "vue";
-import { createPinia } from "pinia";
+import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
+
+export * from "./models/app";
+export * from "./models/auth";
+export * from "./models/route";
+export * from "./models/tab";
+export * from "./models/dict";
+export * from "./models/watermark";
 
 const store = createPinia();
 
-// 全局注册 store
-export function setupStore(app: App<Element>) {
-  app.use(store);
-}
+// 持久化插件
+store.use(piniaPluginPersistedstate);
 
-export * from "./modules/app";
-export * from "./modules/permission";
-export * from "./modules/settings";
-export * from "./modules/tags-view";
-export * from "./modules/user";
-export * from "./modules/dict";
-export * from "./modules/tenant";
+// 安装pinia全局状态库
+export const installPinia = (app: App) => {
+  app.use(store);
+};
+
 export { store };

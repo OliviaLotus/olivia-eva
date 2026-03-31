@@ -1,232 +1,136 @@
-import request from "@/utils/request";
-import type {
-  UserInfo,
-  UserForm,
-  UserQueryParams,
-  UserItem,
-  UserProfileDetail,
-  UserProfileForm,
-  PasswordChangeForm,
-  PasswordVerifyForm,
-  MobileUpdateForm,
-  EmailUpdateForm,
-  OptionItem,
-} from "@/types/api";
+import request, { del, get, post, put } from "@/utils";
+import type { AxiosProgressEvent } from "axios";
 
 const USER_BASE_URL = "/api/v1/users";
 
-const UserAPI = {
-  /* 获取当前登录用户信息
-   *
-   * @returns 登录用户昵称、头像信息，包括角色和权限
+export default {
+  /**
+   * 获取当前登录用户信息
    */
-  getInfo() {
-    return request<any, UserInfo>({
-      url: `${USER_BASE_URL}/me`,
-      method: "get",
-    });
-  },
+  getInfo: () => get<User.Info>(`${USER_BASE_URL}/me`),
 
-  /* 获取用户分页列表
-   *
-   * @param queryParams 查询参数
+  /**
+   * 获取用户分页列表
+   * @param params 查询参数
    */
-  getPage(queryParams: UserQueryParams) {
-    return request<any, PageResult<UserItem>>({
-      url: `${USER_BASE_URL}`,
-      method: "get",
-      params: queryParams,
-    });
-  },
+  getPage: (params: User.Query) => get<PageResult<User.VO>>(`${USER_BASE_URL}`, params),
 
-  /* 获取用户表单详情
-   *
-   * @param userId 用户ID
-   * @returns 用户表单详情
+  /**
+   * 获取用户表单详情
+   * @param userId 用户id
    */
-  getFormData(userId: string) {
-    return request<any, UserForm>({
-      url: `${USER_BASE_URL}/${userId}/form`,
-      method: "get",
-    });
-  },
+  getFormData: (userId: string) => get<User.Form>(`${USER_BASE_URL}/${userId}/form`),
 
-  /* 添加用户
-   *
+  /**
+   * 添加用户
    * @param data 用户表单数据
    */
-  create(data: UserForm) {
-    return request({
-      url: `${USER_BASE_URL}`,
-      method: "post",
-      data,
-    });
-  },
+  create: (data: User.Form) => post(`${USER_BASE_URL}`, data),
 
-  /* 修改用户
-   *
-   * @param id 用户ID
+  /**
+   * 修改用户
+   * @param id 用户id
    * @param data 用户表单数据
    */
-  update(id: string, data: UserForm) {
-    return request({
-      url: `${USER_BASE_URL}/${id}`,
-      method: "put",
-      data,
-    });
-  },
+  update: (id: string, data: User.Form) => put(`${USER_BASE_URL}/${id}`, data),
 
-  /* 修改用户密码
-   *
-   * @param id 用户ID
+  /**
+   * 修改用户密码
+   * @param id 用户id
    * @param password 新密码
    */
-  resetPassword(id: string, password: string) {
-    return request({
-      url: `${USER_BASE_URL}/${id}/password/reset`,
-      method: "put",
-      params: { password },
-    });
-  },
+  resetPassword: (id: string, password: string) =>
+    put(`${USER_BASE_URL}/${id}/reset-password`, null, { password }),
 
-  /* 批量删除用户，多个以英文逗号(,)分割
-   *
-   * @param ids 用户ID字符串，多个以英文逗号(,)分割
+  /**
+   * 批量删除用户
+   * @param ids 用户id字符串，多个以英文逗号(,)分割
    */
-  deleteByIds(ids: string) {
-    return request({
-      url: `${USER_BASE_URL}/${ids}`,
-      method: "delete",
-    });
-  },
+  deleteByIds: (ids: string) => del(`${USER_BASE_URL}/${ids}`),
 
-  /* 下载用户导入模板 */
-  downloadTemplate() {
-    return request({
+  /**
+   * 下载用户导入模板
+   */
+  downloadTemplate: () =>
+    request({
       url: `${USER_BASE_URL}/template`,
       method: "get",
       responseType: "blob",
-    });
-  },
+    }),
 
-  /* 导出用户
-   *
-   * @param queryParams 查询参数
+  /**
+   * 导出用户
    */
-  export(queryParams: UserQueryParams) {
-    return request({
+  export: (params: User.Query) =>
+    request({
       url: `${USER_BASE_URL}/export`,
       method: "get",
-      params: queryParams,
+      params,
       responseType: "blob",
-    });
-  },
+    }),
 
-  /* 导入用户
-   *
+  /**
+   * 导入用户
    * @param file 导入文件
+   * @param onUploadProgress 进度回调
    */
-  import(file: File) {
+  import(file: File, onUploadProgress?: (e: AxiosProgressEvent) => void) {
     const formData = new FormData();
+
     formData.append("file", file);
+
     return request<any, ExcelResult>({
       url: `${USER_BASE_URL}/import`,
       method: "post",
       data: formData,
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
+      headers: { "Content-Type": "multipart/form-data" },
+      onUploadProgress,
     });
   },
 
-  /* 获取个人中心用户信息 */
-  getProfile() {
-    return request<any, UserProfileDetail>({
-      url: `${USER_BASE_URL}/profile`,
-      method: "get",
-    });
-  },
-
-  /* 修改个人中心用户信息 */
-  updateProfile(data: UserProfileForm) {
-    return request({
-      url: `${USER_BASE_URL}/profile`,
-      method: "put",
-      data,
-    });
-  },
-
-  /* 修改个人中心用户密码 */
-  changePassword(data: PasswordChangeForm) {
-    return request({
-      url: `${USER_BASE_URL}/password`,
-      method: "put",
-      data,
-    });
-  },
-
-  /* 发送短信验证码（绑定或更换手机号）*/
-  sendMobileCode(mobile: string) {
-    return request({
-      url: `${USER_BASE_URL}/mobile/code`,
-      method: "post",
-      params: { mobile },
-    });
-  },
-
-  /* 绑定或更换手机号 */
-  bindOrChangeMobile(data: MobileUpdateForm) {
-    return request({
-      url: `${USER_BASE_URL}/mobile`,
-      method: "put",
-      data,
-    });
-  },
-
-  /* 解绑手机号 */
-  unbindMobile(data: PasswordVerifyForm) {
-    return request({
-      url: `${USER_BASE_URL}/mobile`,
-      method: "delete",
-      data,
-    });
-  },
-
-  /* 发送邮箱验证码（绑定或更换邮箱）*/
-  sendEmailCode(email: string) {
-    return request({
-      url: `${USER_BASE_URL}/email/code`,
-      method: "post",
-      params: { email },
-    });
-  },
-
-  /* 绑定或更换邮箱 */
-  bindOrChangeEmail(data: EmailUpdateForm) {
-    return request({
-      url: `${USER_BASE_URL}/email`,
-      method: "put",
-      data,
-    });
-  },
-
-  /* 解绑邮箱 */
-  unbindEmail(data: PasswordVerifyForm) {
-    return request({
-      url: `${USER_BASE_URL}/email`,
-      method: "delete",
-      data,
-    });
-  },
-
-  /*  获取用户下拉列表
+  /**
+   * 获取个人中心用户信息
    */
-  getOptions() {
-    return request<any, OptionItem[]>({
-      url: `${USER_BASE_URL}/options`,
-      method: "get",
-    });
-  },
-};
+  getProfile: () => get<User.ProfileVO>(`${USER_BASE_URL}/profile`),
 
-export default UserAPI;
+  /**
+   * 修改个人中心用户信息
+   * @param data 个人中心表单数据
+   */
+  updateProfile: (data: User.ProfileForm) => put(`${USER_BASE_URL}/profile`, data),
+
+  /**
+   * 修改个人中心用户密码
+   * @param data 修改密码表单数据
+   */
+  changePassword: (data: User.PasswordChangeForm) => put(`${USER_BASE_URL}/password`, data),
+
+  /**
+   * 发送短信验证码（绑定或更换手机号）
+   * @param mobile 手机号
+   */
+  sendMobileCode: (mobile?: string) => post(`${USER_BASE_URL}/mobile/code`, undefined, { mobile }),
+
+  /**
+   * 绑定或更换手机号
+   * @param data 手机号表单数据
+   */
+  bindOrChangeMobile: (data: User.MobileUpdateForm) => put(`${USER_BASE_URL}/mobile`, data),
+
+  /**
+   * 发送邮箱验证码（绑定或更换邮箱）
+   * @param email 邮箱
+   */
+  sendEmailCode: (email?: string) => post(`${USER_BASE_URL}/email/code`, undefined, { email }),
+
+  /**
+   * 绑定或更换邮箱
+   * @param data 邮箱表单数据
+   */
+  bindOrChangeEmail: (data: User.EmailUpdateForm) => put(`${USER_BASE_URL}/email`, data),
+
+  /**
+   *  获取用户下拉列表
+   */
+  getOptions: () => get<OptionItem[]>(`${USER_BASE_URL}/options`),
+};

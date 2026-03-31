@@ -1,335 +1,268 @@
 <template>
-  <div class="app-container">
-    <div class="filter-section">
-      <el-form ref="queryFormRef" :model="queryParams" :inline="true">
-        <el-form-item label="关键字" prop="keywords">
-          <el-input
-            v-model="queryParams.keywords"
-            placeholder="部门名称"
-            @keyup.enter="handleQuery"
-          />
-        </el-form-item>
-
-        <el-form-item label="部门状态" prop="status">
-          <el-select v-model="queryParams.status" placeholder="全部" clearable style="width: 100px">
-            <el-option :value="1" label="正常" />
-            <el-option :value="0" label="禁用" />
-          </el-select>
-        </el-form-item>
-
-        <el-form-item class="search-buttons">
-          <el-button class="filter-item" type="primary" icon="search" @click="handleQuery">
-            搜索
-          </el-button>
-          <el-button icon="refresh" @click="handleResetQuery">重置</el-button>
-        </el-form-item>
-      </el-form>
-    </div>
-
-    <el-card shadow="hover" class="table-section">
-      <div class="table-section__toolbar">
-        <div class="table-section__toolbar--actions">
-          <el-button
-            v-hasPerm="['sys:dept:create']"
-            type="success"
-            icon="plus"
-            @click="openDialog()"
-          >
-            新增
-          </el-button>
-          <el-button
-            v-hasPerm="['sys:dept:delete']"
-            type="danger"
-            :disabled="selectIds.length === 0"
-            icon="delete"
-            @click="handleDelete()"
-          >
-            删除
-          </el-button>
-        </div>
-      </div>
-
-      <el-table
-        v-loading="loading"
-        :data="deptList"
-        row-key="id"
-        default-expand-all
-        :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
-        class="table-section__content"
-        @selection-change="handleSelectionChange"
-      >
-        <el-table-column type="selection" width="55" align="center" />
-        <el-table-column prop="name" label="部门名称" min-width="200" />
-        <el-table-column prop="code" label="部门编号" width="200" />
-        <el-table-column prop="status" label="状态" width="100">
-          <template #default="scope">
-            <el-tag v-if="scope.row.status == 1" type="success">正常</el-tag>
-            <el-tag v-else type="info">禁用</el-tag>
-          </template>
-        </el-table-column>
-
-        <el-table-column prop="sort" label="排序" width="100" />
-
-        <el-table-column label="操作" fixed="right" align="left" width="200">
-          <template #default="scope">
-            <el-button
-              v-hasPerm="['sys:dept:create']"
-              type="primary"
-              link
-              size="small"
-              icon="plus"
-              @click.stop="openDialog(scope.row.id, undefined)"
-            >
-              新增
-            </el-button>
-            <el-button
-              v-hasPerm="['sys:dept:update']"
-              type="primary"
-              link
-              size="small"
-              icon="edit"
-              @click.stop="openDialog(scope.row.parentId, scope.row.id)"
-            >
-              编辑
-            </el-button>
-            <el-button
-              v-hasPerm="['sys:dept:delete']"
-              type="danger"
-              link
-              size="small"
-              icon="delete"
-              @click.stop="handleDelete(scope.row.id)"
-            >
-              删除
-            </el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-    </el-card>
-
-    <el-dialog
-      v-model="dialogState.visible"
-      :title="dialogState.title"
-      width="600px"
-      @closed="closeDialog"
+  <div>
+    <TablePro
+      v-model="queryParams"
+      :show-table="expandAll.show"
+      :form-config="formConfig"
+      :columns="columns"
+      :table-data="tableData"
+      :loading="loading"
+      :row-key="(row) => row.id"
+      :table-props="{
+        defaultExpandAll: expandAll.isExpandAll,
+        onUpdateCheckedRowKeys: handleCheck,
+      }"
+      @query="handleQuery"
+      @reset="handleQuery"
     >
-      <el-form ref="deptFormRef" :model="formData" :rules="rules" label-width="80px">
-        <el-form-item label="上级部门" prop="parentId">
-          <el-tree-select
-            v-model="formData.parentId"
-            placeholder="选择上级部门"
-            :data="deptOptions"
-            filterable
-            check-strictly
-            :render-after-expand="false"
-          />
-        </el-form-item>
-        <el-form-item label="部门名称" prop="name">
-          <el-input v-model="formData.name" placeholder="请输入部门名称" />
-        </el-form-item>
-        <el-form-item label="部门编号" prop="code">
-          <el-input v-model="formData.code" placeholder="请输入部门编码" />
-        </el-form-item>
-        <el-form-item label="显示排序" prop="sort">
-          <el-input-number
-            v-model="formData.sort"
-            controls-position="right"
-            style="width: 100px"
-            :min="0"
-          />
-        </el-form-item>
-        <el-form-item label="部门状态">
-          <el-radio-group v-model="formData.status">
-            <el-radio :value="1">正常</el-radio>
-            <el-radio :value="0">禁用</el-radio>
-          </el-radio-group>
-        </el-form-item>
-      </el-form>
-
-      <template #footer>
-        <div class="dialog-footer">
-          <el-button type="primary" @click="handleSubmit">确定</el-button>
-          <el-button @click="closeDialog">取消</el-button>
-        </div>
+      <template #controls>
+        <n-button v-has-perm="['sys:dept:create']" type="primary" @click="openDrawer()">
+          <template #icon>
+            <icon-park-outline-plus />
+          </template>
+          {{ t("button.add") }}
+        </n-button>
+        <n-button
+          v-has-perm="['sys:dept:delete']"
+          type="error"
+          :disabled="!selectedRowKeys.length"
+          @click="handleDelete()"
+        >
+          <template #icon>
+            <icon-park-outline-delete-themes />
+          </template>
+          {{ t("button.delete") }}
+        </n-button>
+        <n-button type="info" @click="handleExpandAll()">
+          <template #icon>
+            <Icones :icon="expandAll.isExpandAll ? up : down" />
+          </template>
+          {{ expandAll.isExpandAll ? t("button.collapse") : t("button.expand") }}
+        </n-button>
       </template>
-    </el-dialog>
+    </TablePro>
+
+    <!-- 新增、编辑 -->
+    <DrawerForm
+      ref="drawerForm"
+      v-model="modelValue"
+      :form="editFormConfig"
+      :loading="spin"
+      @submit="submitForm"
+    />
   </div>
 </template>
-
-<script setup lang="ts">
-defineOptions({
-  name: "Dept",
-  inheritAttrs: false,
-});
+<script setup lang="tsx">
+import { type DataTableColumns, type DataTableRowKey, NButton, NFlex } from "naive-ui";
 
 import DeptAPI from "@/api/system/dept";
-import type { DeptItem, DeptForm, DeptQueryParams } from "@/types/api";
-import type { FormInstance, FormRules } from "element-plus";
 
-// 表单引用
-const queryFormRef = ref<FormInstance>();
-const deptFormRef = ref<FormInstance>();
+import { useLoading } from "@/hooks";
+import { spin, executeAsync, InquiryBox, startSpin, endSpin, statusOptions } from "@/utils";
 
-// 查询参数
-const queryParams = reactive<DeptQueryParams>({});
+import Icones from "@/components/icones.vue";
+import CommonStatus from "@/components/common-status.vue";
 
-// 列表数据
-const deptList = ref<DeptItem[]>();
-const deptOptions = ref<OptionItem[]>();
-const loading = ref(false);
-const selectIds = ref<string[]>([]);
+defineOptions({ name: "Dept" });
 
-// 弹窗状态
-const dialogState = reactive({
-  title: "",
-  visible: false,
+const { t } = useI18n();
+
+const up = "ant-design:caret-up-filled";
+const down = "ant-design:caret-down-filled";
+
+// 定义表单的初始值
+const queryParams = ref<Dept.Query>({});
+
+const tableData = ref<Dept.VO[]>([]);
+const deptOptions = ref<OptionItem[]>([]);
+
+const { loading, startLoading, endLoading } = useLoading();
+
+onMounted(async () => {
+  handleQuery();
+  // 加载部门下拉数据
+  const data = await DeptAPI.getOptions();
+
+  deptOptions.value = [{ value: "0", label: t("dept.top"), children: data }];
 });
+/** 查询方法 */
+const handleQuery = () => {
+  startLoading();
+  DeptAPI.getList(queryParams.value)
+    .then(async (data) => {
+      tableData.value = data;
+      await handleExpandAll(true); // 接口调用之后展开所有
+    })
+    .finally(() => endLoading());
+};
+// 展开\收起
+const expandAll = ref<TableExpand>({
+  isExpandAll: false,
+  show: true,
+});
+const handleExpandAll = async (bool?: boolean) => {
+  expandAll.value.isExpandAll = bool ?? !expandAll.value.isExpandAll;
+  expandAll.value.show = false;
+  await nextTick();
+  expandAll.value.show = true;
+};
 
-// 表单数据
-const formData = reactive<DeptForm>({
+const formConfig = ref<FormPro.FormItemConfig[]>([
+  { name: "keywords", label: t("tableHeader.deptName") },
+]);
+
+const columns = ref<DataTableColumns<Dept.VO>>([
+  { type: "selection", options: ["all", "none"] },
+  { title: t("tableHeader.deptName"), key: "name" },
+  { title: t("tableHeader.deptCode"), key: "code", align: "center" },
+  {
+    title: t("tableHeader.status"),
+    key: "status",
+    align: "center",
+    render: ({ status }) => <CommonStatus value={status} />,
+  },
+  { title: t("tableHeader.sort"), key: "sort", align: "center", sorter: "default" },
+  { title: t("tableHeader.createTime"), key: "createTime", align: "center", width: 180 },
+  {
+    title: t("tableHeader.action"),
+    key: "action",
+    align: "center",
+    width: 220,
+    render: (row) => (
+      <NFlex justify="center">
+        <NButton
+          text
+          type="primary"
+          v-has-perm={["sys:dept:create"]}
+          v-slots={{ icon: () => <Icones icon="ant-design:plus-outlined" /> }}
+          onClick={() => openDrawer(row.id)}
+        >
+          {t("button.add")}
+        </NButton>
+        <NButton
+          text
+          type="info"
+          v-has-perm={["sys:dept:update"]}
+          v-slots={{ icon: () => <Icones icon="ant-design:edit-outlined" /> }}
+          onClick={() => handleEdit(row)}
+        >
+          {t("button.edit")}
+        </NButton>
+        <NButton
+          text
+          type="error"
+          v-has-perm={["sys:dept:delete"]}
+          v-slots={{ icon: () => <Icones icon="ant-design:delete-outlined" /> }}
+          onClick={() => handleDelete(row.id)}
+        >
+          {t("button.delete")}
+        </NButton>
+      </NFlex>
+    ),
+  },
+]);
+
+const editFormConfig = computed(
+  (): DialogForm.Form => ({
+    config: [
+      {
+        name: "parentId",
+        label: t("dept.top"),
+        component: "tree-select",
+        props: { keyField: "value", labelField: "label", options: deptOptions.value },
+      },
+      { name: "name", label: t("tableHeader.deptName") },
+      { name: "code", label: t("tableHeader.deptCode") },
+      {
+        name: "status",
+        label: t("tableHeader.status"),
+        component: "radio",
+        props: { options: statusOptions.value },
+      },
+      { name: "sort", label: t("tableHeader.sort"), component: "number" },
+    ],
+    props: {
+      rules: {
+        name: [
+          {
+            required: true,
+            message: t("input") + t("tableHeader.deptName"),
+            trigger: "blur",
+          },
+        ],
+        code: [
+          {
+            required: true,
+            message: t("input") + t("tableHeader.deptCode"),
+            trigger: "blur",
+          },
+        ],
+        dataScope: [
+          {
+            required: true,
+            type: "number",
+            message: t("select") + t("role.dataPermission"),
+            trigger: "change",
+          },
+        ],
+        status: [
+          {
+            required: true,
+            type: "number",
+            message: t("select") + t("tableHeader.status"),
+            trigger: "change",
+          },
+        ],
+      },
+    },
+  })
+);
+
+/** 初始化表单 */
+const modelValue = ref<Dept.Form>({
   status: 1,
   parentId: "0",
   sort: 1,
 });
-
-// 验证规则
-const rules: FormRules = {
-  parentId: [{ required: true, message: "上级部门不能为空", trigger: "change" }],
-  name: [{ required: true, message: "部门名称不能为空", trigger: "blur" }],
-  code: [{ required: true, message: "部门编号不能为空", trigger: "blur" }],
-  sort: [{ required: true, message: "显示排序不能为空", trigger: "blur" }],
+/** 新增、编辑 */
+const drawerFormRef = useTemplateRef("drawerForm");
+const openDrawer = (deptId?: string) => {
+  modelValue.value.parentId = deptId ? deptId : "0";
+  drawerFormRef.value?.open(t("dept.add"), modelValue.value);
 };
 
-/* 加载部门列表数据
- */
-function fetchData(): void {
-  loading.value = true;
-  DeptAPI.getList(queryParams)
-    .then((data) => {
-      deptList.value = data;
-    })
-    .finally(() => {
-      loading.value = false;
-    });
-}
-
-/* 查询按钮点击事件
- */
-function handleQuery(): void {
-  fetchData();
-}
-
-/* 重置查询
- */
-function handleResetQuery(): void {
-  queryFormRef.value?.resetFields();
-  fetchData();
-}
-
-/* 表格选择变化事件
- */
-function handleSelectionChange(selection: DeptItem[]): void {
-  selectIds.value = selection.map((item) => item.id).filter(Boolean) as string[];
-}
-
-/* 打开弹窗
- * @param parentId 父部门ID
- * @param deptId 部门ID（编辑时传入）
- */
-async function openDialog(parentId?: string, deptId?: string): Promise<void> {
-  const data = await DeptAPI.getOptions();
-  deptOptions.value = [
-    {
-      value: "0",
-      label: "顶级部门",
-      children: data,
-    },
-  ];
-
-  dialogState.visible = true;
-  if (deptId) {
-    dialogState.title = "修改部门";
-    DeptAPI.getFormData(deptId).then((data) => {
-      Object.assign(formData, data);
-    });
-  } else {
-    dialogState.title = "新增部门";
-    formData.parentId = parentId || "0";
-  }
-}
-
-/* 提交表单
- */
-function handleSubmit(): void {
-  deptFormRef.value?.validate((valid) => {
-    if (valid) {
-      loading.value = true;
-      const deptId = formData.id;
-      if (deptId) {
-        DeptAPI.update(deptId, formData)
-          .then(() => {
-            ElMessage.success("修改成功");
-            closeDialog();
-            fetchData();
-          })
-          .finally(() => (loading.value = false));
-      } else {
-        DeptAPI.create(formData)
-          .then(() => {
-            ElMessage.success("新增成功");
-            closeDialog();
-            fetchData();
-          })
-          .finally(() => (loading.value = false));
-      }
-    }
+const handleEdit = ({ id }: Dept.VO) => {
+  startSpin();
+  DeptAPI.getFormData(id).then((data) => {
+    Object.assign(modelValue.value, data);
+    endSpin();
   });
-}
+  drawerFormRef.value?.open(t("dept.edit"), modelValue.value);
+};
 
-/* 删除部门
- * @param deptId 部门ID
- */
-function handleDelete(deptId?: number): void {
-  const deptIds = [deptId || selectIds.value].join(",");
-
-  if (!deptIds) {
-    ElMessage.warning("请勾选删除项");
-    return;
-  }
-
-  ElMessageBox.confirm("确认删除已选中的数据项?", "警告", {
-    confirmButtonText: "确定",
-    cancelButtonText: "取消",
-    type: "warning",
-  }).then(
+/** 表单提交 */
+const submitForm = (val: Dept.Form) =>
+  executeAsync(
+    () => (val.id ? DeptAPI.update(val.id, val) : DeptAPI.create(val)),
     () => {
-      loading.value = true;
-      DeptAPI.deleteByIds(deptIds)
-        .then(() => {
-          ElMessage.success("删除成功");
-          handleResetQuery();
-        })
-        .finally(() => (loading.value = false));
-    },
-    () => {
-      ElMessage.info("已取消删除");
+      drawerFormRef.value?.close();
+      handleQuery();
     }
   );
-}
 
-/* 关闭弹窗
- */
-function closeDialog(): void {
-  dialogState.visible = false;
-  deptFormRef.value?.resetFields();
-  deptFormRef.value?.clearValidate();
-  formData.id = undefined;
-  formData.parentId = "0";
-  formData.status = 1;
-  formData.sort = 1;
-}
+/** 选中行 */
+const selectedRowKeys = ref<string[]>([]);
+const handleCheck = (keys: DataTableRowKey[]) => (selectedRowKeys.value = keys as string[]);
 
-onMounted(() => {
-  fetchData();
-});
+// 删除部门
+const handleDelete = (deptId?: string) => {
+  const deptIds = [deptId || selectedRowKeys.value].join(",");
+
+  InquiryBox(t("confirm.deleteSelect")).then(() => {
+    DeptAPI.deleteByIds(deptIds).then(() => {
+      window.$message.success(t("message.deleteSuccess"));
+      handleQuery();
+    });
+  });
+};
 </script>

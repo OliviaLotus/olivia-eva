@@ -1,122 +1,155 @@
-﻿<template>
+<template>
   <div>
-    <h3 text-center m-0 mb-20px>{{ t("login.reg") }}</h3>
-    <el-form ref="formRef" :model="model" :rules="rules" size="large">
-      <!-- 用户名 -->
-      <el-form-item prop="username">
-        <el-input v-model.trim="model.username" :placeholder="t('login.username')">
+    <n-h3 mt-0 depth="3" text-center>{{ t("register.register") }}</n-h3>
+    <n-form ref="form" :rules="rules" :model="model" :show-label="false" size="large">
+      <n-form-item path="username">
+        <n-input
+          v-model:value="model.username"
+          clearable
+          :placeholder="t('input') + t('login.username')"
+        >
           <template #prefix>
-            <el-icon><User /></el-icon>
+            <Icones icon="ant-design:user-outlined" />
           </template>
-        </el-input>
-      </el-form-item>
-
-      <!-- 密码 -->
-      <el-tooltip :visible="isCapsLock" :content="t('login.capsLock')" placement="right">
-        <el-form-item prop="password">
-          <el-input
-            v-model.trim="model.password"
-            :placeholder="t('login.password')"
-            type="password"
-            show-password
-            @keyup="checkCapsLock"
-            @keyup.enter="submit"
-          >
-            <template #prefix>
-              <el-icon><Lock /></el-icon>
-            </template>
-          </el-input>
-        </el-form-item>
-      </el-tooltip>
-
-      <el-tooltip :visible="isCapsLock" :content="t('login.capsLock')" placement="right">
-        <el-form-item prop="confirmPassword">
-          <el-input
-            v-model.trim="model.confirmPassword"
-            :placeholder="t('login.message.password.confirm')"
-            type="password"
-            show-password
-            @keyup="checkCapsLock"
-            @keyup.enter="submit"
-          >
-            <template #prefix>
-              <el-icon><Lock /></el-icon>
-            </template>
-          </el-input>
-        </el-form-item>
-      </el-tooltip>
-
-      <!-- 验证码 -->
-      <el-form-item prop="captchaCode">
-        <div flex>
-          <el-input
-            v-model.trim="model.captchaCode"
-            :placeholder="t('login.captchaCode')"
-            @keyup.enter="submit"
-          >
-            <template #prefix>
-              <div class="i-svg:captcha" />
-            </template>
-          </el-input>
-          <div cursor-pointer h="[44px]" w="[140px]" flex-center ml-10px @click="getCaptcha">
-            <el-icon v-if="codeLoading" class="is-loading"><Loading /></el-icon>
-
+        </n-input>
+      </n-form-item>
+      <n-form-item path="password">
+        <n-input
+          v-model:value="model.password"
+          type="password"
+          :placeholder="t('input') + t('login.password')"
+          clearable
+          show-password-on="click"
+        >
+          <template #password-invisible-icon>
+            <icon-park-outline-preview-close-one />
+          </template>
+          <template #password-visible-icon>
+            <icon-park-outline-preview-open />
+          </template>
+          <template #prefix>
+            <Icones icon="ant-design:lock-outlined" />
+          </template>
+        </n-input>
+      </n-form-item>
+      <n-form-item path="confirmPassword">
+        <n-input
+          v-model:value="model.confirmPassword"
+          type="password"
+          :placeholder="t('input') + t('login.password')"
+          clearable
+          show-password-on="click"
+        >
+          <template #password-invisible-icon>
+            <icon-park-outline-preview-close-one />
+          </template>
+          <template #password-visible-icon>
+            <icon-park-outline-preview-open />
+          </template>
+          <template #prefix>
+            <Icones icon="ant-design:lock-outlined" />
+          </template>
+        </n-input>
+      </n-form-item>
+      <n-form-item v-if="enabled" path="captchaCode">
+        <n-input
+          ref="captcha"
+          v-model:value="model.captchaCode"
+          clearable
+          :placeholder="t('input') + t('login.captcha')"
+          @keyup.enter="handleRegister"
+        >
+          <template #prefix>
+            <Icones icon="ant-design:verified-outlined" />
+          </template>
+        </n-input>
+        <n-spin size="small" :show="captchaLoading">
+          <n-el cursor-pointer h="[40px]" ml="[10px]" w="[120px]" @click="getCaptcha">
             <img
-              v-else
-              border-rd-4px
-              w-full
-              h-full
-              block
-              object-contain
-              shadow="[0_0_0_1px_var(--el-border-color)_inset]"
+              shadow="[var(--box-shadow-1)]"
+              w="[100%]"
+              object-cover
+              border-rd-3px
               :src="captchaBase64"
-              alt="code"
+              alt="captchaCode"
             />
+          </n-el>
+        </n-spin>
+      </n-form-item>
+      <n-form-item>
+        <n-flex vertical :size="20" class="w-full">
+          <div>
+            <n-checkbox v-model:checked="isRead">{{ t("register.readAndAgree") }}</n-checkbox>
+            <n-button type="primary" text>{{ t("register.userAgreement") }}</n-button>
           </div>
-        </div>
-      </el-form-item>
-
-      <el-form-item>
-        <div class="flex-y-center w-full gap-10px">
-          <el-checkbox v-model="isRead">{{ t("login.agree") }}</el-checkbox>
-          <el-link type="primary" underline="never">{{ t("login.userAgreement") }}</el-link>
-        </div>
-      </el-form-item>
-
-      <!-- 注册按钮 -->
-      <el-form-item>
-        <el-button :loading="loading" type="success" class="w-full" @click="submit">
-          {{ t("login.register") }}
-        </el-button>
-      </el-form-item>
-    </el-form>
-    <div flex-center gap-10px>
-      <el-text size="default">{{ t("login.haveAccount") }}</el-text>
-      <el-link type="primary" underline="never" @click="toLogin">{{ t("login.login") }}</el-link>
-    </div>
+          <n-button
+            block
+            type="primary"
+            :loading="isLoading"
+            :disabled="isLoading"
+            @click="handleRegister"
+          >
+            {{ t("register.register") }}
+          </n-button>
+          <n-flex justify="center">
+            <n-text>{{ t("register.haveAccount") }}</n-text>
+            <n-button text type="primary" @click="toLogin">{{ t("login.login") }}</n-button>
+          </n-flex>
+        </n-flex>
+      </n-form-item>
+    </n-form>
   </div>
 </template>
+
 <script setup lang="ts">
-import type { FormInstance } from "element-plus";
-import { Lock } from "@element-plus/icons-vue";
-import { useI18n } from "vue-i18n";
+import type { FormInst, FormItemRule, FormRules } from "naive-ui";
 import AuthAPI from "@/api/auth";
-import type { LoginRequest } from "@/types/api";
+import { useI18n } from "vue-i18n";
 
-const { t } = useI18n();
-
-const emit = defineEmits(["update:modelValue"]);
-const toLogin = () => emit("update:modelValue", "login");
+const t = useI18n().t;
 
 onMounted(() => getCaptcha());
 
-const formRef = ref<FormInstance>();
-const loading = ref(false); // 按钮 loading 状态
-const isCapsLock = ref(false); // 是否大写锁定
-const captchaBase64 = ref(); // 验证码图片Base64字符串
-const isRead = ref(false);
+const emit = defineEmits(["update:modelValue"]);
 
-interface Model extends LoginRequest {
+const toLogin = () => {
+  emit("update:modelValue", "login");
+};
+
+const validatePassword = (_rule: FormItemRule, value: string): boolean =>
+  !!model.value.password &&
+  model.value.password.startsWith(value) &&
+  model.value.password.length >= value.length &&
+  value === model.value.password;
+
+const rules: FormRules = {
+  username: [{ required: true, trigger: "blur", message: t("input") + t("login.username") }],
+  password: [
+    { required: true, trigger: "blur", message: t("input") + t("login.password") },
+    {
+      min: 5,
+      max: 20,
+      message: t("rules.passwordLength"),
+      trigger: "blur",
+    },
+    {
+      pattern: /^[^<>"'|\\]+$/,
+      message: t("register.noSpecialChars"),
+      trigger: "blur",
+    },
+  ],
+  confirmPassword: [
+    {
+      required: true,
+      validator: validatePassword,
+      message: t("register.passwordNotMatch"),
+      trigger: ["blur", "password-input"],
+    },
+  ],
+  captchaCode: [{ required: true, trigger: "blur", message: t("input") + t("login.captcha") }],
+};
+
+interface Model extends Auth.LoginFormData {
   confirmPassword: string;
 }
 
@@ -129,78 +162,34 @@ const model = ref<Model>({
   rememberMe: false,
 });
 
-const rules = computed(() => {
-  return {
-    username: [
-      {
-        required: true,
-        trigger: "blur",
-        message: t("login.message.username.required"),
-      },
-    ],
-    password: [
-      {
-        required: true,
-        trigger: "blur",
-        message: t("login.message.password.required"),
-      },
-      {
-        min: 6,
-        message: t("login.message.password.min"),
-        trigger: "blur",
-      },
-    ],
-    confirmPassword: [
-      {
-        required: true,
-        trigger: "blur",
-        message: t("login.message.password.required"),
-      },
-      {
-        min: 6,
-        message: t("login.message.password.min"),
-        trigger: "blur",
-      },
-      {
-        validator: (_: any, value: string) => {
-          return value === model.value.password;
-        },
-        trigger: "blur",
-        message: t("login.message.password.inconformity"),
-      },
-    ],
-    captchaCode: [
-      {
-        required: true,
-        trigger: "blur",
-        message: t("login.message.captchaCode.required"),
-      },
-    ],
-  };
-});
+const isRead = ref(false);
 
-// 获取验证码
-const codeLoading = ref(false);
-function getCaptcha() {
-  codeLoading.value = true;
+const enabled = ref<boolean>(true); // 验证码开关
+
+const captchaBase64 = ref<string>(""); // 验证码图片Base64字符串
+
+const captchaLoading = ref<boolean>(false); // 验证码加载中
+
+const getCaptcha = () => {
+  captchaLoading.value = true;
   AuthAPI.getCaptcha()
     .then((data) => {
       model.value.captchaId = data.captchaId;
       captchaBase64.value = data.captchaBase64;
     })
-    .finally(() => (codeLoading.value = false));
-}
+    .finally(() => (captchaLoading.value = false));
+};
 
-// 检查输入大小写
-function checkCapsLock(event: KeyboardEvent) {
-  // 防止浏览器密码自动填充时报错
-  if (event instanceof KeyboardEvent) {
-    isCapsLock.value = event.getModifierState("CapsLock");
-  }
-}
+const formRef = useTemplateRef<FormInst>("form");
 
-const submit = async () => {
+const isLoading = ref<boolean>(false);
+
+const handleRegister = async () => {
   await formRef.value?.validate();
-  ElMessage.warning("开发中 ...");
+  if (!isRead.value) {
+    return window.$message.error(t("register.readAndAgreeFirst"));
+  }
+
+  window.$message.warning(t("common.notImplemented"));
 };
 </script>
